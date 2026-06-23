@@ -596,15 +596,13 @@ function renderRd(rd){
     opts.forEach(function(o,j){
       html+='<div class="opt" onclick="pickR('+rd.idx+','+i+','+j+')"><span class="dot"></span><span><strong>'+(String.fromCharCode(65+j))+'.</strong> '+o+'</span></div>';
     });
-    html+='</div><div class="fb" id="rfb-'+rd.idx+'-'+i+'"></div>
-</div>';
+    html+='</div><div class="fb" id="rfb-'+rd.idx+'-'+i+'"></div></div>';
   });
   html+='<div class="rd-key"><div class="lb">\u53c2\u8003\u7b54\u6848</div>';
   rd.questions.forEach(function(q,i){
     var opts=q.opts.split('|');html+='<p>\u7b2c'+(i+1)+'\u9898\uff1a<span class="ans">'+(String.fromCharCode(65+q.ci))+'. '+opts[q.ci]+'</span></p>';
   });
-  html+='</div>
-</div>';
+  html+='</div></div>';
   return html;
 }
 
