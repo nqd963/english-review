@@ -116,6 +116,30 @@ body{scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-apple-system,Bli
 .analysis-btn{display:inline-block;margin-top:8px;padding:4px 12px;background:var(--accent-light);color:var(--accent);border:1px solid var(--accent);border-radius:6px;font-size:.78rem;font-weight:500;cursor:pointer;transition:all .15s;user-select:none}
 .analysis-btn:hover{background:var(--accent);color:#fff}
 .analysis-btn.show{background:var(--accent);color:#fff}
+.user-bar{display:flex;align-items:center;gap:10px;padding:8px 16px;background:rgba(255,255,255,.15);backdrop-filter:blur(10px);border-radius:8px;font-size:.82rem}
+.user-bar .user-name{color:#fff;font-weight:500}
+.user-bar .user-btn{padding:5px 14px;border:1px solid rgba(255,255,255,.4);border-radius:6px;background:transparent;color:#fff;cursor:pointer;font-size:.78rem;font-weight:500;transition:all .15s}
+.user-bar .user-btn:hover{background:rgba(255,255,255,.2)}
+.user-bar .user-btn.primary{background:var(--accent);border-color:var(--accent)}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);backdrop-filter:blur(4px);display:none;align-items:center;justify-content:center;z-index:1000;animation:fadeIn .2s ease}
+.modal-overlay.show{display:flex}
+.modal{background:#fff;border-radius:16px;padding:32px 28px;width:100%;max-width:380px;box-shadow:0 20px 60px rgba(0,0,0,.2);animation:slideUp .3s ease}
+.modal h2{font-size:1.2rem;font-weight:700;margin-bottom:20px;color:var(--primary);display:flex;align-items:center;gap:8px}
+.modal .form-group{margin-bottom:16px}
+.modal .form-group label{display:block;font-size:.82rem;font-weight:500;color:#555;margin-bottom:6px}
+.modal .form-group input{width:100%;padding:10px 14px;border:1px solid var(--border);border-radius:8px;font-size:.88rem;transition:border-color .15s}
+.modal .form-group input:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(67,97,238,.1)}
+.modal .form-error{color:var(--error);font-size:.78rem;margin-top:4px;display:none}
+.modal .form-error.show{display:block}
+.modal .modal-btn{width:100%;padding:12px;border:none;border-radius:8px;background:var(--accent);color:#fff;font-size:.9rem;font-weight:600;cursor:pointer;transition:all .15s;margin-top:8px}
+.modal .modal-btn:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(67,97,238,.3)}
+.modal .modal-btn.secondary{background:var(--accent-light);color:var(--accent);margin-top:8px}
+.modal .modal-btn.secondary:hover{background:rgba(67,97,238,.15)}
+.modal .switch-text{text-align:center;margin-top:16px;font-size:.82rem;color:#888}
+.modal .switch-text a{color:var(--accent);cursor:pointer;font-weight:500}
+.modal .switch-text a:hover{text-decoration:underline}
+@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @media(max-width:640px){.header h1{font-size:1.5rem}.q-card{padding:12px 14px}.tab-btn{padding:10px 12px;font-size:.76rem}}
 </style>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -126,6 +150,11 @@ body{scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-apple-system,Bli
 <div class="header">
 <h1>英语期末考试复习</h1>
 <p>交互式模拟练习 ・ 基于教材内容</p>
+<div class="user-bar" id="userBar">
+  <span id="userStatus">未登录</span>
+  <button class="user-btn" onclick="showLoginModal()">登录</button>
+  <button class="user-btn primary" onclick="showRegisterModal()">注册</button>
+</div>
 </div>
 <div class="tab-bar">
 <button class="tab-btn active" onclick="showTab('tab-v1')">词汇（一）</button>
@@ -483,60 +512,60 @@ However, the current wave of AI-driven automation differs in important ways. Unl
 </div>
 <div class="page" id="tab-cn">
 <div class="section-title">Translation <span class="badge">汉译英</span></div>
-<div class="sub-t">Unit 2</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">他对生活的乐观态度常常会感染队友，在队里造成一种积极向上的气氛。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">His optimistic attitude toward life tended to spread to his teammates, and created a positive atmosphere within the team.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查动词"infect"的引申用法，"infect"在此意为"感染、影响"，后接"teammates"（队友）。"in the team"表示"在队里"，"positive atmosphere"意为"积极向上的气氛"。整句结构为：主语 + 谓语 + 宾语 + 结果状语。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">搜寻外星人或许有可能为我们了解宇宙起源提供新的线索。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">The search for extraterrestrial intelligence may throw new light on the origins of the universe.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查动词短语"throw light on"，意为"为……提供新的线索/启发"。"the search for extraterrestrial intelligence"是主语，"may"表示可能性，"origins of the universe"意为"宇宙起源"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">他妻子把他们所处的窘境跟他说了，然后让他仔细想想他们剩下的可能有的几种选择。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">His wife told him the dilemma they were in, and then left him to ponder the few options left to them.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查动词"ponder"，意为"仔细思考"。"dilemma"意为"窘境、困境"，"the few options left to them"意为"他们剩下的可能有的几种选择"。"leave sb. to do sth."表示"让某人去做某事"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">她为招待会所挑选的食物、音乐和装饰品全都显示出她高雅的情趣。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">Her choices of food, music and decorations for the reception all showed her exquisite taste.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查名词"taste"的用法，"exquisite taste"意为"高雅的情趣"。"choices of food, music and decorations"意为"食物、音乐和装饰品的选择"，"for the reception"意为"为招待会"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">你今后出国旅行的机会即便有，也很可能极少，我觉得这次你应该尽量争取去。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">Your opportunities to travel abroad in future might very well be so few, if any, that I think you should make every effort to go this time.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"might well be"的用法，意为"很可能是"。"so few, if any"意为"即便有，也很可能极少"，"make every effort to do sth."意为"尽力去做某事"。</div>
-</div><div class="sub-t">Unit 4</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">起初，我打算先准备生物课的考试，而后再做论文，但后来决定还是将做的顺序倒过来为好。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">At first I planned to prepare for my biology test first and then work on my research paper, but later I decided that I had better do it the other way around.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"the other way around"，意为"反过来、相反地"。"at first"意为"起初"，"prepare for"意为"为……做准备"，"research paper"意为"论文"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">就预测地震而言，科学家能做的似乎微乎其微，不过城市规划设计师却可以在减轻地震造成的损失方面有点作为。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">When it comes to predicting earthquakes, there seems very little scientists can do, though city planners can do something to reduce the damage caused by earthquakes.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查固定句式"When it comes to..."，意为"就……而言"。"there seems very little (that) scientists can do"意为"科学家能做的似乎微乎其微"，"reduce the damage"意为"减轻损失"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">去年夏天洪水期间，不得不动员全国的力量来救灾。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">During last summer&#x27;s flood, the whole nation had to be mobilized for relief efforts.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查被动语态和动词"mobilize"，意为"动员"。"During last summer's flood"意为"去年夏天洪水期间"，"relief efforts"意为"救灾工作"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">鉴于她对生活的消极态度，她不可能在改革管理部门的事情上给予支持。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">Given her passive attitude toward life, she is not likely to provide any support in terms of management reform.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"Given"作介词，意为"鉴于、考虑到"。"passive attitude"意为"消极态度"，"provide support"意为"给予支持"，"management reform"意为"管理改革"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">凭她的创见和组织能力，我认为她不是我们的负担，而是我们委员会的一份宝贵的财富。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">With her creative mind and organizational ability, she is, I believe, not a liability but rather a great asset to our committee.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"not...but..."结构，意为"不是……而是……"。"creative mind"意为"创见"，"liability"意为"负担"，"asset"意为"财富、资产"。</div>
-</div><div class="sub-t">Unit 7</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">詹姆斯搬开小桌子上的书，腾出地方摆电视机。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">James took the books off the little table to make room for the television.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查动词短语"make room for"，意为"为……腾出地方"。"took the books off the little table"意为"搬开小桌子上的书"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">据报道，在消防队赶到之前火已经熄灭。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">It was reported that the fire had burnt out before the fire brigade arrived.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"It is reported that..."，意为"据报道……"。"fire brigade"意为"消防队"，"burnt out"意为"熄灭"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">鲍勃坐下来准备写作，二十分钟后只好打消这个念头，因为他找不到写文章的灵感。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">Twenty minutes after he sat down to write his essay, Bob had to give up as he could not find any inspiration.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"give up"，意为"放弃"。"sat down to write"意为"坐下来准备写作"，"inspiration"意为"灵感"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">沙漠中的植物不需要很多雨水，因为它们能从地里吸收所需的全部水分。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">Desert plants don&#x27;t need a lot of rain, because they are able to suck up all the moisture they need from the ground.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"suck up"，意为"吸收"。"Desert plants"意为"沙漠中的植物"，"moisture"意为"水分"。</div>
-</div><div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-zh">公司正在寻找扩大市场的新办法，不过它的竞争对手同时也在竭尽全力扩大市场份额。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">The company is looking for new ways of enlarging its market, but then its rivals are also doing everything in their power to increase their market share.</div><div class="analysis-btn" onclick="event.stopPropagation();toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"look for"，意为"寻找"。"enlarge its market"意为"扩大市场"，"market share"意为"市场份额"，"doing everything in their power"意为"竭尽全力"。</div>
+<div class="sub-t">Unit 2</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">他对生活的乐观态度常常会感染队友，在队里造成一种积极向上的气氛。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">His optimistic attitude toward life tended to spread to his teammates, and created a positive atmosphere within the team.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查动词"infect"的引申用法，"infect"在此意为"感染、影响"，后接"teammates"（队友）。"in the team"表示"在队里"，"positive atmosphere"意为"积极向上的气氛"。整句结构为：主语 + 谓语 + 宾语 + 结果状语。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">搜寻外星人或许有可能为我们了解宇宙起源提供新的线索。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">The search for extraterrestrial intelligence may throw new light on the origins of the universe.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查动词短语"throw light on"，意为"为……提供新的线索/启发"。"the search for extraterrestrial intelligence"是主语，"may"表示可能性，"origins of the universe"意为"宇宙起源"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">他妻子把他们所处的窘境跟他说了，然后让他仔细想想他们剩下的可能有的几种选择。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">His wife told him the dilemma they were in, and then left him to ponder the few options left to them.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查动词"ponder"，意为"仔细思考"。"dilemma"意为"窘境、困境"，"the few options left to them"意为"他们剩下的可能有的几种选择"。"leave sb. to do sth."表示"让某人去做某事"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">她为招待会所挑选的食物、音乐和装饰品全都显示出她高雅的情趣。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">Her choices of food, music and decorations for the reception all showed her exquisite taste.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查名词"taste"的用法，"exquisite taste"意为"高雅的情趣"。"choices of food, music and decorations"意为"食物、音乐和装饰品的选择"，"for the reception"意为"为招待会"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">你今后出国旅行的机会即便有，也很可能极少，我觉得这次你应该尽量争取去。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">Your opportunities to travel abroad in future might very well be so few, if any, that I think you should make every effort to go this time.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"might well be"的用法，意为"很可能是"。"so few, if any"意为"即便有，也很可能极少"，"make every effort to do sth."意为"尽力去做某事"。</div>
+</div><div class="sub-t">Unit 4</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">起初，我打算先准备生物课的考试，而后再做论文，但后来决定还是将做的顺序倒过来为好。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">At first I planned to prepare for my biology test first and then work on my research paper, but later I decided that I had better do it the other way around.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"the other way around"，意为"反过来、相反地"。"at first"意为"起初"，"prepare for"意为"为……做准备"，"research paper"意为"论文"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">就预测地震而言，科学家能做的似乎微乎其微，不过城市规划设计师却可以在减轻地震造成的损失方面有点作为。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">When it comes to predicting earthquakes, there seems very little scientists can do, though city planners can do something to reduce the damage caused by earthquakes.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查固定句式"When it comes to..."，意为"就……而言"。"there seems very little (that) scientists can do"意为"科学家能做的似乎微乎其微"，"reduce the damage"意为"减轻损失"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">去年夏天洪水期间，不得不动员全国的力量来救灾。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">During last summer&#x27;s flood, the whole nation had to be mobilized for relief efforts.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查被动语态和动词"mobilize"，意为"动员"。"During last summer's flood"意为"去年夏天洪水期间"，"relief efforts"意为"救灾工作"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">鉴于她对生活的消极态度，她不可能在改革管理部门的事情上给予支持。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">Given her passive attitude toward life, she is not likely to provide any support in terms of management reform.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"Given"作介词，意为"鉴于、考虑到"。"passive attitude"意为"消极态度"，"provide support"意为"给予支持"，"management reform"意为"管理改革"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">凭她的创见和组织能力，我认为她不是我们的负担，而是我们委员会的一份宝贵的财富。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">With her creative mind and organizational ability, she is, I believe, not a liability but rather a great asset to our committee.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"not...but..."结构，意为"不是……而是……"。"creative mind"意为"创见"，"liability"意为"负担"，"asset"意为"财富、资产"。</div>
+</div><div class="sub-t">Unit 7</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">詹姆斯搬开小桌子上的书，腾出地方摆电视机。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">James took the books off the little table to make room for the television.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查动词短语"make room for"，意为"为……腾出地方"。"took the books off the little table"意为"搬开小桌子上的书"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">据报道，在消防队赶到之前火已经熄灭。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">It was reported that the fire had burnt out before the fire brigade arrived.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"It is reported that..."，意为"据报道……"。"fire brigade"意为"消防队"，"burnt out"意为"熄灭"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">鲍勃坐下来准备写作，二十分钟后只好打消这个念头，因为他找不到写文章的灵感。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">Twenty minutes after he sat down to write his essay, Bob had to give up as he could not find any inspiration.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"give up"，意为"放弃"。"sat down to write"意为"坐下来准备写作"，"inspiration"意为"灵感"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">沙漠中的植物不需要很多雨水，因为它们能从地里吸收所需的全部水分。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">Desert plants don&#x27;t need a lot of rain, because they are able to suck up all the moisture they need from the ground.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"suck up"，意为"吸收"。"Desert plants"意为"沙漠中的植物"，"moisture"意为"水分"。</div>
+</div><div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-zh">公司正在寻找扩大市场的新办法，不过它的竞争对手同时也在竭尽全力扩大市场份额。</div><div class="t-en" style="display:none;color:var(--accent);margin-top:6px;padding-top:6px;border-top:1px dashed var(--border)">The company is looking for new ways of enlarging its market, but then its rivals are also doing everything in their power to increase their market share.</div><div class="analysis-btn" onclick="toggleAnalysis(this.parentElement)">【翻译解析】</div><div class="cn-analysis" style="display:none"><div class="a-title">翻译解析</div>本句考查"look for"，意为"寻找"。"enlarge its market"意为"扩大市场"，"market share"意为"市场份额"，"doing everything in their power"意为"竭尽全力"。</div>
 </div>
 </div>
 <div class="page" id="tab-en">
 <div class="section-title">Translation <span class="badge">英译汉</span></div>
 <div class="sub-t">Unit 1</div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">The first sign of trouble was the escalating traffic. Cars with stereos blasting were suddenly tearing through the tranquil block where Susan and Al York had settled four years earlier.</div><div class="t-zh" style="display:none"><div>出现麻烦的第一个征兆是越来越多的进进出出的车辆。苏珊和艾尔·约克四年前定居的原本宁静安谧的街区突然出现了大声播放着立体音乐疾驰而过的汽车。</div><div>麻烦的最初迹象是日益拥堵的交通。音响开得震天响的汽车突然冲进了苏珊和艾尔·约克四年前安家的那条宁静街区。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">A wild party in LaShawn&#x27;s house was spilling out into the street, where revelers had ignited a roaring bonfire.</div><div class="t-zh" style="display:none"><div>拉肖恩家举行狂野晚会的人涌到了街上，狂欢者在街上点燃了熊熊篝火。</div><div>拉肖恩家里那场狂野的派对已经蔓延到了街上，狂欢的人群在那里点起了一堆熊熊燃烧的篝火。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">Prolonged exposure triggers paranoia, neurological damage, and such overpowering dependence that users can think of nothing beyond the pursuit of more meth.</div><div class="t-zh" style="display:none"><div>长期使用会引起妄想狂病症、神经损伤和极强的依赖性，其结果是使用者整天就想着寻找更多的脱氧麻黄碱。</div><div>长期接触会引发偏执、神经系统损伤，以及一种强烈到压倒一切的依赖性，使使用者脑子里除了继续寻求更多冰毒之外，什么都不再想。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">"We could smell the fumes and see the paranoia," she says. "One day I saw LaShawn up on her roof sweeping away 'little green men.'"</div><div class="t-zh" style="display:none"><div>"那股味儿我们老远就能闻到，那状态也一眼能看出来不对劲，"她说，"有一天我还看见拉肖恩站在屋顶上，拿着扫帚在那儿疯狂驱赶'小绿人'，简直像在发癫。"</div><div>"我们可以闻到毒品的气味，看到妄想狂，"她说。"有一天，我见到拉肖恩站在屋顶上扫走'绿色小矮人'"。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">Her immersion in the cause came at another price: She separated from her husband after 28 years of marriage.</div><div class="t-zh" style="display:none"><div>她全身心投入这一事业还付出了另一个代价：她和结婚28年的丈夫分居了。</div><div>她全身心投入这项事业，也付出了另一种代价：结婚二十八年后，她与丈夫分开了。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">The first sign of trouble was the escalating traffic. Cars with stereos blasting were suddenly tearing through the tranquil block where Susan and Al York had settled four years earlier.</div><div class="t-zh" style="display:none"><div>出现麻烦的第一个征兆是越来越多的进进出出的车辆。苏珊和艾尔·约克四年前定居的原本宁静安谧的街区突然出现了大声播放着立体音乐疾驰而过的汽车。</div><div>麻烦的最初迹象是日益拥堵的交通。音响开得震天响的汽车突然冲进了苏珊和艾尔·约克四年前安家的那条宁静街区。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">A wild party in LaShawn&#x27;s house was spilling out into the street, where revelers had ignited a roaring bonfire.</div><div class="t-zh" style="display:none"><div>拉肖恩家举行狂野晚会的人涌到了街上，狂欢者在街上点燃了熊熊篝火。</div><div>拉肖恩家里那场狂野的派对已经蔓延到了街上，狂欢的人群在那里点起了一堆熊熊燃烧的篝火。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">Prolonged exposure triggers paranoia, neurological damage, and such overpowering dependence that users can think of nothing beyond the pursuit of more meth.</div><div class="t-zh" style="display:none"><div>长期使用会引起妄想狂病症、神经损伤和极强的依赖性，其结果是使用者整天就想着寻找更多的脱氧麻黄碱。</div><div>长期接触会引发偏执、神经系统损伤，以及一种强烈到压倒一切的依赖性，使使用者脑子里除了继续寻求更多冰毒之外，什么都不再想。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">"We could smell the fumes and see the paranoia," she says. "One day I saw LaShawn up on her roof sweeping away 'little green men.'"</div><div class="t-zh" style="display:none"><div>"那股味儿我们老远就能闻到，那状态也一眼能看出来不对劲，"她说，"有一天我还看见拉肖恩站在屋顶上，拿着扫帚在那儿疯狂驱赶'小绿人'，简直像在发癫。"</div><div>"我们可以闻到毒品的气味，看到妄想狂，"她说。"有一天，我见到拉肖恩站在屋顶上扫走'绿色小矮人'"。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">Her immersion in the cause came at another price: She separated from her husband after 28 years of marriage.</div><div class="t-zh" style="display:none"><div>她全身心投入这一事业还付出了另一个代价：她和结婚28年的丈夫分居了。</div><div>她全身心投入这项事业，也付出了另一种代价：结婚二十八年后，她与丈夫分开了。</div></div></div>
 <div class="sub-t">Unit 2</div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">One hundred billion stars like the Sun surround us in our galaxy alone; according to indirect but solid astronomical evidence, many have planets made of the same ingredients as the Earth; these planets have water and air and the same vicissitudes of climate as the Earth; the molecules on their surfaces enter into the same chemical combinations, subject to the same laws of chemistry and physics, as molecules on our planet.</div><div class="t-zh" style="display:none"><div>仅在我们的星系中，我们周围就有一千亿颗像太阳这样的恒星；间接的但可靠的天文资料表明，很多恒星都有与地球构成成分相同的行星；这些行星上有水和空气，也有与地球相似的有规律的气候变化；其表面的分子与我们行星上的分子一样，遵循同样的化学和物理法则组成同样的化合物。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">It follows that the Earth is a very recent arrival in the cosmic family of planets, and man is among the youngest denizens of the Universe.</div><div class="t-zh" style="display:none"><div>由此可见，地球是宇宙行星系中一个相当晚的后来者，而人类则是宇宙中最年轻的居民之一。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">Since before the fishes left the water, the most intelligent form of life present on Earth in each era has been the rootstock out of which new and still more intelligent forms have evolved.</div><div class="t-zh" style="display:none"><div>早自鱼类离开水之前开始，地球上每个时期出现的智能最高的生命形式，总是演化新的具有更高智慧的生命形式的来源。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">And if the Earth is typical of planets in the cosmos — and everything we know in astronomy and geology tells us that it is — intelligent beings who live on planets billions of years older than the Earth have already reached that advanced level of intelligence that our successors will only achieve in the distant future.</div><div class="t-zh" style="display:none"><div>如果地球是宇宙中一个典型的行星的话——我们的天文和地质知识告诉我们事实正是这样——那么居住在比我们的地球古老数十亿年的星球上的智慧生物其智能早已达到了我们的后代在遥远的未来才能达到的那种高级水平。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">And what our descendants can do a billion years in the future, other races, a billion years older and more evolved than man, should be able to do today.</div><div class="t-zh" style="display:none"><div>而我们的子孙后代十亿年后方能做到的事，那些比人类古老十亿年且更加进化的其他星球上的人，今天应该就能办到了。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">One hundred billion stars like the Sun surround us in our galaxy alone; according to indirect but solid astronomical evidence, many have planets made of the same ingredients as the Earth; these planets have water and air and the same vicissitudes of climate as the Earth; the molecules on their surfaces enter into the same chemical combinations, subject to the same laws of chemistry and physics, as molecules on our planet.</div><div class="t-zh" style="display:none"><div>仅在我们的星系中，我们周围就有一千亿颗像太阳这样的恒星；间接的但可靠的天文资料表明，很多恒星都有与地球构成成分相同的行星；这些行星上有水和空气，也有与地球相似的有规律的气候变化；其表面的分子与我们行星上的分子一样，遵循同样的化学和物理法则组成同样的化合物。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">It follows that the Earth is a very recent arrival in the cosmic family of planets, and man is among the youngest denizens of the Universe.</div><div class="t-zh" style="display:none"><div>由此可见，地球是宇宙行星系中一个相当晚的后来者，而人类则是宇宙中最年轻的居民之一。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">Since before the fishes left the water, the most intelligent form of life present on Earth in each era has been the rootstock out of which new and still more intelligent forms have evolved.</div><div class="t-zh" style="display:none"><div>早自鱼类离开水之前开始，地球上每个时期出现的智能最高的生命形式，总是演化新的具有更高智慧的生命形式的来源。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">And if the Earth is typical of planets in the cosmos — and everything we know in astronomy and geology tells us that it is — intelligent beings who live on planets billions of years older than the Earth have already reached that advanced level of intelligence that our successors will only achieve in the distant future.</div><div class="t-zh" style="display:none"><div>如果地球是宇宙中一个典型的行星的话——我们的天文和地质知识告诉我们事实正是这样——那么居住在比我们的地球古老数十亿年的星球上的智慧生物其智能早已达到了我们的后代在遥远的未来才能达到的那种高级水平。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">And what our descendants can do a billion years in the future, other races, a billion years older and more evolved than man, should be able to do today.</div><div class="t-zh" style="display:none"><div>而我们的子孙后代十亿年后方能做到的事，那些比人类古老十亿年且更加进化的其他星球上的人，今天应该就能办到了。</div></div></div>
 <div class="sub-t">Unit 3</div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">My first lesson in how to live as a Negro came when I was quite small.</div><div class="t-zh" style="display:none"><div>我很小的时候，就上了该如何做黑人的第一课</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">I never fully realized the appalling disadvantages of a cinder environment till one day the gang to which I belonged found itself engaged in a war with the white boys who lived beyond the tracks.</div><div class="t-zh" style="display:none"><div>我从未真正意识到生活在满地煤渣的环境里有多么不利，直到有一天我们一帮人与住在铁路那边的一群白人男孩打开了仗，方才明白。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">The sight of blood pouring over my face completely demoralized our ranks.</div><div class="t-zh" style="display:none"><div>见我血流满面，我们队伍的士气一下子全垮了。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">She finished by telling me that I ought to be thankful to God as long as I lived that they didn't kill me.</div><div class="t-zh" style="display:none"><div>末了她对我说，我该一辈子感谢上帝，没有让他们把我打死。</div><div>最后她还补了一刀，说我这辈子都该谢谢上帝，谢他们那天没直接把我弄死。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">My first lesson in how to live as a Negro came when I was quite small.</div><div class="t-zh" style="display:none"><div>我很小的时候，就上了该如何做黑人的第一课</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">I never fully realized the appalling disadvantages of a cinder environment till one day the gang to which I belonged found itself engaged in a war with the white boys who lived beyond the tracks.</div><div class="t-zh" style="display:none"><div>我从未真正意识到生活在满地煤渣的环境里有多么不利，直到有一天我们一帮人与住在铁路那边的一群白人男孩打开了仗，方才明白。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">The sight of blood pouring over my face completely demoralized our ranks.</div><div class="t-zh" style="display:none"><div>见我血流满面，我们队伍的士气一下子全垮了。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">She finished by telling me that I ought to be thankful to God as long as I lived that they didn't kill me.</div><div class="t-zh" style="display:none"><div>末了她对我说，我该一辈子感谢上帝，没有让他们把我打死。</div><div>最后她还补了一刀，说我这辈子都该谢谢上帝，谢他们那天没直接把我弄死。</div></div></div>
 <div class="sub-t">Unit 4</div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">Could it be that our dream that material welfare per se leads to happiness is just a pipe dream?</div><div class="t-zh" style="display:none"><div>我们所持的物质福利本身能带来幸福的梦想，会不会只是一个不切实际的幻想呢？</div><div>难道我们所梦想的那种"物质福利本身就能带来幸福"，终究只是一场白日梦吗？……</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">what mattered to them was the person who is much, not the one who has much or uses much.</div><div class="t-zh" style="display:none"><div>他们看重的是人自身的价值，而不是他拥有的财产或他的消费量。</div><div>对他们而言，重要的是"其人之为如何"——是一个内在丰盛的人，而不是一个占有很多或消费很多的人。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">Those higher up on the social ladder are no less anxious. Their lives are no less empty than those of their subordinates.</div><div class="t-zh" style="display:none"><div>那些在社会阶梯上爬的较高的人也同样焦虑不安，他们的生活和他们下属的生活同样空虚。</div><div>社会地位更高的人并不见得较少焦虑；他们的生活也并不比其下属更充实。</div><div>就算爬到了社会金字塔上面那层，也不见得就不焦虑；日子该空还是空，跟下属比也未必更有"活人感"。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">Also, they are so frightened of the possibility of their personal failure and humiliation that their anxiety about personal matters prevents them from feeling anxiety about the possibility that everybody and everything may be destroyed.</div><div class="t-zh" style="display:none"><div>另外，他们极其害怕个人会遭到失败、蒙受耻辱；他们为私事惶惶不安，对于世人与万物均可能遭毁灭一事则无暇顾及了。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">I suggest transforming our social system from a bureaucratically managed industrialism in which maximal production and consumption are ends in themselves (in the Soviet Union as well as in the capitalist countries) into a humanist industrialism in which man and the full development of his potentialities — those of love and of reason — are the aims of all social arrangements.</div><div class="t-zh" style="display:none"><div>我建议改造我们的社会制度，将其从一个在官僚机构管理下的以追求最高产量和最大消费为目的的工业化社会体制（苏联和资本主义国家都属此类体制）转化为一个人本主义的工业化社会体制。在后一种体制中，一切社会活动的目的都是为了人，为了使人的各种潜力——爱的潜力和运用理智的潜力——获得充分发展。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">Could it be that our dream that material welfare per se leads to happiness is just a pipe dream?</div><div class="t-zh" style="display:none"><div>我们所持的物质福利本身能带来幸福的梦想，会不会只是一个不切实际的幻想呢？</div><div>难道我们所梦想的那种"物质福利本身就能带来幸福"，终究只是一场白日梦吗？……</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">what mattered to them was the person who is much, not the one who has much or uses much.</div><div class="t-zh" style="display:none"><div>他们看重的是人自身的价值，而不是他拥有的财产或他的消费量。</div><div>对他们而言，重要的是"其人之为如何"——是一个内在丰盛的人，而不是一个占有很多或消费很多的人。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">Those higher up on the social ladder are no less anxious. Their lives are no less empty than those of their subordinates.</div><div class="t-zh" style="display:none"><div>那些在社会阶梯上爬的较高的人也同样焦虑不安，他们的生活和他们下属的生活同样空虚。</div><div>社会地位更高的人并不见得较少焦虑；他们的生活也并不比其下属更充实。</div><div>就算爬到了社会金字塔上面那层，也不见得就不焦虑；日子该空还是空，跟下属比也未必更有"活人感"。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">Also, they are so frightened of the possibility of their personal failure and humiliation that their anxiety about personal matters prevents them from feeling anxiety about the possibility that everybody and everything may be destroyed.</div><div class="t-zh" style="display:none"><div>另外，他们极其害怕个人会遭到失败、蒙受耻辱；他们为私事惶惶不安，对于世人与万物均可能遭毁灭一事则无暇顾及了。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">I suggest transforming our social system from a bureaucratically managed industrialism in which maximal production and consumption are ends in themselves (in the Soviet Union as well as in the capitalist countries) into a humanist industrialism in which man and the full development of his potentialities — those of love and of reason — are the aims of all social arrangements.</div><div class="t-zh" style="display:none"><div>我建议改造我们的社会制度，将其从一个在官僚机构管理下的以追求最高产量和最大消费为目的的工业化社会体制（苏联和资本主义国家都属此类体制）转化为一个人本主义的工业化社会体制。在后一种体制中，一切社会活动的目的都是为了人，为了使人的各种潜力——爱的潜力和运用理智的潜力——获得充分发展。</div></div></div>
 <div class="sub-t">Unit 5</div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">A biographer of his time compared Newton to the River Nile, whose great powers were known but whose source had not been discovered.</div><div class="t-zh" style="display:none"><div>一位与牛顿同时代的传记作家把他比作尼罗河：其巨大威力人所众知，但其源头却仍无觅处。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">Newton's subsequent life in science consisted to a large degree in the elaboration of the great discoveries made during those "golden" months.</div><div class="t-zh" style="display:none"><div>牛顿随后的科研生涯，在很大程度上就是进一步阐述这些"黄金"月份里的各种伟大发现。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">He had been loath to announce his discoveries, but within a week after his election to the Society he asked permission to communicate an account of the "philosophical discovery" which had induced him "to the making of the said telescope".</div><div class="t-zh" style="display:none"><div>原先他一直不愿公布他的发现，但在他入选皇家学会后一周不到，便主动请求发布一项"哲学上的发现"。这一发现曾促成他"造出该望远镜"。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">His amanuensis, Humphrey Newton (no relative), wrote that he never knew Newton "to take any recreation or pastime either in riding out to take the air, walking, rowing, or any other exercise whatever, thinking all hours lost that were not spent in his studies".</div><div class="t-zh" style="display:none"><div>他的书记员汉弗莱·牛顿（并非他的亲戚）曾写道，他从未听说牛顿"参加过什么娱乐、休闲活动，比如骑马兜风、散散步、划划船或者任何其他体育锻炼，他认为不是花在研究上的时光都是白白浪费掉的"。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">Now famous and honored, he felt secure enough to offer many public speculations on scientific problems.</div><div class="t-zh" style="display:none"><div>这时他声名卓著，受人敬重，不再感到有什么顾虑了，于是对科学上的问题公开提出了许多推断和猜测。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">A biographer of his time compared Newton to the River Nile, whose great powers were known but whose source had not been discovered.</div><div class="t-zh" style="display:none"><div>一位与牛顿同时代的传记作家把他比作尼罗河：其巨大威力人所众知，但其源头却仍无觅处。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">Newton's subsequent life in science consisted to a large degree in the elaboration of the great discoveries made during those "golden" months.</div><div class="t-zh" style="display:none"><div>牛顿随后的科研生涯，在很大程度上就是进一步阐述这些"黄金"月份里的各种伟大发现。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">He had been loath to announce his discoveries, but within a week after his election to the Society he asked permission to communicate an account of the "philosophical discovery" which had induced him "to the making of the said telescope".</div><div class="t-zh" style="display:none"><div>原先他一直不愿公布他的发现，但在他入选皇家学会后一周不到，便主动请求发布一项"哲学上的发现"。这一发现曾促成他"造出该望远镜"。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">His amanuensis, Humphrey Newton (no relative), wrote that he never knew Newton "to take any recreation or pastime either in riding out to take the air, walking, rowing, or any other exercise whatever, thinking all hours lost that were not spent in his studies".</div><div class="t-zh" style="display:none"><div>他的书记员汉弗莱·牛顿（并非他的亲戚）曾写道，他从未听说牛顿"参加过什么娱乐、休闲活动，比如骑马兜风、散散步、划划船或者任何其他体育锻炼，他认为不是花在研究上的时光都是白白浪费掉的"。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">Now famous and honored, he felt secure enough to offer many public speculations on scientific problems.</div><div class="t-zh" style="display:none"><div>这时他声名卓著，受人敬重，不再感到有什么顾虑了，于是对科学上的问题公开提出了许多推断和猜测。</div></div></div>
 <div class="sub-t">Unit 7</div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">Americans who have lived in Europe come back to comment on our favorite farewell which, instead of the old goodbye (God be with you), is now "Take it easy," each American admonishing the other not to break down from the tension and strain of modern life.</div><div class="t-zh" style="display:none"><div>在欧洲生活过的美国人回来后评论我们最爱用的告别语说，过去是"再见"（goodbye——原意为"上帝与你同在"），如今却说"多保重"（take it easy——原意为"放松些"），美国人都在相互告诫，别让紧张劳累的现代生活搞垮身体。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">The explosion of a bomb in the streets of a city whose name no one had ever heard before may set in motion forces which end up by ruining one's carefully planned education in law school, half a world away.</div><div class="t-zh" style="display:none"><div>一枚炸弹在一个过去从来没人听说过的城市的街道上爆炸，就可能会导致一些势力活跃起来，结果使自己精心设计的去地球另一边就读法学院的计划告吹。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">He isn&#x27;t sure whether it is the current year or the Administration or a change in climate or the atom bomb that is to blame for this undefined sense of unease.</div><div class="t-zh" style="display:none"><div>他吃不准到底是什么引起这种无可名状的不安心情，是今年的运道还是政府，是气候变化还是因为原子弹。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">People who are anxious enough keep their car insurance up, have the brakes checked, don&#x27;t take a second drink when they have to drive, are careful where they go and with whom they drive on holidays.</div><div class="t-zh" style="display:none"><div>有足够焦虑的人总是及时交汽车保险，检查刹车，要开车时不喝第二杯酒，对于假日去哪里以及和谁一起开车去，都十分当心。</div></div></div>
-<div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">This is the world out of which grows the hope, for the first time in history, of a society where there will be freedom from want and freedom from fear.</div><div class="t-zh" style="display:none"><div>这是一个产生希望的世界，历史上人们第一次可以希望生活在一个没有贫困没有不满的社会里。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">Americans who have lived in Europe come back to comment on our favorite farewell which, instead of the old goodbye (God be with you), is now "Take it easy," each American admonishing the other not to break down from the tension and strain of modern life.</div><div class="t-zh" style="display:none"><div>在欧洲生活过的美国人回来后评论我们最爱用的告别语说，过去是"再见"（goodbye——原意为"上帝与你同在"），如今却说"多保重"（take it easy——原意为"放松些"），美国人都在相互告诫，别让紧张劳累的现代生活搞垮身体。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">The explosion of a bomb in the streets of a city whose name no one had ever heard before may set in motion forces which end up by ruining one's carefully planned education in law school, half a world away.</div><div class="t-zh" style="display:none"><div>一枚炸弹在一个过去从来没人听说过的城市的街道上爆炸，就可能会导致一些势力活跃起来，结果使自己精心设计的去地球另一边就读法学院的计划告吹。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">He isn&#x27;t sure whether it is the current year or the Administration or a change in climate or the atom bomb that is to blame for this undefined sense of unease.</div><div class="t-zh" style="display:none"><div>他吃不准到底是什么引起这种无可名状的不安心情，是今年的运道还是政府，是气候变化还是因为原子弹。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">People who are anxious enough keep their car insurance up, have the brakes checked, don&#x27;t take a second drink when they have to drive, are careful where they go and with whom they drive on holidays.</div><div class="t-zh" style="display:none"><div>有足够焦虑的人总是及时交汽车保险，检查刹车，要开车时不喝第二杯酒，对于假日去哪里以及和谁一起开车去，都十分当心。</div></div></div>
+<div class="txt-card tc" onclick="toggleTrans(this,event)"><div class="t-en">This is the world out of which grows the hope, for the first time in history, of a society where there will be freedom from want and freedom from fear.</div><div class="t-zh" style="display:none"><div>这是一个产生希望的世界，历史上人们第一次可以希望生活在一个没有贫困没有不满的社会里。</div></div></div>
 </div>
 <div class="footer"><p>英语期末考试复习资料 &mdash; 根据教材内容整理</p></div>
 <script>
@@ -886,7 +915,8 @@ function clReset(ci){
 }
 
 // ===== TRANS =====
-function toggleTrans(el){
+function toggleTrans(el,e){
+  if(e && e.target && (e.target.classList.contains('analysis-btn') || e.target.closest('.analysis-btn')))return;
   var zh=el.querySelector('.t-zh');
   var en=el.querySelector('.t-en');
   if(!zh||!en)return;
@@ -932,11 +962,144 @@ function toggleAnalysis(el){
   }
 }
 
+// ===== USER AUTH =====
+function getUsers(){
+  try{return JSON.parse(localStorage.getItem('er_users'))||{users:[]}}catch(e){return{users:[]}}
+}
+function saveUsers(data){
+  localStorage.setItem('er_users',JSON.stringify(data))
+}
+function getCurrentUser(){
+  return localStorage.getItem('er_currentUser')||null
+}
+function setCurrentUser(username){
+  localStorage.setItem('er_currentUser',username)
+}
+function clearCurrentUser(){
+  localStorage.removeItem('er_currentUser')
+}
+function updateUserBar(){
+  var bar=document.getElementById('userBar');
+  var status=document.getElementById('userStatus');
+  var user=getCurrentUser();
+  if(user){
+    status.textContent='当前用户：'+user;
+    bar.innerHTML='<span class="user-name">当前用户：'+user+'</span><button class="user-btn" onclick="logout()">退出登录</button>';
+  }else{
+    status.textContent='未登录';
+    bar.innerHTML='<span id="userStatus">未登录</span><button class="user-btn" onclick="showLoginModal()">登录</button><button class="user-btn primary" onclick="showRegisterModal()">注册</button>';
+  }
+}
+function showRegisterModal(){
+  document.getElementById('regModal').classList.add('show');
+  document.getElementById('loginModal').classList.remove('show');
+}
+function showLoginModal(){
+  document.getElementById('loginModal').classList.add('show');
+  document.getElementById('regModal').classList.remove('show');
+}
+function closeModals(){
+  document.getElementById('regModal').classList.remove('show');
+  document.getElementById('loginModal').classList.remove('show');
+}
+document.addEventListener('click',function(e){
+  if(e.target.classList.contains('modal-overlay')){closeModals()}
+});
+function register(){
+  var username=document.getElementById('regUsername').value.trim();
+  var password=document.getElementById('regPassword').value;
+  var confirm=document.getElementById('regConfirm').value;
+  var err=document.getElementById('regError');
+  err.className='form-error';
+  if(!username){err.textContent='请输入用户名';err.classList.add('show');return}
+  if(username.length<3){err.textContent='用户名至少3个字符';err.classList.add('show');return}
+  if(!password){err.textContent='请输入密码';err.classList.add('show');return}
+  if(password.length<4){err.textContent='密码至少4个字符';err.classList.add('show');return}
+  if(password!==confirm){err.textContent='两次输入的密码不一致';err.classList.add('show');return}
+  var data=getUsers();
+  var exists=data.users.some(function(u){return u.username===username});
+  if(exists){err.textContent='该用户名已被注册';err.classList.add('show');return}
+  data.users.push({username:username,password:password,createdAt:new Date().toISOString()});
+  saveUsers(data);
+  setCurrentUser(username);
+  closeModals();
+  updateUserBar();
+  document.getElementById('regUsername').value='';
+  document.getElementById('regPassword').value='';
+  document.getElementById('regConfirm').value='';
+  alert('注册成功！已自动登录。');
+}
+function login(){
+  var username=document.getElementById('loginUsername').value.trim();
+  var password=document.getElementById('loginPassword').value;
+  var err=document.getElementById('loginError');
+  err.className='form-error';
+  if(!username){err.textContent='请输入用户名';err.classList.add('show');return}
+  if(!password){err.textContent='请输入密码';err.classList.add('show');return}
+  var data=getUsers();
+  var user=data.users.find(function(u){return u.username===username});
+  if(!user){err.textContent='用户不存在';err.classList.add('show');return}
+  if(user.password!==password){err.textContent='密码错误';err.classList.add('show');return}
+  setCurrentUser(username);
+  closeModals();
+  updateUserBar();
+  document.getElementById('loginUsername').value='';
+  document.getElementById('loginPassword').value='';
+  alert('登录成功！欢迎回来，'+username+'。');
+}
+function logout(){
+  clearCurrentUser();
+  updateUserBar();
+  alert('已退出登录。');
+}
+
 // ===== INIT =====
 // Ensure first reading set is rendered
 if(RD_DATA.length>0){
   document.getElementById('rd-container').innerHTML=renderRd(RD_DATA[0]);
 }
+updateUserBar();
 </script>
+
+<!-- 注册弹窗 -->
+<div class="modal-overlay" id="regModal">
+  <div class="modal">
+    <h2>📝 用户注册</h2>
+    <div class="form-group">
+      <label>用户名</label>
+      <input type="text" id="regUsername" placeholder="请输入用户名（至少3个字符）" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>密码</label>
+      <input type="password" id="regPassword" placeholder="请输入密码（至少4个字符）">
+    </div>
+    <div class="form-group">
+      <label>确认密码</label>
+      <input type="password" id="regConfirm" placeholder="请再次输入密码">
+    </div>
+    <div class="form-error" id="regError"></div>
+    <button class="modal-btn" onclick="register()">注册</button>
+    <div class="switch-text">已有账号？<a onclick="showLoginModal()">去登录</a></div>
+  </div>
+</div>
+
+<!-- 登录弹窗 -->
+<div class="modal-overlay" id="loginModal">
+  <div class="modal">
+    <h2>🔐 用户登录</h2>
+    <div class="form-group">
+      <label>用户名</label>
+      <input type="text" id="loginUsername" placeholder="请输入用户名" autocomplete="off">
+    </div>
+    <div class="form-group">
+      <label>密码</label>
+      <input type="password" id="loginPassword" placeholder="请输入密码">
+    </div>
+    <div class="form-error" id="loginError"></div>
+    <button class="modal-btn" onclick="login()">登录</button>
+    <div class="switch-text">没有账号？<a onclick="showRegisterModal()">去注册</a></div>
+  </div>
+</div>
+
 </body>
 </html>
