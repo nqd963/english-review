@@ -889,16 +889,23 @@ function toggleTrans(el){
   if(!zh||!en)return;
   var opened=el.classList.contains('opened');
   if(opened){
-    // Hide only the translation, keep original visible
-    zh.style.display='none';
-    zh.classList.remove('show');
-    en.style.display='block';
-    en.classList.remove('show');
+    // Second click: hide translation, show original
+    var tab=el.closest('.page');
+    var isCnToEn=tab && tab.id==='tab-cn';
+    if(isCnToEn){
+      // 汉译英: original is Chinese (.t-zh), translation is English (.t-en)
+      en.style.display='none'; en.classList.remove('show');
+      zh.style.display='block'; zh.classList.remove('show');
+    }else{
+      // 英译汉: original is English (.t-en), translation is Chinese (.t-zh)
+      zh.style.display='none'; zh.classList.remove('show');
+      en.style.display='block'; en.classList.remove('show');
+    }
     el.classList.remove('opened');
     var an=el.querySelector('.cn-analysis');
     if(an)an.classList.remove('show');
   }else{
-    // Show both languages
+    // First click: show both languages
     zh.style.display='block';
     zh.classList.add('show');
     en.style.display='block';
