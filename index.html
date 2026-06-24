@@ -889,10 +889,10 @@ function toggleTrans(el){
   if(!zh||!en)return;
   var opened=el.classList.contains('opened');
   if(opened){
-    // Hide both languages (show only original)
+    // Hide only the translation, keep original visible
     zh.style.display='none';
     zh.classList.remove('show');
-    en.style.display='none';
+    en.style.display='block';
     en.classList.remove('show');
     el.classList.remove('opened');
     var an=el.querySelector('.cn-analysis');
