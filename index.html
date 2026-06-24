@@ -946,10 +946,9 @@ function toggleTrans(el){
 function toggleAnalysis(btn){
   var card=btn;
   while(card && !card.classList.contains('txt-card')){card=card.parentElement;}
-  if(!card){console.log('No card found');return;}
+  if(!card)return;
   var an=card.querySelector('.cn-analysis');
-  if(!an){console.log('No analysis found');return;}
-  console.log('Toggling analysis, current show:',an.classList.contains('show'));
+  if(!an)return;
   if(an.classList.contains('show')){
     an.classList.remove('show');
     btn.classList.remove('show');
@@ -958,15 +957,12 @@ function toggleAnalysis(btn){
     btn.classList.add('show');
   }
 }
-// Add event listeners after DOM loads
-document.addEventListener('DOMContentLoaded',function(){
-  document.querySelectorAll('.analysis-btn').forEach(function(btn){
-    btn.addEventListener('click',function(e){
-      e.stopPropagation();
-      e.preventDefault();
-      console.log('Analysis button clicked');
-      toggleAnalysis(btn);
-    });
+// DOM is already loaded since script is at end of body
+document.querySelectorAll('.analysis-btn').forEach(function(btn){
+  btn.addEventListener('click',function(e){
+    e.stopPropagation();
+    e.preventDefault();
+    toggleAnalysis(btn);
   });
 });
 
