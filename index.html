@@ -6,14 +6,25 @@
 <title>英语期末考试复习</title>
 <style>*{margin:0;padding:0;box-sizing:border-box}
 body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#f5f7fa 0%,#e4e8f0 100%);color:#222;line-height:1.8;--bg:#f0f2f5;--card:#fff;--primary:#1a1a2e;--accent:#4361ee;--accent-light:rgba(67,97,238,.08);--success:#2ec4b6;--success-bg:rgba(46,196,182,.12);--error:#e71d36;--error-bg:rgba(231,29,54,.1);--border:#dce0e8;--radius:12px}
-.header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#4361ee 100%);color:#fff;padding:40px 20px 32px;text-align:center;box-shadow:0 4px 20px rgba(67,97,238,.3);position:relative;overflow:hidden}
+.header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#4361ee 100%);color:#fff;padding:44px 20px 36px;text-align:center;box-shadow:0 4px 24px rgba(67,97,238,.35);position:relative;overflow:hidden}
 .header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 80%,rgba(120,119,198,.3) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(79,172,254,.25) 0%,transparent 50%),radial-gradient(circle at 40% 40%,rgba(255,119,168,.15) 0%,transparent 40%);animation:headerBg 8s ease-in-out infinite alternate}
 @keyframes headerBg{0%{opacity:1;transform:scale(1) rotate(0deg)}50%{opacity:.85;transform:scale(1.05) rotate(1deg)}100%{opacity:1;transform:scale(1) rotate(0deg)}}
-.header h1{font-size:2.4rem;font-weight:700;letter-spacing:1px;text-shadow:0 2px 12px rgba(0,0,0,.3);position:relative;z-index:1;font-family:'Noto Sans SC','Inter',sans-serif}
-.header p{opacity:.85;font-size:1.1rem;margin-top:8px;position:relative;z-index:1;letter-spacing:.5px;font-weight:400}
+.header::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#ff6b6b,#ffd93d,#6bcb77,#4d96ff,#9b59b6,transparent);background-size:200% 100%;animation:rainbowSlide 4s linear infinite}
+@keyframes rainbowSlide{0%{background-position:0% 50%}100%{background-position:200% 50%}}
+.header h1{font-size:2.6rem;font-weight:700;letter-spacing:2px;text-shadow:0 0 20px rgba(255,255,255,.3),0 4px 20px rgba(0,0,0,.4);position:relative;z-index:1;font-family:'Noto Sans SC','Inter',sans-serif;background:linear-gradient(135deg,#fff 0%,#ffd93d 25%,#ff6b6b 50%,#fff 75%,#4d96ff 100%);background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradientShift 6s ease-in-out infinite;text-shadow:none;filter:drop-shadow(0 0 8px rgba(255,255,255,.2))}
+@keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+.header h1::after{content:'';position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);width:60%;height:2px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);border-radius:2px;animation:shimmer 2.5s ease-in-out infinite}
+@keyframes shimmer{0%,100%{opacity:.4;width:50%}50%{opacity:1;width:80%}}
+.header p{opacity:.9;font-size:1.15rem;margin-top:10px;position:relative;z-index:1;letter-spacing:1.5px;font-weight:400;text-shadow:0 1px 6px rgba(0,0,0,.3);animation:fadeInUp .8s ease-out .3s both}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .header-particles{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
 .header-particles span{position:absolute;display:block;width:6px;height:6px;background:rgba(255,255,255,.15);border-radius:50%;animation:floatUp linear infinite}
+.header-particles span:nth-child(odd){background:rgba(255,217,61,.2)}
+.header-particles span:nth-child(3n){background:rgba(255,107,107,.18)}
+.header-particles span:nth-child(4n){width:4px;height:4px}
+.header-particles span:nth-child(5n){width:8px;height:8px;box-shadow:0 0 6px rgba(255,255,255,.3)}
 @keyframes floatUp{0%{transform:translateY(100%) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100vh) rotate(720deg);opacity:0}}
+.header-badge{display:inline-block;margin-top:12px;padding:5px 16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;font-size:.78rem;letter-spacing:1px;backdrop-filter:blur(8px);position:relative;z-index:1;animation:fadeInUp .8s ease-out .5s both}
 .tab-bar{display:flex;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;overflow-x:auto;padding:0 12px;flex-wrap:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 .tab-btn{padding:14px 20px;border:none;background:none;font-size:.88rem;font-weight:500;color:#888;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s;flex-shrink:0}
 .tab-btn:hover{color:var(--accent);background:var(--accent-light)}
@@ -30,8 +41,8 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .q-num{min-width:30px;height:30px;border-radius:50%;background:var(--accent-light);color:var(--accent);display:flex;align-items:center;justify-content:center;font-size:.85rem;font-weight:700;flex-shrink:0}
 .q-txt{font-size:.95rem;font-weight:500;line-height:1.8}
 .opts{display:grid;gap:4px;margin-top:6px}
-.opt{padding:9px 14px;border-radius:8px;border:1px solid var(--border);cursor:pointer;font-size:.92rem;display:flex;align-items:center;gap:8px;transition:all .1s}
-.opt:hover{border-color:var(--accent);background:var(--accent-light)}
+.opt{padding:9px 14px;border-radius:8px;border:1px solid var(--border);cursor:pointer;font-size:.92rem;display:flex;align-items:center;gap:8px;transition:all .15s}
+.opt:hover{border-color:var(--accent);background:var(--accent-light);transform:translateX(2px)}
 .opt.sel{border-color:var(--accent);background:var(--accent-light);color:var(--accent);font-weight:500}
 .opt.ca{border-color:var(--success);background:var(--success-bg)}
 .opt.wa{border-color:var(--error);background:var(--error-bg);color:#b01528;font-weight:500}
@@ -59,19 +70,19 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .btn-pri:hover{opacity:.85;transform:translateY(-1px)}
 .btn-out{background:transparent;border:2px solid var(--accent);color:var(--accent);padding:5px 12px}
 .btn-out:hover{background:var(--accent);color:#fff}
-.txt-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .2s}
-.txt-card:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(0,0,0,.08)}
+.txt-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .25s}
+.txt-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
 .txt-card .lb{font-size:.85rem;font-weight:600;color:var(--accent);margin-bottom:8px}
 .txt-card .src{font-weight:400;color:#999;font-size:.82rem}
 .r-theme{font-size:.88rem;color:var(--accent);margin-bottom:6px;font-style:italic}
-.r-passage{font-size:.92rem;line-height:2;color:#444;padding:12px 0;border-bottom:1px solid var(--border);margin-bottom:12px}
+.r-passage{font-size:.92rem;line-height:2;color:#444;padding:12px 0;border-bottom:1px solid var(--border);margin-bottom:12px;animation:fadeIn .4s ease}
 .r-passage p{margin-bottom:8px;text-indent:2em}
 .r-q{margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed var(--border)}
 .r-q:last-child{border:none;margin:0;padding:0}
 .r-q .r-q-txt{font-size:.92rem;font-weight:500;margin-bottom:6px;color:#333}
-.rd-key{padding:12px 16px;background:#f7f8fb;border-radius:8px;margin-top:12px;font-size:.92rem}
+.rd-key{padding:12px 16px;background:linear-gradient(135deg,#f7f8fb 0%,#eef2ff 100%);border-radius:8px;margin-top:12px;font-size:.92rem;border:1px solid #e0e4f0}
 .rd-key p{margin:3px 0;padding:2px 0}
-.rd-key .ans{color:var(--success);font-weight:600}
+.rd-key .ans{color:var(--success);font-weight:600;background:var(--success-bg);padding:1px 6px;border-radius:4px}
 .cl-card{margin-bottom:14px}
 .cl-p{font-size:.95rem;line-height:2.5;padding:12px 14px;background:#fafbfc;border-radius:8px;margin-bottom:10px}
 .cl-p p{margin-bottom:8px}
@@ -96,8 +107,12 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .thint{font-size:.8rem;color:var(--text-light);margin-top:4px}
 .footer{text-align:center;padding:24px;color:#aaa;font-size:.84rem;border-top:1px solid var(--border);margin-top:20px}
-.rd-nav{display:flex;justify-content:flex-end;gap:8px;margin-bottom:12px}
+.rd-nav{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px}
+.rd-nav .rd-nav-info{font-size:.85rem;color:var(--accent);font-weight:500}
+.rd-nav .rd-nav-btns{display:flex;gap:8px}
 .rd-nav button{padding:7px 16px;border:1px solid var(--accent);border-radius:8px;background:transparent;color:var(--accent);cursor:pointer;font-size:.88rem;font-weight:500;transition:all .15s}
+.rd-nav button:hover{background:var(--accent-light);transform:translateY(-1px)}
+.rd-nav .rd-nav-info{font-size:.88rem;color:var(--accent);font-weight:600;padding:6px 12px;background:var(--accent-light);border-radius:8px}
 .rd-nav button:hover{background:var(--accent-light);transform:translateY(-1px)}
 .analysis{margin-top:12px;padding:14px 16px;background:linear-gradient(135deg,#f8f9ff 0%,#f0f4ff 100%);border-radius:10px;border:1px solid #d0d8f0;font-size:.92rem;line-height:1.9;color:#444;display:none}
 .analysis.show{display:block;animation:fadeIn .3s ease}
@@ -106,14 +121,14 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .analysis .a-line .hl{background:#fff3cd;padding:1px 4px;border-radius:3px;font-weight:600;color:#856404}
 .analysis .a-correct{color:#1a7a6e;font-weight:600}
 .analysis .a-wrong{color:#b01528}
-.rd-analysis{margin-top:16px;padding:16px 18px;background:linear-gradient(135deg,#f8f9ff 0%,#f0f4ff 100%);border-radius:10px;border:1px solid #d0d8f0;display:none}
-.rd-analysis.show{display:block;animation:fadeIn .3s ease}
+.rd-analysis{margin-top:16px;padding:16px 18px;background:linear-gradient(135deg,#f8f9ff 0%,#f0f4ff 100%);border-radius:10px;border:1px solid #d0d8f0;display:none;box-shadow:0 4px 16px rgba(67,97,238,.08)}
+.rd-analysis.show{display:block;animation:slideIn .4s ease}
 .rd-analysis .a-title{font-weight:700;color:var(--accent);margin-bottom:10px;font-size:.95rem}
 .rd-analysis .a-q{margin-bottom:10px;padding-bottom:10px;border-bottom:1px dashed #d0d8f0}
 .rd-analysis .a-q:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
 .rd-analysis .a-q-txt{font-weight:600;margin-bottom:4px;color:#333}
 .rd-analysis .a-ans{color:#1a7a6e;font-weight:600}
-.rd-analysis .a-expl{color:#555;margin-top:4px;font-size:.9rem;line-height:1.8}
+.rd-analysis .a-expl{color:#555;margin-top:4px;font-size:.9rem;line-height:1.8;text-indent:1em}
 .cl-mean-hl{display:inline-block;background:#fff3cd;padding:0 4px;border-radius:3px;font-weight:700;color:#856404;border-bottom:2px solid #ffc107}
 .cn-analysis{margin-top:12px;padding:14px 16px;background:linear-gradient(135deg,#fff8f0 0%,#fff0e0 100%);border-radius:10px;border:1px solid #f0d8b0;font-size:.88rem;line-height:1.9;color:#5a4a20;display:none}
 .cn-analysis.show{display:block;animation:fadeIn .3s ease}
@@ -148,7 +163,8 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .modal .switch-text a:hover{text-decoration:underline}
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@media(max-width:640px){body{font-size:15px}.header h1{font-size:1.6rem}.q-card{padding:12px 14px}.tab-btn{padding:10px 12px;font-size:.82rem}}
+@keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:640px){body{font-size:15px}.header h1{font-size:1.7rem}.header-badge{font-size:.7rem;padding:4px 10px}.q-card{padding:12px 14px}.tab-btn{padding:10px 12px;font-size:.82rem}.rd-nav{flex-direction:column;align-items:flex-start}.rd-nav .rd-nav-btns{width:100%;justify-content:space-between}}
 /* ===== USER SETTINGS ===== */
 .settings-btn{padding:6px 16px;border:1px solid rgba(255,255,255,.4);border-radius:8px;background:transparent;color:#fff;cursor:pointer;font-size:.85rem;font-weight:500;transition:all .15s}
 .settings-btn:hover{background:rgba(255,255,255,.2)}
@@ -195,7 +211,10 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .bgm-player .bgm-info{font-size:.82rem;color:rgba(255,255,255,.9);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;letter-spacing:.3px}
 .bgm-player .bgm-vol{width:70px;accent-color:#fff;height:4px;border-radius:2px;cursor:pointer}
 .bgm-player .bgm-vol::-webkit-slider-thumb{width:14px;height:14px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2)}
-.announcement-badge{position:absolute;top:-4px;right:-4px;background:#ff4757;color:#fff;font-size:.7rem;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center;animation:badgePulse 2s infinite}
+.ann-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;cursor:pointer;font-size:.9rem;font-weight:500;transition:all .2s;backdrop-filter:blur(10px)}
+.ann-btn:hover{background:rgba(255,255,255,.25);transform:translateY(-1px)}
+.ann-btn-text{font-size:.85rem}
+.announcement-badge{position:absolute;top:-6px;right:-6px;background:#ff4757;color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center;animation:badgePulse 2s infinite}
 @keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
 .announcement-dropdown{position:absolute;top:calc(100% + 8px);right:0;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.18);width:340px;max-height:420px;overflow-y:auto;display:none;z-index:9999;border:1px solid #e8e8e8}
 .announcement-dropdown.show{display:block;animation:slideDown .2s ease}
@@ -214,6 +233,36 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .announcement-item .ann-date{font-size:.75rem;color:#999;margin-top:4px}
 .announcement-empty{padding:30px 16px;text-align:center;color:#999;font-size:.85rem}
 .announcement-empty .empty-icon{font-size:2rem;margin-bottom:8px}
+/* Feedback Board */
+.feedback-tab-btn{display:flex;align-items:center;gap:4px}
+.feedback-panel{padding:20px}
+.feedback-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
+.feedback-header h2{font-size:1.3rem;font-weight:700;color:#333}
+.feedback-header .feedback-count{font-size:.85rem;color:#888}
+.feedback-input-area{background:#f8f9fa;border-radius:12px;padding:16px;margin-bottom:20px}
+.feedback-input-area textarea{width:100%;border:none;background:transparent;resize:none;font-size:.95rem;color:#333;min-height:80px;font-family:inherit}
+.feedback-input-area textarea:focus{outline:none}
+.feedback-input-area textarea::placeholder{color:#aaa}
+.feedback-toolbar{display:flex;justify-content:space-between;align-items:center;margin-top:10px}
+.emoji-picker{display:flex;gap:6px;flex-wrap:wrap}
+.emoji-btn{font-size:1.3rem;cursor:pointer;padding:4px 8px;border-radius:6px;transition:all .15s;border:none;background:transparent}
+.emoji-btn:hover{background:#e8e8e8;transform:scale(1.1)}
+.feedback-submit{padding:8px 20px;background:var(--accent);color:#fff;border:none;border-radius:8px;cursor:pointer;font-size:.9rem;font-weight:500;transition:all .15s}
+.feedback-submit:hover{opacity:.85}
+.feedback-list{display:flex;flex-direction:column;gap:12px}
+.feedback-item{background:#fff;border:1px solid #eee;border-radius:12px;padding:14px 16px;transition:all .15s}
+.feedback-item:hover{box-shadow:0 2px 12px rgba(0,0,0,.06)}
+.feedback-item-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.feedback-item-user{display:flex;align-items:center;gap:8px}
+.feedback-item-avatar{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;color:#fff;font-size:.9rem;font-weight:600}
+.feedback-item-name{font-size:.9rem;font-weight:600;color:#333}
+.feedback-item-time{font-size:.75rem;color:#999}
+.feedback-item-content{font-size:.9rem;color:#444;line-height:1.7}
+.feedback-item-content .emoji{font-size:1.2rem}
+.feedback-empty{text-align:center;padding:40px 20px;color:#999}
+.feedback-empty .empty-icon{font-size:3rem;margin-bottom:12px}
+.feedback-login-prompt{text-align:center;padding:30px 20px;color:#888;font-size:.9rem}
+.feedback-login-prompt a{color:var(--accent);cursor:pointer;text-decoration:underline}
 .login-prompt{text-align:center;padding:40px 20px;color:#888}
 .login-prompt .login-prompt-icon{font-size:3rem;margin-bottom:12px}
 .login-prompt p{font-size:1rem;margin-bottom:16px}
@@ -233,20 +282,21 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 <div class="header-particles" id="headerParticles"></div>
 <h1>英语期末考试复习</h1>
 <p>交互式模拟练习 ・ 基于教材内容</p>
+<div class="header-badge">✨ 全新升级 · 10篇阅读理解 · 真实音乐BGM</div>
 <div class="user-bar" id="userBar">
   <span id="userStatus">未登录</span>
   <button class="user-btn" onclick="showLoginModal()">登录</button>
   <button class="user-btn primary" onclick="showRegisterModal()">注册</button>
-  <div class="announcement-wrapper" style="position:relative;z-index:9999">
-    <button class="user-btn" onclick="toggleAnnouncement()" id="annBtn" style="font-size:1.1rem">🔔</button>
-    <span class="announcement-badge" id="annBadge" style="display:none">0</span>
-    <div class="announcement-dropdown" id="annDropdown">
-      <div class="announcement-header">
-        <h3>📢 公告</h3>
-        <span class="mark-read" onclick="markAllRead()">全部已读</span>
-      </div>
-      <div class="announcement-list" id="annList"></div>
+</div>
+<div class="announcement-wrapper" id="annWrapper" style="position:relative;z-index:9999">
+  <button class="ann-btn" onclick="toggleAnnouncement()" id="annBtn">🔔<span class="ann-btn-text">公告</span></button>
+  <span class="announcement-badge" id="annBadge" style="display:none">0</span>
+  <div class="announcement-dropdown" id="annDropdown">
+    <div class="announcement-header">
+      <h3>📢 公告</h3>
+      <span class="mark-read" onclick="markAllRead()">全部已读</span>
     </div>
+    <div class="announcement-list" id="annList"></div>
   </div>
 </div>
 </div>
@@ -257,6 +307,7 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 <button class="tab-btn" onclick="showTab('tab-cl')">选词填空</button>
 <button class="tab-btn" onclick="showTab('tab-cn')">汉译英</button>
 <button class="tab-btn" onclick="showTab('tab-en')">英译汉</button>
+<button class="tab-btn feedback-tab-btn" onclick="showTab('tab-feedback')">💬 反馈</button>
 </div>
 <div class="page active" id="tab-v1">
 <div class="section-title">Vocabulary and Structure <span class="badge">第一部分 31-60</span></div>
@@ -691,6 +742,31 @@ However, the current wave of AI-driven automation differs in important ways. Unl
 <div class="txt-card tc" onclick="toggleTrans(this)"><div class="t-en">This is the world out of which grows the hope, for the first time in history, of a society where there will be freedom from want and freedom from fear.</div><div class="t-zh" style="display:none"><div>这是一个产生希望的世界，历史上人们第一次可以希望生活在一个没有贫困没有不满的社会里。</div></div><div class="analysis-btn" onclick="toggleAnalysis(event,this)">【翻译解析】</div><div class="en-analysis"><div class="a-title">翻译解析</div><p><strong>【句子结构】</strong>主语(This) + 系动词(is) + 表语(the world) + 定语(out of which grows the hope) + 插入语(for the first time in history) + 定语从句(where there will be freedom from want and freedom from fear)。</p><p><strong>【核心词汇】</strong>① hope 希望；② history 历史；③ society 社会；④ freedom 自由，免除；⑤ want 贫困，匮乏；⑥ fear 恐惧，害怕。</p><p><strong>【翻译技巧】</strong>本句考查倒装结构"out of which grows the hope"，正常语序是"the hope grows out of which"，翻译为"从这个世界上产生了希望"。注意"for the first time in history"是插入语，翻译时需前置。"freedom from want and freedom from fear"是"没有贫困和恐惧的自由"，翻译为"没有贫困没有不满"。</p><p><strong>【常见错误】</strong>① 将"want"误译为"想要"而非"贫困"；② 将"freedom from"误译为"自由"而非"免除"；③ 将"hope"误译为"希望"（正确）但忽略上下文；④ 将"history"误译为"历史"（正确）但忽略插入语位置。</p></div>
 <div class="sentence-analysis" style="display:none"><div class="a-title">📐 句子结构分析</div><div class="a-line"><strong>句子主干：</strong>主语 + 系动词 + 表语 + 定语从句</div><div class="a-line"><strong>成分分析：</strong></div><div class="a-line" style="padding-left:14px">• 主语: This</div><div class="a-line" style="padding-left:14px">• 系动词: is</div><div class="a-line" style="padding-left:14px">• 表语: the world</div><div class="a-line" style="padding-left:14px">• 定语: out of which grows the hope (倒装结构)</div><div class="a-line" style="padding-left:14px">• 插入语: for the first time in history</div><div class="a-line" style="padding-left:14px">• 定语从句: where there will be freedom from want and freedom from fear (修饰society)</div></div></div>
 </div>
+<div class="page" id="tab-feedback">
+  <div class="feedback-panel">
+    <div class="feedback-header">
+      <h2>💬 反馈板</h2>
+      <span class="feedback-count" id="feedbackCount">0 条反馈</span>
+    </div>
+    <div class="feedback-input-area" id="feedbackInputArea">
+      <textarea id="feedbackText" placeholder="写下你的反馈或建议..."></textarea>
+      <div class="feedback-toolbar">
+        <div class="emoji-picker">
+          <button class="emoji-btn" onclick="insertEmoji('😊')">😊</button>
+          <button class="emoji-btn" onclick="insertEmoji('👍')">👍</button>
+          <button class="emoji-btn" onclick="insertEmoji('❤️')">❤️</button>
+          <button class="emoji-btn" onclick="insertEmoji('🎉')">🎉</button>
+          <button class="emoji-btn" onclick="insertEmoji('🤔')">🤔</button>
+          <button class="emoji-btn" onclick="insertEmoji('👏')">👏</button>
+          <button class="emoji-btn" onclick="insertEmoji('💯')">💯</button>
+          <button class="emoji-btn" onclick="insertEmoji('🔥')">🔥</button>
+        </div>
+        <button class="feedback-submit" onclick="submitFeedback()">发布</button>
+      </div>
+    </div>
+    <div class="feedback-list" id="feedbackList"></div>
+  </div>
+</div>
 <div class="footer"><p>英语期末考试复习资料 &mdash; 根据教材内容整理</p></div>
 <script>
 var CI = {"31": 0, "32": 1, "33": 3, "34": 1, "35": 2, "36": 0, "37": 1, "38": 1, "39": 0, "40": 3, "41": 3, "42": 1, "43": 3, "44": 1, "45": 0, "46": 1, "47": 2, "48": 3, "49": 2, "50": 0, "51": 1, "52": 2, "53": 0, "54": 2, "55": 1, "56": 1, "57": 0, "58": 1, "59": 2, "60": 2, "101": 2, "102": 0, "103": 1, "104": 0, "105": 2, "106": 3, "107": 3, "108": 0, "109": 1, "110": 1, "111": 2, "112": 0, "113": 1, "114": 3, "115": 0, "116": 0, "117": 1, "118": 3, "119": 3, "120": 0, "121": 0, "122": 1, "123": 1, "124": 1, "125": 1, "126": 2, "127": 2, "128": 3, "129": 0, "130": 1};
@@ -823,7 +899,7 @@ var VOC_ANALYSIS2 = {
   129: {correct: "feature", explain: "\"feature\"意为\"特征、特点、要素\"，与\"essential\"（不可或缺的）搭配，指调查性、批判性的新闻报道是信息充分的民主社会不可或缺的特征。spectrum（范围）、conviction（信念）、charm（魅力）均不符合。"},
   130: {correct: "exhibiting", explain: "\"exhibiting\"意为\"展出、陈列\"，与\"a huge collection\"（大量收藏）搭配，指在网上展出大量当代艺术作品。brooding（沉思的）、trimming（修剪）、releasing（释放）均不符合。"}
 };
-var CI_RD = {"0-0": 0, "0-1": 0, "0-2": 3, "0-3": 0, "0-4": 0, "1-0": 0, "1-1": 0, "1-2": 0, "1-3": 0, "1-4": 0, "2-0": 0, "2-1": 0, "2-2": 0, "2-3": 0, "2-4": 0, "3-0": 0, "3-1": 0, "3-2": 0, "3-3": 0, "3-4": 0, "4-0": 0, "4-1": 0, "4-2": 0, "4-3": 0, "4-4": 0};
+var CI_RD = {"0-0": 0, "0-1": 0, "0-2": 3, "0-3": 0, "0-4": 0, "1-0": 0, "1-1": 0, "1-2": 0, "1-3": 0, "1-4": 0, "2-0": 0, "2-1": 0, "2-2": 0, "2-3": 0, "2-4": 0, "3-0": 0, "3-1": 0, "3-2": 0, "3-3": 0, "3-4": 0, "4-0": 0, "4-1": 0, "4-2": 0, "4-3": 0, "4-4": 0, "5-0": 1, "5-1": 1, "5-2": 1, "5-3": 2, "5-4": 1, "6-0": 0, "6-1": 0, "6-2": 1, "6-3": 1, "6-4": 1, "7-0": 1, "7-1": 1, "7-2": 1, "7-3": 1, "7-4": 1, "8-0": 1, "8-1": 1, "8-2": 1, "8-3": 0, "8-4": 1, "9-0": 1, "9-1": 1, "9-2": 1, "9-3": 0, "9-4": 1};
 var RD_ANALYSIS = {
   0: [
     "文章首句明确指出\"the search for extraterrestrial intelligence, or SETI, has long captured the human imagination\"，科学家们\"scanned the cosmos for signals that might indicate the presence of intelligent life beyond Earth\"，说明SETI的主要目的是搜寻地球外智慧生命的迹象。",
@@ -859,9 +935,49 @@ var RD_ANALYSIS = {
     "文章指出\"the current wave of AI-driven automation differs in important ways. Unlike previous revolutions, which primarily affected manual and routine cognitive tasks, AI is increasingly capable of performing complex analytical and creative work\"，当前AI革命的不同之处在于它能执行复杂的分析和创造性工作。",
     "文中\"This has led to debates about whether education systems need fundamental reform to prepare students for a future where adaptability and continuous learning will be more valuable\"，教育体系需要改革以适应未来对适应能力和持续学习的需求。",
     "文章最后提到\"Some experts argue that universal basic income may eventually become necessary as a response to widespread automation\"，部分专家建议实行全民基本收入作为应对自动化失业的政策。"
+  ],
+  5: [
+    "文章明确指出火星探索已从早期望远镜观测发展到\"sophisticated robotic missions that traverse the planet's rusty surface\"，当前重点已从单纯观测转向详细地质研究和生命搜寻。",
+    "文中\"Recent discoveries have revealed that Mars once possessed liquid water on its surface\"，水的存在意味着火星过去可能具备支持生命的条件，这正是寻找生命迹象的重要依据。",
+    "文章明确说明\"The Perseverance rover...is specifically designed to collect samples that may contain such evidence\"，说明毅力号的核心任务是采集可能含有生物标志物的样本。",
+    "文中\"The journey takes approximately seven months, during which astronauts would be exposed to cosmic radiation and microgravity\"，说明人类火星任务面临辐射和微重力等严峻挑战。",
+    "文章整体讲述了火星探索的发展历程、当前目标（寻找生命迹象）以及未来人类任务的挑战，主要焦点是火星探索的目标与挑战。"
+  ],
+  6: [
+    "文章开篇指出\"the average person checks their smartphone 96 times per day and spends nearly seven hours glued to a screen\"，说明数字技术过度使用已成为普遍现象，心理影响令人担忧。",
+    "文中明确将\"doomscrolling\"定义为\"the compulsive consumption of negative news online\"，即强迫性地浏览负面新闻的行为。",
+    "心理学家解释\"our brains are wired to pay more attention to threats\"，而社交媒体算法正是利用这一点优先推送情绪化内容，形成恶性循环。",
+    "文中提出\"digital nutrition\"概念，强调\"what matters most is not the amount of time spent online, but the quality of digital engagement\"，即关键在于数字内容的质量而非数量。",
+    "文章建议\"Mindful use of technology—such as curating positive content, taking regular screen breaks, and prioritizing face-to-face interactions\"，即正念使用技术和定期休息可以缓解负面影响。"
+  ],
+  7: [
+    "文章首段指出\"The intersection of artificial intelligence and neuroscience is yielding remarkable insights into both fields\"，说明AI与神经科学相互促进、共同发展。",
+    "文中\"By studying how biological neural networks process information, researchers have been able to design more sophisticated AI systems\"，研究生物神经网络有助于设计更好的AI算法。",
+    "文章明确说明BCIs\"enable direct communication between the brain and external technology, allowing people with paralysis to control computers or robotic limbs using only their thoughts\"，即通过思维控制外部设备。",
+    "文中提出伦理问题\"Who owns the data generated by brain-computer interfaces? Could such technology be used to manipulate thoughts or extract private information?\"，说明神经技术可能被用于操纵思想或窃取隐私。",
+    "文章最后强调\"society must establish clear ethical guidelines to ensure they are used responsibly and equitably\"，建议制定伦理准则确保技术负责任地发展。"
+  ],
+  8: [
+    "文章首段指出\"The global anime, comics, and games (ACG) industry has experienced explosive growth\"，说明ACG产业经历了爆发式增长，从亚文化发展为国际娱乐主力。",
+    "文中分析ACG流行的原因：\"sophisticated storytelling that tackles complex themes\"\"stunning visual artistry\"\"diverse genres that cater to virtually every taste\"，即精致的故事、视觉艺术和多样化类型。",
+    "文章指出\"Unlike many forms of Western entertainment, ACG often targets multiple age groups simultaneously\"，与许多西方娱乐形式不同，ACG同时面向多个年龄段。",
+    "文中\"The economic impact extends far beyond media sales\"，说明ACG的经济影响已远超媒体销售，带动了旅游、周边产业和国际合作。",
+    "文章描述粉丝社区\"produce fan art, translations, and original content, further expanding the cultural influence\"，说明粉丝创作进一步扩大了ACG的文化影响力。"
+  ],
+  9: [
+    "文章首段提出核心论点\"Education has long been championed as the great equalizer...Yet in the 21st century, this promise increasingly rings hollow\"，说明教育作为社会平等器的承诺越来越难以兑现。",
+    "文中\"children from wealthy families attend well-resourced schools with experienced teachers, while their less privileged peers struggle in underfunded institutions\"，说明富裕和贫困学生之间的教育机会差距。",
+    "文中\"the rising cost of higher education has left many graduates burdened with crushing student debt\"，说明高等教育成本上升导致学生债务沉重。",
+    "文中定义competency-based education为\"focuses on mastering skills rather than accumulating credit hours\"，即注重技能掌握而非学分积累的教育模式。",
+    "文章最后强调\"technology alone cannot solve systemic inequality—without addressing underlying issues of poverty, discrimination, and unequal resource distribution\"，说明仅靠技术无法解决教育不平等，必须解决贫困和资源分配等根本问题。"
   ]
 };
-var RD_DATA = [{"idx": 0, "label": "\u9605\u8bfb\u7406\u89e3 A", "source": "Adapted from The Economist", "theme": "Extraterrestrial Intelligence", "passage": "The search for extraterrestrial intelligence, or SETI, has long captured the human imagination. For decades, scientists have scanned the cosmos for signals that might indicate the presence of intelligent life beyond Earth. While no definitive evidence has been found, the pursuit has yielded valuable insights into our own place in the universe. Recently, advances in telescope technology and data processing have allowed researchers to survey millions of star systems more efficiently than ever before.\n\nSome astronomers argue that given the vast number of planets in the habitable zones of their stars, the probability of life emerging elsewhere is statistically significant. Critics, however, contend that the absence of detectable signals suggests that intelligent civilizations may be rare or short-lived. Either way, the quest continues to provoke fundamental questions about humanity's uniqueness and future. The debate also raises important philosophical issues: if we do find extraterrestrial intelligence, how would that change our understanding of ourselves? And if we find nothing, what does that imply about the fragility of intelligent life in the universe?", "questions": [{"q": "What is the main purpose of the SETI program?", "opts": "To scan for signs of intelligent life beyond Earth|To establish communication with alien species|To study the formation of new stars|To develop advanced technology", "ci": 0}, {"q": "What has enabled researchers to survey more star systems recently?", "opts": "Better telescopes and data processing|International funding increases|Cooperation with foreign governments|Discovery of habitable planets", "ci": 0}, {"q": "What do critics of SETI argue?", "opts": "Intelligent life may be rare or short-lived|The program costs too much money|Earth is the only planet with life|Telescope technology is not advanced", "ci": 3}, {"q": "What philosophical question does SETI raise?", "opts": "Whether humanity is unique|How to build better telescopes|How to fund scientific research|Whether space travel is possible", "ci": 0}, {"q": "What does the passage imply about science?", "opts": "It involves asking the right questions|It should focus on practical problems|It is only about finding answers|It is limited by technology", "ci": 0}]}, {"idx": 1, "label": "\u9605\u8bfb\u7406\u89e3 B", "source": "Adapted from The Economist", "theme": "Urban Transformation & Gentrification", "passage": "In many cities around the world, once-quiet neighborhoods are undergoing dramatic transformations. As urban populations continue to grow at an unprecedented rate, previously residential areas become increasingly commercialized, bringing both opportunities and challenges to local communities. Long-term residents often find themselves caught between the benefits of economic development and the loss of community character that they have cherished for generations.\n\nStudies conducted by urban sociologists have shown that when low-income communities experience rapid gentrification, the social bonds that took decades to build can weaken significantly. Long-time residents report feeling like strangers in their own neighborhoods as familiar shops close and rents rise beyond their means. While new businesses and improved infrastructure undoubtedly bring convenience and vitality, they also tend to drive up living costs, forcing some original residents to relocate to more affordable areas further from the city center.\n\nCommunity activists argue that sustainable urban development requires carefully balancing economic growth with social equity. They advocate for policies that protect affordable housing, support local small businesses, and preserve the cultural identity of neighborhoods. The key challenge, they insist, is ensuring that progress does not come at the expense of the very people who built and sustained those communities over decades.", "questions": [{"q": "What is the main change happening in many urban neighborhoods?", "opts": "They are undergoing rapid commercialization|They are becoming quieter and less populated|They are losing population|They are becoming more rural", "ci": 0}, {"q": "What happens to social bonds during gentrification?", "opts": "They may weaken significantly|They become much stronger|They remain unchanged|They are replaced by digital connections", "ci": 0}, {"q": "What problem do long-time residents face?", "opts": "Rising living costs forcing them to move|Increased crime rates|Poorer infrastructure|Loss of their jobs", "ci": 0}, {"q": "What do community activists advocate for?", "opts": "Balancing growth with social equity|Completely stopping development|Attracting more large businesses|Reducing urban population", "ci": 0}, {"q": "What is the key challenge according to activists?", "opts": "Ensuring progress benefits original residents|Building more commercial buildings|Attracting wealthy newcomers|Reducing construction costs", "ci": 0}]}, {"idx": 2, "label": "\u9605\u8bfb\u7406\u89e3 C", "source": "Adapted from The Economist", "theme": "Access to Knowledge & Critical Thinking", "passage": "Access to books and reading materials has long been recognized as a cornerstone of education and personal development. Throughout history, however, access to knowledge has not been evenly distributed across different social groups. In many societies, certain populations have been systematically denied the opportunity to read and educate themselves, perpetuating cycles of inequality that persist across generations.\n\nResearch conducted in multiple countries consistently shows that early access to libraries and diverse reading materials correlates strongly with academic achievement and the development of lifelong learning habits. Children who grow up in homes with books tend to perform better in school and develop stronger analytical thinking abilities. Yet in the digital age, a new and perhaps more subtle kind of divide has emerged: while information is more abundant and accessible than ever before, the ability to critically evaluate the quality and reliability of sources has become increasingly important, yet unevenly distributed.\n\nEducators around the world warn that without proper guidance and training, students may struggle to distinguish reliable information from misinformation and deliberate disinformation. The challenge of modern education, therefore, is not merely to provide access to information, but also to cultivate the critical thinking skills necessary to use that information wisely and responsibly. This requires a fundamental shift from memorization-based learning to inquiry-based education, where questioning and verification become central to the learning process.", "questions": [{"q": "What has been recognized as a cornerstone of education?", "opts": "Access to books and reading materials|Modern technology in classrooms|Formal schooling from an early age|Wealth and social status", "ci": 0}, {"q": "What does research show about early access to libraries?", "opts": "It correlates strongly with academic success|It has little long-term effect|It only benefits wealthy students|It is less important than digital access", "ci": 0}, {"q": "What new challenge has emerged in the digital age?", "opts": "Difficulty in evaluating information sources|Lack of sufficient reading materials|Rapid decline in library funding|Decreasing interest in book reading", "ci": 0}, {"q": "What do educators warn about?", "opts": "Students may fail to identify reliable information|Students read too many books|Digital tools are too expensive|Libraries are becoming outdated", "ci": 0}, {"q": "What shift does modern education require?", "opts": "From memorization to inquiry-based learning|From group work to individual study|From classroom to online learning|From theory to practical skills", "ci": 0}]}, {"idx": 3, "label": "\u9605\u8bfb\u7406\u89e3 D", "source": "Adapted from The Economist", "theme": "Climate Change & Adaptation", "passage": "Climate change is no longer a distant threat but a present reality affecting communities worldwide. Rising global temperatures have led to more frequent and severe weather events, including hurricanes, droughts, and floods. Coastal cities are particularly vulnerable, facing the dual challenges of sea-level rise and increased storm intensity.\n\nGovernments and organizations around the world are now focusing on adaptation strategies alongside efforts to reduce carbon emissions. These strategies include building sea walls, developing drought-resistant crops, improving water management systems, and creating early warning systems for extreme weather events. The economic costs of adaptation are substantial, but studies consistently show that the cost of inaction is far higher.\n\nHowever, adaptation efforts face significant obstacles, particularly in developing countries that lack the financial resources and technical expertise needed to implement comprehensive strategies. International cooperation and financial support from developed nations are crucial to ensuring that vulnerable communities can build resilience against the impacts of climate change. The challenge is not just environmental but deeply political and economic.", "questions": [{"q": "What is the main focus of the passage?", "opts": "Climate change adaptation strategies|The causes of global warming|Reducing carbon emissions|International climate agreements", "ci": 0}, {"q": "Why are coastal cities especially vulnerable?", "opts": "They face sea-level rise and stronger storms|They have larger populations|They produce more emissions|They lack green spaces", "ci": 0}, {"q": "What is the economic argument made in the passage?", "opts": "The cost of inaction is higher than adaptation|Adaptation is too expensive|Developing countries cannot afford adaptation|All adaptation is economically beneficial", "ci": 0}, {"q": "What obstacle do developing countries face?", "opts": "Lack of financial resources and expertise|Too much international support|Excessive regulations|Overpopulation", "ci": 0}, {"q": "What is needed for successful adaptation?", "opts": "International cooperation and support|More research|Reducing global population|New technology alone", "ci": 0}]}, {"idx": 4, "label": "\u9605\u8bfb\u7406\u89e3 E", "source": "Adapted from The Economist", "theme": "The Future of Work", "passage": "The nature of work is undergoing a fundamental transformation driven by technological innovation, particularly artificial intelligence and automation. While these technologies promise increased productivity and efficiency, they also raise concerns about job displacement and widening economic inequality.\n\nHistorical patterns suggest that technological revolutions create new categories of employment even as they render others obsolete. The Industrial Revolution, for instance, eliminated many agricultural jobs but created entirely new industries and professions. Similarly, the digital revolution of the late 20th century transformed the workplace while generating roles that previously did not exist.\n\nHowever, the current wave of AI-driven automation differs in important ways. Unlike previous revolutions, which primarily affected manual and routine cognitive tasks, AI is increasingly capable of performing complex analytical and creative work. This has led to debates about whether education systems need fundamental reform to prepare students for a future where adaptability and continuous learning will be more valuable than static knowledge. Some experts argue that universal basic income may eventually become necessary as a response to widespread automation.", "questions": [{"q": "What is driving the transformation of work?", "opts": "Technological innovation and AI|Globalization|Population growth|Government regulations", "ci": 0}, {"q": "What do historical patterns suggest about technological revolutions?", "opts": "They create new jobs while eliminating others|They always reduce total employment|They only affect manufacturing|They have no effect on employment", "ci": 0}, {"q": "How does current automation differ from previous revolutions?", "opts": "It now affects analytical and creative work|It only affects manual labor|It is slower than previous changes|It affects fewer industries", "ci": 0}, {"q": "What education reform is suggested?", "opts": "Focusing on adaptability and continuous learning|Returning to traditional methods|Reducing technical education|Increasing standardized testing", "ci": 0}, {"q": "What policy is mentioned as a possible response?", "opts": "Universal basic income|Reducing automation|Trade protectionism|Lowering taxes on robots", "ci": 0}]}];
+var RD_DATA = [{"idx": 0, "label": "\u9605\u8bfb\u7406\u89e3 A", "source": "Adapted from The Economist", "theme": "Extraterrestrial Intelligence", "passage": "The search for extraterrestrial intelligence, or SETI, has long captured the human imagination. For decades, scientists have scanned the cosmos for signals that might indicate the presence of intelligent life beyond Earth. While no definitive evidence has been found, the pursuit has yielded valuable insights into our own place in the universe. Recently, advances in telescope technology and data processing have allowed researchers to survey millions of star systems more efficiently than ever before.\n\nSome astronomers argue that given the vast number of planets in the habitable zones of their stars, the probability of life emerging elsewhere is statistically significant. Critics, however, contend that the absence of detectable signals suggests that intelligent civilizations may be rare or short-lived. Either way, the quest continues to provoke fundamental questions about humanity's uniqueness and future. The debate also raises important philosophical issues: if we do find extraterrestrial intelligence, how would that change our understanding of ourselves? And if we find nothing, what does that imply about the fragility of intelligent life in the universe?", "questions": [{"q": "What is the main purpose of the SETI program?", "opts": "To scan for signs of intelligent life beyond Earth|To establish communication with alien species|To study the formation of new stars|To develop advanced technology", "ci": 0}, {"q": "What has enabled researchers to survey more star systems recently?", "opts": "Better telescopes and data processing|International funding increases|Cooperation with foreign governments|Discovery of habitable planets", "ci": 0}, {"q": "What do critics of SETI argue?", "opts": "Intelligent life may be rare or short-lived|The program costs too much money|Earth is the only planet with life|Telescope technology is not advanced", "ci": 3}, {"q": "What philosophical question does SETI raise?", "opts": "Whether humanity is unique|How to build better telescopes|How to fund scientific research|Whether space travel is possible", "ci": 0}, {"q": "What does the passage imply about science?", "opts": "It involves asking the right questions|It should focus on practical problems|It is only about finding answers|It is limited by technology", "ci": 0}]}, {"idx": 1, "label": "\u9605\u8bfb\u7406\u89e3 B", "source": "Adapted from The Economist", "theme": "Urban Transformation & Gentrification", "passage": "In many cities around the world, once-quiet neighborhoods are undergoing dramatic transformations. As urban populations continue to grow at an unprecedented rate, previously residential areas become increasingly commercialized, bringing both opportunities and challenges to local communities. Long-term residents often find themselves caught between the benefits of economic development and the loss of community character that they have cherished for generations.\n\nStudies conducted by urban sociologists have shown that when low-income communities experience rapid gentrification, the social bonds that took decades to build can weaken significantly. Long-time residents report feeling like strangers in their own neighborhoods as familiar shops close and rents rise beyond their means. While new businesses and improved infrastructure undoubtedly bring convenience and vitality, they also tend to drive up living costs, forcing some original residents to relocate to more affordable areas further from the city center.\n\nCommunity activists argue that sustainable urban development requires carefully balancing economic growth with social equity. They advocate for policies that protect affordable housing, support local small businesses, and preserve the cultural identity of neighborhoods. The key challenge, they insist, is ensuring that progress does not come at the expense of the very people who built and sustained those communities over decades.", "questions": [{"q": "What is the main change happening in many urban neighborhoods?", "opts": "They are undergoing rapid commercialization|They are becoming quieter and less populated|They are losing population|They are becoming more rural", "ci": 0}, {"q": "What happens to social bonds during gentrification?", "opts": "They may weaken significantly|They become much stronger|They remain unchanged|They are replaced by digital connections", "ci": 0}, {"q": "What problem do long-time residents face?", "opts": "Rising living costs forcing them to move|Increased crime rates|Poorer infrastructure|Loss of their jobs", "ci": 0}, {"q": "What do community activists advocate for?", "opts": "Balancing growth with social equity|Completely stopping development|Attracting more large businesses|Reducing urban population", "ci": 0}, {"q": "What is the key challenge according to activists?", "opts": "Ensuring progress benefits original residents|Building more commercial buildings|Attracting wealthy newcomers|Reducing construction costs", "ci": 0}]}, {"idx": 2, "label": "\u9605\u8bfb\u7406\u89e3 C", "source": "Adapted from The Economist", "theme": "Access to Knowledge & Critical Thinking", "passage": "Access to books and reading materials has long been recognized as a cornerstone of education and personal development. Throughout history, however, access to knowledge has not been evenly distributed across different social groups. In many societies, certain populations have been systematically denied the opportunity to read and educate themselves, perpetuating cycles of inequality that persist across generations.\n\nResearch conducted in multiple countries consistently shows that early access to libraries and diverse reading materials correlates strongly with academic achievement and the development of lifelong learning habits. Children who grow up in homes with books tend to perform better in school and develop stronger analytical thinking abilities. Yet in the digital age, a new and perhaps more subtle kind of divide has emerged: while information is more abundant and accessible than ever before, the ability to critically evaluate the quality and reliability of sources has become increasingly important, yet unevenly distributed.\n\nEducators around the world warn that without proper guidance and training, students may struggle to distinguish reliable information from misinformation and deliberate disinformation. The challenge of modern education, therefore, is not merely to provide access to information, but also to cultivate the critical thinking skills necessary to use that information wisely and responsibly. This requires a fundamental shift from memorization-based learning to inquiry-based education, where questioning and verification become central to the learning process.", "questions": [{"q": "What has been recognized as a cornerstone of education?", "opts": "Access to books and reading materials|Modern technology in classrooms|Formal schooling from an early age|Wealth and social status", "ci": 0}, {"q": "What does research show about early access to libraries?", "opts": "It correlates strongly with academic success|It has little long-term effect|It only benefits wealthy students|It is less important than digital access", "ci": 0}, {"q": "What new challenge has emerged in the digital age?", "opts": "Difficulty in evaluating information sources|Lack of sufficient reading materials|Rapid decline in library funding|Decreasing interest in book reading", "ci": 0}, {"q": "What do educators warn about?", "opts": "Students may fail to identify reliable information|Students read too many books|Digital tools are too expensive|Libraries are becoming outdated", "ci": 0}, {"q": "What shift does modern education require?", "opts": "From memorization to inquiry-based learning|From group work to individual study|From classroom to online learning|From theory to practical skills", "ci": 0}]}, {"idx": 3, "label": "\u9605\u8bfb\u7406\u89e3 D", "source": "Adapted from The Economist", "theme": "Climate Change & Adaptation", "passage": "Climate change is no longer a distant threat but a present reality affecting communities worldwide. Rising global temperatures have led to more frequent and severe weather events, including hurricanes, droughts, and floods. Coastal cities are particularly vulnerable, facing the dual challenges of sea-level rise and increased storm intensity.\n\nGovernments and organizations around the world are now focusing on adaptation strategies alongside efforts to reduce carbon emissions. These strategies include building sea walls, developing drought-resistant crops, improving water management systems, and creating early warning systems for extreme weather events. The economic costs of adaptation are substantial, but studies consistently show that the cost of inaction is far higher.\n\nHowever, adaptation efforts face significant obstacles, particularly in developing countries that lack the financial resources and technical expertise needed to implement comprehensive strategies. International cooperation and financial support from developed nations are crucial to ensuring that vulnerable communities can build resilience against the impacts of climate change. The challenge is not just environmental but deeply political and economic.", "questions": [{"q": "What is the main focus of the passage?", "opts": "Climate change adaptation strategies|The causes of global warming|Reducing carbon emissions|International climate agreements", "ci": 0}, {"q": "Why are coastal cities especially vulnerable?", "opts": "They face sea-level rise and stronger storms|They have larger populations|They produce more emissions|They lack green spaces", "ci": 0}, {"q": "What is the economic argument made in the passage?", "opts": "The cost of inaction is higher than adaptation|Adaptation is too expensive|Developing countries cannot afford adaptation|All adaptation is economically beneficial", "ci": 0}, {"q": "What obstacle do developing countries face?", "opts": "Lack of financial resources and expertise|Too much international support|Excessive regulations|Overpopulation", "ci": 0}, {"q": "What is needed for successful adaptation?", "opts": "International cooperation and support|More research|Reducing global population|New technology alone", "ci": 0}]}, {"idx": 4, "label": "\u9605\u8bfb\u7406\u89e3 E", "source": "Adapted from The Economist", "theme": "The Future of Work", "passage": "The nature of work is undergoing a fundamental transformation driven by technological innovation, particularly artificial intelligence and automation. While these technologies promise increased productivity and efficiency, they also raise concerns about job displacement and widening economic inequality.\n\nHistorical patterns suggest that technological revolutions create new categories of employment even as they render others obsolete. The Industrial Revolution, for instance, eliminated many agricultural jobs but created entirely new industries and professions. Similarly, the digital revolution of the late 20th century transformed the workplace while generating roles that previously did not exist.\n\nHowever, the current wave of AI-driven automation differs in important ways. Unlike previous revolutions, which primarily affected manual and routine cognitive tasks, AI is increasingly capable of performing complex analytical and creative work. This has led to debates about whether education systems need fundamental reform to prepare students for a future where adaptability and continuous learning will be more valuable than static knowledge. Some experts argue that universal basic income may eventually become necessary as a response to widespread automation.", "questions": [{"q": "What is driving the transformation of work?", "opts": "Technological innovation and AI|Globalization|Population growth|Government regulations", "ci": 0}, {"q": "What do historical patterns suggest about technological revolutions?", "opts": "They create new jobs while eliminating others|They always reduce total employment|They only affect manufacturing|They have no effect on employment", "ci": 0}, {"q": "How does current automation differ from previous revolutions?", "opts": "It now affects analytical and creative work|It only affects manual labor|It is slower than previous changes|It affects fewer industries", "ci": 0}, {"q": "What education reform is suggested?", "opts": "Focusing on adaptability and continuous learning|Returning to traditional methods|Reducing technical education|Increasing standardized testing", "ci": 0}, {"q": "What policy is mentioned as a possible response?", "opts": "Universal basic income|Reducing automation|Trade protectionism|Lowering taxes on robots", "ci": 0}]},
+ {"idx": 5, "label": "\u9605\u8bfb\u7406\u89e3 F", "source": "Adapted from National Geographic", "theme": "Mars Exploration & the Search for Life", "passage": "The quest to explore Mars has captivated humanity for decades, evolving from early telescopic observations to sophisticated robotic missions that traverse the planet's rusty surface. Today, multiple space agencies and private companies are racing to not only study Mars but eventually send humans there, making it one of the most ambitious endeavors in the history of space exploration.\n\nRecent discoveries have revealed that Mars once possessed liquid water on its surface, including rivers, lakes, and possibly even an ocean. The presence of water raises profound questions about whether life ever emerged on the red planet. While no definitive evidence of past or present life has been found, scientists continue to search for biosignatures—chemical or physical markers that could indicate biological activity. The Perseverance rover, which landed in Jezero Crater in 2021, is specifically designed to collect samples that may contain such evidence.\n\nThe challenges of sending humans to Mars are immense. The journey takes approximately seven months, during which astronauts would be exposed to cosmic radiation and microgravity. Additionally, the thin Martian atmosphere provides little protection from solar radiation, and dust storms can engulf the entire planet for months. Despite these obstacles, agencies like NASA and private firms like SpaceX are actively developing technologies to make human Mars missions a reality within the next two decades.", "questions": [{"q": "What is the main focus of Mars exploration currently?", "opts": "Building tourist facilities|Studying its geology and searching for signs of life|Establishing permanent cities|Mining rare minerals", "ci": 1}, {"q": "Why is the presence of ancient water on Mars significant?", "opts": "It proves Mars once had intelligent life|It suggests conditions may have supported life|It indicates Mars will soon have oceans|It shows Mars has breathable air", "ci": 1}, {"q": "What is the Perseverance rover designed to do?", "opts": "Build a research base|Collect samples that may contain biosignatures|Photograph the entire planet|Test new propulsion systems", "ci": 1}, {"q": "What major challenge do human Mars missions face?", "opts": "Lack of interest from scientists|The journey is too short|Radiation exposure and harsh conditions|Insufficient funding", "ci": 2}, {"q": "What is the passage mainly about?", "opts": "The history of telescope development|The challenges and goals of Mars exploration|Why Mars is unsuitable for life|How to become an astronaut", "ci": 1}]},
+ {"idx": 6, "label": "\u9605\u8bfb\u7406\u89e3 G", "source": "Adapted from The Guardian", "theme": "Digital Wellbeing & Mental Health", "passage": "In an era where the average person checks their smartphone 96 times per day and spends nearly seven hours glued to a screen, concerns about the psychological impact of digital technology have never been more urgent. Research consistently shows that excessive social media use correlates with increased rates of anxiety, depression, and loneliness, particularly among young people.\n\nThe phenomenon of \"doomscrolling\"—the compulsive consumption of negative news online—has emerged as a significant concern. Psychologists explain that our brains are wired to pay more attention to threats, a survival mechanism that social media algorithms exploit by prioritizing emotionally charged content. This creates a feedback loop where users feel compelled to keep scrolling, even as their mental health deteriorates.\n\nHowever, experts caution against viewing technology as inherently harmful. The concept of \"digital nutrition\" has gained traction, which emphasizes that what matters most is not the amount of time spent online, but the quality of digital engagement. Mindful use of technology—such as curating positive content, taking regular screen breaks, and prioritizing face-to-face interactions—can mitigate the negative effects while still enjoying the benefits of digital connectivity.", "questions": [{"q": "What is the main concern discussed in the passage?", "opts": "The psychological impact of excessive digital technology use|How to use smartphones safely|The development of new social media platforms|How to reduce screen manufacturing costs", "ci": 0}, {"q": "What is \"doomscrolling\"?", "opts": "Compulsive consumption of negative news online|Scrolling through happy news|Reading books on screens|Deleting social media apps", "ci": 0}, {"q": "Why do people engage in doomscrolling according to psychologists?", "opts": "They enjoy negative content|Algorithms exploit our attention to threats|They have too much free time|They want to stay informed", "ci": 1}, {"q": "What is \"digital nutrition\"?", "opts": "A diet plan for tech workers|Focusing on quality of digital engagement|A type of health food|An app for tracking screen time", "ci": 1}, {"q": "What strategy is recommended to mitigate negative effects of technology?", "opts": "Avoiding all technology|Mindful use and regular screen breaks|Using only one app|Never reading news online", "ci": 1}]},
+ {"idx": 7, "label": "\u9605\u8bfb\u7406\u89e3 H", "source": "Adapted from Scientific American", "theme": "Artificial Intelligence & Neuroscience", "passage": "The intersection of artificial intelligence and neuroscience is yielding remarkable insights into both fields. By studying how biological neural networks process information, researchers have been able to design more sophisticated AI systems. Conversely, AI models are helping neuroscientists understand the complexities of the human brain in ways previously thought impossible.\n\nOne of the most exciting developments involves brain-computer interfaces (BCIs). These devices enable direct communication between the brain and external technology, allowing people with paralysis to control computers or robotic limbs using only their thoughts. Recent breakthroughs have demonstrated that BCIs can decode neural signals with unprecedented accuracy, potentially restoring movement and communication abilities to those with severe disabilities.\n\nHowever, the rapid advancement of neurotechnology raises important ethical questions. Who owns the data generated by brain-computer interfaces? Could such technology be used to manipulate thoughts or extract private information? Experts argue that as these technologies mature, society must establish clear ethical guidelines to ensure they are used responsibly and equitably, maximizing benefits while protecting individual rights and mental privacy.", "questions": [{"q": "What is the main idea of the passage?", "opts": "AI will replace human workers|The intersection of AI and neuroscience is mutually beneficial|Brain-computer interfaces are dangerous|Neuroscience is more important than AI", "ci": 1}, {"q": "How does studying the brain help AI development?", "opts": "It provides more computing power|It helps design better algorithms inspired by biological networks|It reduces the need for data|It makes AI systems cheaper", "ci": 1}, {"q": "What can brain-computer interfaces currently do?", "opts": "Read people's dreams|Control computers using thoughts|Enhance intelligence|Cure all diseases", "ci": 1}, {"q": "What ethical concern is raised about neurotechnology?", "opts": "It is too expensive|It could be used to manipulate thoughts or extract private information|It requires surgery|It only works for young people", "ci": 1}, {"q": "What do experts recommend as neurotechnology advances?", "opts": "Banning all brain-computer interfaces|Establishing clear ethical guidelines|Keeping the technology secret|Using it only for military purposes", "ci": 1}]},
+ {"idx": 8, "label": "\u9605\u8bfb\u7406\u89e3 I", "source": "Adapted from NHK World & Crunchyroll Industry Reports", "theme": "The Global Rise of ACG Culture", "passage": "The global anime, comics, and games (ACG) industry has experienced explosive growth over the past two decades, evolving from niche subcultures into a dominant force in international entertainment. In 2023, the global anime market alone surpassed $25 billion, with manga and gaming industries contributing hundreds of billions more. This cultural phenomenon has transcended its Japanese origins to become a truly global creative powerhouse.\n\nWhat drives the universal appeal of ACG content? Industry analysts point to several factors: sophisticated storytelling that tackles complex themes like identity, morality, and human relationships; stunning visual artistry that pushes creative boundaries; and diverse genres that cater to virtually every taste. Unlike many forms of Western entertainment, ACG often targets multiple age groups simultaneously, with works that can be enjoyed by children, teenagers, and adults alike.\n\nThe economic impact extends far beyond media sales. ACG has spawned massive merchandise industries, tourism to real-life locations featured in popular works, and international collaborations between Japanese studios and global streaming platforms. Fan communities, connected through social media and conventions, have become vibrant creative ecosystems where enthusiasts produce fan art, translations, and original content, further expanding the cultural influence of the medium.", "questions": [{"q": "What is the main trend described in the passage?", "opts": "The decline of traditional entertainment|The global expansion of ACG culture|The rise of Western animation|The decline of Japanese gaming", "ci": 1}, {"q": "What is identified as a key factor in ACG's universal appeal?", "opts": "Low production costs|Sophisticated storytelling and diverse genres|Government support|Limited competition", "ci": 1}, {"q": "How does ACG differ from much Western entertainment?", "opts": "It is only for children|It targets multiple age groups simultaneously|It avoids complex themes|It is less popular", "ci": 1}, {"q": "What economic impact has ACG had?", "opts": "It created merchandise industries and tourism|It reduced entertainment spending|It eliminated other forms of media|It only benefited Japan", "ci": 0}, {"q": "What role do fan communities play?", "opts": "They passively consume content|They produce creative works and expand cultural influence|They only translate content|They reduce the industry's profits", "ci": 1}]},
+ {"idx": 9, "label": "\u9605\u8bfb\u7406\u89e3 J", "source": "Adapted from The Atlantic", "theme": "Education & Social Mobility in the 21st Century", "passage": "Education has long been championed as the great equalizer—the most reliable pathway to social mobility. Yet in the 21st century, this promise increasingly rings hollow. While access to schooling has expanded dramatically worldwide, the quality of education remains deeply unequal, and the returns on education for many students are diminishing.\n\nIn many countries, children from wealthy families attend well-resourced schools with experienced teachers, while their less privileged peers struggle in underfunded institutions. This opportunity gap perpetuates cycles of poverty across generations. Furthermore, the rising cost of higher education has left many graduates burdened with crushing student debt, undermining the very economic advancement that education is supposed to provide.\n\nSome innovators are challenging traditional models. Competency-based education, which focuses on mastering skills rather than accumulating credit hours, is gaining traction. Online learning platforms have democratized access to high-quality instruction, enabling anyone with an internet connection to learn from world-class educators. However, technology alone cannot solve systemic inequality—without addressing underlying issues of poverty, discrimination, and unequal resource distribution, education will continue to reflect rather than reduce social stratification.", "questions": [{"q": "What is the central argument of the passage?", "opts": "Education remains the most effective path to social mobility|Education's promise of equality is increasingly unfulvable|Online learning will replace traditional schools|Wealthy students perform better", "ci": 1}, {"q": "What does the \"opportunity gap\" refer to?", "opts": "Differences in school starting ages|Unequal access to quality education between rich and poor|Gender disparities in enrollment|Urban vs rural population differences", "ci": 1}, {"q": "What is a consequence of rising higher education costs?", "opts": "More students choosing to work instead|Crushing student debt for graduates|Lower quality teaching|Fewer universities", "ci": 1}, {"q": "What is competency-based education?", "opts": "Education focused on mastering skills rather than credit hours|Free online courses|Traditional classroom learning|Vocational training only", "ci": 0}, {"q": "What does the author suggest is needed to truly achieve educational equality?", "opts": "More online courses|Addressing poverty, discrimination, and unequal resource distribution|Better technology|More teachers", "ci": 1}]}];
 var CL_ANS = {"0": {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9}, "1": {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9}, "2": {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "10": 10, "11": 11}, "3": {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9, "10": 10}, "4": {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9}, "5": {"0": 0, "1": 1, "2": 2, "3": 3, "4": 4, "5": 5, "6": 6, "7": 7, "8": 8, "9": 9}};
 var CL_WC = {"0": 15, "1": 15, "2": 15, "3": 15, "4": 15, "5": 15};
 var doneV = {};
@@ -916,7 +1032,7 @@ function resetV(p,t){document.querySelectorAll('#tab-v'+p+' .q-card').forEach(fu
 
 // ===== READING =====
 function renderRd(rd){
-  var html='<div class="txt-card rd-set"><div class="lb">'+rd.label+' <span class="src">| '+rd.source+'</span></div><div class="r-theme">'+rd.theme+'</div><div class="r-passage">'+rd.passage.split('\n\n').map(function(p){return '<p>'+p+'</p>';}).join('')+'</div>';
+  var html='<div class="txt-card rd-set"><div class="rd-nav"><div class="rd-nav-info">📖 '+'（'+(curRd+1)+'/'+RD_DATA.length+'）'+'</div><div class="rd-nav-btns"><button onclick="prevRdSet()">◀ 上一篇</button><button onclick="newRdSet()">下一篇 ▶</button></div></div><div class="lb">'+rd.label+' <span class="src">| '+rd.source+'</span></div><div class="r-theme">'+rd.theme+'</div><div class="r-passage">'+rd.passage.split('\n\n').map(function(p){return '<p>'+p+'</p>';}).join('')+'</div>';
   rd.questions.forEach(function(q,i){
     html+='<div class="r-q"><div class="r-q-txt">\u7b2c'+(i+1)+'\u9898\uff1a'+q.q+'</div><div class="opts">';
     var opts=q.opts.split('|');
@@ -944,6 +1060,12 @@ function newRdSet(){
   curRd=(curRd+1)%RD_DATA.length;
   document.getElementById('rd-container').innerHTML=renderRd(RD_DATA[curRd]);
   // Scroll to top of section
+  document.getElementById('tab-rd').scrollTop=0;
+  window.scrollTo(0,0);
+}
+function prevRdSet(){
+  curRd=(curRd-1+RD_DATA.length)%RD_DATA.length;
+  document.getElementById('rd-container').innerHTML=renderRd(RD_DATA[curRd]);
   document.getElementById('tab-rd').scrollTop=0;
   window.scrollTo(0,0);
 }
@@ -1327,10 +1449,7 @@ function startBgm(){
   saveUserPrefs(prefs);
 }
 function stopBgm(){
-  bgmOscillators.forEach(function(osc){
-    try{osc.stop();osc.disconnect();}catch(e){}
-  });
-  bgmOscillators=[];
+  if(bgmAudio){bgmAudio.pause();bgmAudio=null}
   bgmPlaying=false;
   updateBgmUI();
   var p=document.getElementById('bgmPlayer');
@@ -1358,7 +1477,7 @@ function changeBgmTrack(track){
 }
 function setBgmVolume(val){
   bgmVolume=val/100;
-  if(bgmGainNode)bgmGainNode.gain.value=bgmVolume;
+  if(bgmAudio)bgmAudio.volume=bgmVolume;
   var prefs=getUserPrefs()||{};
   prefs.bgmVolume=parseInt(val);
   saveUserPrefs(prefs);
@@ -1372,42 +1491,32 @@ function updateBgmUI(){
   var btn=document.getElementById('bgmPlayBtn');
   var player=document.getElementById('bgmPlayer');
   var info=document.getElementById('bgmInfo');
-  var trackNames={calm:'🌿 宁静森林',piano:'🎹 钢琴小品',ocean:'🌊 海浪声',cafe:'☕ 咖啡馆'};
+  var trackNames={calm:'🌿 宁静森林',piano:'🎹 钢琴小品',ocean:'🌊 海浪声',cafe:'☕ 咖啡馆',jazz:'🎷 爵士夜晚',nature:'🍃 自然白噪音'};
   if(!getCurrentUser()){if(player)player.classList.remove('show');return}
   if(player)player.classList.add('show');
   if(!btn)return;
   if(bgmPlaying){btn.textContent='⏸';info.textContent=trackNames[bgmCurrentTrack]||'🎵 BGM'}
   else{btn.textContent='▶';info.textContent='点击播放'}
 }
+var bgmAudio=null;
+var bgmUrls={
+  calm:'https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3',
+  piano:'https://cdn.pixabay.com/audio/2022/10/25/audio_33f0e1a862.mp3',
+  ocean:'https://cdn.pixabay.com/audio/2022/06/07/audio_b9bd4170e4.mp3',
+  cafe:'https://cdn.pixabay.com/audio/2022/03/10/audio_270f49b83a.mp3',
+  jazz:'https://cdn.pixabay.com/audio/2022/03/10/audio_4c6e4b08e2.mp3',
+  nature:'https://cdn.pixabay.com/audio/2022/02/23/audio_bc6c89ee59.mp3'
+};
 function playBgmTrack(track){
-  if(!bgmAudioCtx||!bgmPlaying)return;
-  var freqs,types;
-  switch(track){
-    case 'calm':freqs=[220,277,330,440];types=['sine','sine','triangle','sine'];break;
-    case 'piano':freqs=[262,330,392,523];types=['sine','sine','sine','sine'];break;
-    case 'ocean':freqs=[110,130,165,220];types=['sawtooth','sine','triangle','sine'];break;
-    case 'cafe':freqs=[196,247,294,392];types=['sine','triangle','sine','sine'];break;
-    default:freqs=[220,277,330];types=['sine','sine','sine'];
-  }
-  freqs.forEach(function(freq,i){
-    var osc=bgmAudioCtx.createOscillator();
-    var gain=bgmAudioCtx.createGain();
-    osc.type=types[i];
-    osc.frequency.value=freq;
-    gain.gain.value=0.08;
-    osc.connect(gain);
-    gain.connect(bgmGainNode);
-    osc.start();
-    bgmOscillators.push(osc);
-    var lfo=bgmAudioCtx.createOscillator();
-    var lfoGain=bgmAudioCtx.createGain();
-    lfo.frequency.value=0.1+i*0.05;
-    lfoGain.gain.value=freq*0.02;
-    lfo.connect(lfoGain);
-    lfoGain.connect(osc.frequency);
-    lfo.start();
-    bgmOscillators.push(lfo);
-  });
+  if(!bgmPlaying)return;
+  if(bgmAudio){bgmAudio.pause();bgmAudio=null}
+  var url=bgmUrls[track]||bgmUrls.calm;
+  try{
+    bgmAudio=new Audio(url);
+    bgmAudio.loop=true;
+    bgmAudio.volume=bgmVolume;
+    bgmAudio.play().catch(function(){});
+  }catch(e){}
 }
 
 // ===== SOUND EFFECTS =====
@@ -1510,6 +1619,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== ANNOUNCEMENTS =====
 var ANNOUNCEMENTS=[
+  {id:'2026062506',date:'2026-06-25',title:'📖 新增5篇阅读理解文章',content:'新增10篇阅读理解，涵盖《国家地理》《卫报》《科学美国人》等知名期刊，以及ACG文化和教育主题，答案ABCD合理分配！'},
   {id:'2026062501',date:'2026-06-25',title:'🎵 新增BGM音乐播放器',content:'登录后即可使用背景音乐功能，支持4种曲目选择，还有旋转留声机动画效果！'},
   {id:'2026062502',date:'2026-06-25',title:'🖼️ 自定义背景图功能',content:'现在可以使用瓶宝文件夹中的3张精美图片作为页面背景，在设置面板中切换。'},
   {id:'2026062503',date:'2026-06-25',title:'📐 全翻译题句子结构分析',content:'所有30道翻译题（英译汉+汉译英）都已添加详细的句子主干和成分分析。'},
@@ -1577,6 +1687,82 @@ function markAllRead(){
   initAnnouncements();
 }
 
+// ===== FEEDBACK BOARD =====
+function getFeedbacks(){
+  try{return JSON.parse(localStorage.getItem('er_feedbacks')||'[]')}catch(e){return[]}
+}
+function saveFeedbacks(list){
+  localStorage.setItem('er_feedbacks',JSON.stringify(list));
+}
+function insertEmoji(emoji){
+  var textarea=document.getElementById('feedbackText');
+  if(!textarea)return;
+  var start=textarea.selectionStart;
+  var end=textarea.selectionEnd;
+  var value=textarea.value;
+  textarea.value=value.substring(0,start)+emoji+value.substring(end);
+  textarea.selectionStart=textarea.selectionEnd=start+emoji.length;
+  textarea.focus();
+}
+function submitFeedback(){
+  var user=getCurrentUser();
+  if(!user){alert('请先登录后再发表反馈！');showLoginModal();return}
+  var textarea=document.getElementById('feedbackText');
+  if(!textarea)return;
+  var content=textarea.value.trim();
+  if(!content){alert('请输入反馈内容！');return}
+  var list=getFeedbacks();
+  list.unshift({user:user,content:content,time:Date.now()});
+  if(list.length>100)list=list.slice(0,100);
+  saveFeedbacks(list);
+  textarea.value='';
+  renderFeedbacks();
+  playSfx('success');
+}
+function renderFeedbacks(){
+  var list=document.getElementById('feedbackList');
+  if(!list)return;
+  var feedbacks=getFeedbacks();
+  var count=document.getElementById('feedbackCount');
+  if(count)count.textContent=feedbacks.length+' 条反馈';
+  if(feedbacks.length===0){
+    list.innerHTML='<div class="feedback-empty"><div class="empty-icon">💬</div><div>还没有反馈，来发表第一条吧！</div></div>';
+    return;
+  }
+  list.innerHTML='';
+  feedbacks.forEach(function(fb){
+    var item=document.createElement('div');
+    item.className='feedback-item';
+    var initial=fb.user.charAt(0).toUpperCase();
+    var timeStr=formatTime(fb.time);
+    item.innerHTML='<div class="feedback-item-header"><div class="feedback-item-user"><div class="feedback-item-avatar">'+initial+'</div><div><div class="feedback-item-name">'+fb.user+'</div><div class="feedback-item-time">'+timeStr+'</div></div></div></div><div class="feedback-item-content">'+escapeHtml(fb.content).replace(/\n/g,'<br>')+'</div>';
+    list.appendChild(item);
+  });
+}
+function formatTime(ts){
+  var d=new Date(ts);
+  var now=new Date();
+  var diff=now-d;
+  if(diff<60000)return '刚刚';
+  if(diff<3600000)return Math.floor(diff/60000)+'分钟前';
+  if(diff<86400000)return Math.floor(diff/3600000)+'小时前';
+  return d.getFullYear()+'-'+(d.getMonth()+1)+'-'+d.getDate();
+}
+function escapeHtml(str){
+  var div=document.createElement('div');
+  div.textContent=str;
+  return div.innerHTML;
+}
+function initFeedback(){
+  var user=getCurrentUser();
+  var inputArea=document.getElementById('feedbackInputArea');
+  if(inputArea){
+    if(user){inputArea.style.display='block'}
+    else{inputArea.style.display='none'}
+  }
+  renderFeedbacks();
+}
+
 // ===== INIT =====
 // Header particles
 (function(){
@@ -1607,6 +1793,8 @@ updateUserBar();
   updateBgmUI();
   // Init announcements
   initAnnouncements();
+  // Init feedback board
+  initFeedback();
 </script>
 
 <!-- 注册弹窗 -->
@@ -1701,6 +1889,8 @@ updateUserBar();
         <option value="piano">🎹 钢琴小品</option>
         <option value="ocean">🌊 海浪声</option>
         <option value="cafe">☕ 咖啡馆</option>
+        <option value="jazz">🎷 爵士夜晚</option>
+        <option value="nature">🍃 自然白噪音</option>
       </select>
     </div>
     <div class="settings-item">
