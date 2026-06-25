@@ -170,6 +170,10 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .settings-section .color-preset{width:32px;height:32px;border-radius:50%;cursor:pointer;border:3px solid transparent;transition:all .15s}
 .settings-section .color-preset:hover{transform:scale(1.1)}
 .settings-section .color-preset.active{border-color:var(--accent)}
+.settings-section .bg-presets{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:10px}
+.settings-section .bg-preset{width:60px;height:60px;border-radius:10px;cursor:pointer;border:3px solid transparent;transition:all .15s;background-size:cover;background-position:center;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.settings-section .bg-preset:hover{transform:scale(1.05);box-shadow:0 4px 16px rgba(0,0,0,.15)}
+.settings-section .bg-preset.active{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-light)}
 .settings-section .toggle-switch{display:flex;align-items:center;gap:10px;cursor:pointer}
 .settings-section .toggle-switch input{display:none}
 .settings-section .toggle-slider{width:44px;height:24px;background:#ccc;border-radius:12px;position:relative;transition:background .2s}
@@ -1178,6 +1182,9 @@ function applyPrefs(){
   if(prefs.bgImage){
     var u=document.getElementById('bgImageUrl');
     if(u)u.value=prefs.bgImage;
+    document.querySelectorAll('.bg-preset').forEach(function(p){
+      p.classList.toggle('active',p.dataset.bg===prefs.bgImage);
+    });
   }
   var bgmToggle=document.getElementById('bgmToggle');
   if(bgmToggle)bgmToggle.checked=prefs.bgmOn||false;
@@ -1213,6 +1220,15 @@ document.addEventListener('click',function(e){
   if(e.target.classList.contains('color-preset')){
     var color=e.target.dataset.color;
     setBgColor(color);
+    document.querySelectorAll('.bg-preset').forEach(function(p){p.classList.remove('active')});
+  }
+  if(e.target.classList.contains('bg-preset')){
+    var bg=e.target.dataset.bg;
+    setBgImage(bg);
+    document.querySelectorAll('.color-preset').forEach(function(p){p.classList.remove('active')});
+    document.querySelectorAll('.bg-preset').forEach(function(p){
+      p.classList.toggle('active',p.dataset.bg===bg);
+    });
   }
 });
 function setBgColor(color){
@@ -1245,6 +1261,10 @@ function setBgImage(url){
     document.body.style.background='#f5f7fa';
     document.body.style.backgroundImage='none';
   }
+  document.querySelectorAll('.color-preset').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.bg-preset').forEach(function(p){
+    p.classList.toggle('active',p.dataset.bg===url);
+  });
   playSfx('click');
 }
 
@@ -1545,6 +1565,14 @@ updateUserBar();
       <div class="color-preset" data-color="#fce4ec" style="background:#fce4ec" title="樱花粉"></div>
       <div class="color-preset" data-color="#263238" style="background:#263238" title="深空灰"></div>
       <div class="color-preset" data-color="#1a237e" style="background:#1a237e" title="午夜蓝"></div>
+    </div>
+    <div class="settings-item">
+      <label>背景图片</label>
+      <div class="bg-presets">
+        <div class="bg-preset" data-bg="backgrounds/bg1.png" style="background-image:url('backgrounds/bg1.png')" title="瓶宝1"></div>
+        <div class="bg-preset" data-bg="backgrounds/bg2.png" style="background-image:url('backgrounds/bg2.png')" title="瓶宝2"></div>
+        <div class="bg-preset" data-bg="backgrounds/bg3.png" style="background-image:url('backgrounds/bg3.png')" title="瓶宝3"></div>
+      </div>
     </div>
     <div class="settings-item">
       <label>自定义颜色</label>
