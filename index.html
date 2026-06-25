@@ -195,6 +195,25 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .bgm-player .bgm-info{font-size:.82rem;color:rgba(255,255,255,.9);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;letter-spacing:.3px}
 .bgm-player .bgm-vol{width:70px;accent-color:#fff;height:4px;border-radius:2px;cursor:pointer}
 .bgm-player .bgm-vol::-webkit-slider-thumb{width:14px;height:14px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2)}
+.announcement-badge{position:absolute;top:-4px;right:-4px;background:#ff4757;color:#fff;font-size:.7rem;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center;animation:badgePulse 2s infinite}
+@keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.announcement-dropdown{position:absolute;top:100%;right:0;background:#fff;border-radius:12px;box-shadow:0 8px 32px rgba(0,0,0,.15);width:340px;max-height:420px;overflow-y:auto;display:none;z-index:1000;border:1px solid #e8e8e8}
+.announcement-dropdown.show{display:block;animation:slideDown .2s ease}
+@keyframes slideDown{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:translateY(0)}}
+.announcement-header{padding:14px 16px;border-bottom:1px solid #eee;display:flex;justify-content:space-between;align-items:center}
+.announcement-header h3{font-size:.95rem;font-weight:600;color:#333}
+.announcement-header .mark-read{font-size:.8rem;color:var(--accent);cursor:pointer}
+.announcement-header .mark-read:hover{text-decoration:underline}
+.announcement-list{max-height:340px;overflow-y:auto}
+.announcement-item{padding:12px 16px;border-bottom:1px solid #f5f5f5;cursor:pointer;transition:background .15s}
+.announcement-item:hover{background:#f8f9ff}
+.announcement-item.unread{background:#f0f4ff}
+.announcement-item .ann-title{font-size:.9rem;font-weight:600;color:#333;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+.announcement-item .ann-title .new-tag{background:#ff4757;color:#fff;font-size:.65rem;padding:1px 6px;border-radius:8px;font-weight:700}
+.announcement-item .ann-content{font-size:.82rem;color:#666;line-height:1.6}
+.announcement-item .ann-date{font-size:.75rem;color:#999;margin-top:4px}
+.announcement-empty{padding:30px 16px;text-align:center;color:#999;font-size:.85rem}
+.announcement-empty .empty-icon{font-size:2rem;margin-bottom:8px}
 .login-prompt{text-align:center;padding:40px 20px;color:#888}
 .login-prompt .login-prompt-icon{font-size:3rem;margin-bottom:12px}
 .login-prompt p{font-size:1rem;margin-bottom:16px}
@@ -218,6 +237,17 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
   <span id="userStatus">未登录</span>
   <button class="user-btn" onclick="showLoginModal()">登录</button>
   <button class="user-btn primary" onclick="showRegisterModal()">注册</button>
+  <div class="announcement-wrapper" style="position:relative">
+    <button class="user-btn" onclick="toggleAnnouncement()" id="annBtn">🔔</button>
+    <span class="announcement-badge" id="annBadge" style="display:none">0</span>
+    <div class="announcement-dropdown" id="annDropdown">
+      <div class="announcement-header">
+        <h3>📢 公告</h3>
+        <span class="mark-read" onclick="markAllRead()">全部已读</span>
+      </div>
+      <div class="announcement-list" id="annList"></div>
+    </div>
+  </div>
 </div>
 </div>
 <div class="tab-bar">
@@ -1478,6 +1508,70 @@ document.addEventListener('DOMContentLoaded',function(){
   }
 });
 
+// ===== ANNOUNCEMENTS =====
+var ANNOUNCEMENTS=[
+  {id:'2026062501',date:'2026-06-25',title:'🎵 新增BGM音乐播放器',content:'登录后即可使用背景音乐功能，支持4种曲目选择，还有旋转留声机动画效果！'},
+  {id:'2026062502',date:'2026-06-25',title:'🖼️ 自定义背景图功能',content:'现在可以使用瓶宝文件夹中的3张精美图片作为页面背景，在设置面板中切换。'},
+  {id:'2026062503',date:'2026-06-25',title:'📐 全翻译题句子结构分析',content:'所有30道翻译题（英译汉+汉译英）都已添加详细的句子主干和成分分析。'},
+  {id:'2026062504',date:'2026-06-25',title:'📝 翻译解析功能',content:'每道翻译题都新增了翻译解析，包含核心词汇、翻译技巧和常见错误。'},
+  {id:'2026062505',date:'2026-06-25',title:'🎨 界面优化',content:'主界面标题字体增大，添加了动态粒子背景动画，整体更美观。'},
+  {id:'2026062401',date:'2026-06-24',title:'🔧 修复翻译卡片切换',content:'修复了点击卡片时翻译内容显示/隐藏的问题。'},
+  {id:'2026062402',date:'2026-06-24',title:'📚 词汇分析更新',content:'更新了所有词汇题的详细解析，包括词义辨析和例句。'}
+];
+function initAnnouncements(){
+  var readIds=JSON.parse(localStorage.getItem('er_ann_read')||'[]');
+  var list=document.getElementById('annList');
+  if(!list)return;
+  list.innerHTML='';
+  var unreadCount=0;
+  ANNOUNCEMENTS.forEach(function(ann){
+    var isRead=readIds.indexOf(ann.id)!==-1;
+    if(!isRead)unreadCount++;
+    var item=document.createElement('div');
+    item.className='announcement-item'+(isRead?'':' unread');
+    item.innerHTML='<div class="ann-title">'+ann.title+(isRead?'':' <span class="new-tag">NEW</span>')+'</div><div class="ann-content">'+ann.content+'</div><div class="ann-date">'+ann.date+'</div>';
+    item.onclick=function(){markRead(ann.id)};
+    list.appendChild(item);
+  });
+  var badge=document.getElementById('annBadge');
+  if(badge){
+    if(unreadCount>0){badge.style.display='block';badge.textContent=unreadCount}
+    else{badge.style.display='none'}
+  }
+}
+function toggleAnnouncement(){
+  var dd=document.getElementById('annDropdown');
+  if(!dd)return;
+  var isOpen=dd.classList.contains('show');
+  if(isOpen){
+    dd.classList.remove('show');
+    document.removeEventListener('click',closeAnnouncementOnOutside);
+  }else{
+    dd.classList.add('show');
+    setTimeout(function(){
+      document.addEventListener('click',closeAnnouncementOnOutside);
+    },10);
+  }
+}
+function closeAnnouncementOnOutside(e){
+  var dd=document.getElementById('annDropdown');
+  var btn=document.getElementById('annBtn');
+  if(dd&&!dd.contains(e.target)&&!e.target.closest('.announcement-wrapper')){
+    dd.classList.remove('show');
+    document.removeEventListener('click',closeAnnouncementOnOutside);
+  }
+}
+function markRead(id){
+  var readIds=JSON.parse(localStorage.getItem('er_ann_read')||'[]');
+  if(readIds.indexOf(id)===-1){readIds.push(id);localStorage.setItem('er_ann_read',JSON.stringify(readIds))}
+  initAnnouncements();
+}
+function markAllRead(){
+  var readIds=ANNOUNCEMENTS.map(function(a){return a.id});
+  localStorage.setItem('er_ann_read',JSON.stringify(readIds));
+  initAnnouncements();
+}
+
 // ===== INIT =====
 // Header particles
 (function(){
@@ -1506,6 +1600,8 @@ updateUserBar();
   var prefs=getUserPrefs();
   if(prefs&&sfxEnabled!==undefined)sfxEnabled=prefs.sfxOn!==false;
   updateBgmUI();
+  // Init announcements
+  initAnnouncements();
 </script>
 
 <!-- 注册弹窗 -->
