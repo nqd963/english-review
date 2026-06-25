@@ -6,9 +6,14 @@
 <title>英语期末考试复习</title>
 <style>*{margin:0;padding:0;box-sizing:border-box}
 body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;background:linear-gradient(135deg,#f5f7fa 0%,#e4e8f0 100%);color:#222;line-height:1.8;--bg:#f0f2f5;--card:#fff;--primary:#1a1a2e;--accent:#4361ee;--accent-light:rgba(67,97,238,.08);--success:#2ec4b6;--success-bg:rgba(46,196,182,.12);--error:#e71d36;--error-bg:rgba(231,29,54,.1);--border:#dce0e8;--radius:12px}
-.header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#4361ee 100%);color:#fff;padding:40px 20px 32px;text-align:center;box-shadow:0 4px 20px rgba(67,97,238,.3)}
-.header h1{font-size:2.2rem;font-weight:700;letter-spacing:-.5px}
-.header p{opacity:.75;font-size:1.05rem;margin-top:6px}
+.header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#4361ee 100%);color:#fff;padding:40px 20px 32px;text-align:center;box-shadow:0 4px 20px rgba(67,97,238,.3);position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(circle at 20% 80%,rgba(120,119,198,.3) 0%,transparent 50%),radial-gradient(circle at 80% 20%,rgba(79,172,254,.25) 0%,transparent 50%),radial-gradient(circle at 40% 40%,rgba(255,119,168,.15) 0%,transparent 40%);animation:headerBg 8s ease-in-out infinite alternate}
+@keyframes headerBg{0%{opacity:1;transform:scale(1) rotate(0deg)}50%{opacity:.85;transform:scale(1.05) rotate(1deg)}100%{opacity:1;transform:scale(1) rotate(0deg)}}
+.header h1{font-size:2.4rem;font-weight:700;letter-spacing:1px;text-shadow:0 2px 12px rgba(0,0,0,.3);position:relative;z-index:1;font-family:'Noto Sans SC','Inter',sans-serif}
+.header p{opacity:.85;font-size:1.1rem;margin-top:8px;position:relative;z-index:1;letter-spacing:.5px;font-weight:400}
+.header-particles{position:absolute;top:0;left:0;right:0;bottom:0;pointer-events:none;overflow:hidden}
+.header-particles span{position:absolute;display:block;width:6px;height:6px;background:rgba(255,255,255,.15);border-radius:50%;animation:floatUp linear infinite}
+@keyframes floatUp{0%{transform:translateY(100%) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100vh) rotate(720deg);opacity:0}}
 .tab-bar{display:flex;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;overflow-x:auto;padding:0 12px;flex-wrap:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 .tab-btn{padding:14px 20px;border:none;background:none;font-size:.88rem;font-weight:500;color:#888;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s;flex-shrink:0}
 .tab-btn:hover{color:var(--accent);background:var(--accent-light)}
@@ -174,10 +179,16 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .settings-section .toggle-label{font-size:.9rem;color:#444}
 .bgm-player{position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:16px;box-shadow:0 8px 32px rgba(102,126,234,.35),0 2px 8px rgba(0,0,0,.1);padding:14px 18px;display:none;align-items:center;gap:14px;z-index:999;animation:slideUp .3s ease;backdrop-filter:blur(10px)}
 .bgm-player.show{display:flex}
-.bgm-player .bgm-btn{width:42px;height:42px;border-radius:50%;border:none;background:rgba(255,255,255,.25);color:#fff;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.bgm-player .vinyl-disc{width:48px;height:48px;border-radius:50%;background:radial-gradient(circle,#1a1a1a 0%,#1a1a1a 30%,#2d2d2d 31%,#1a1a1a 32%,#1a1a1a 45%,#2d2d2d 46%,#1a1a1a 47%,#1a1a1a 100%);position:relative;box-shadow:0 4px 12px rgba(0,0,0,.3);animation:vinylSpin 3s linear infinite;animation-play-state:paused;flex-shrink:0}
+.bgm-player.playing .vinyl-disc{animation-play-state:running}
+@keyframes vinylSpin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}
+.bgm-player .vinyl-grooves{position:absolute;top:0;left:0;right:0;bottom:0;border-radius:50%;background:repeating-radial-gradient(circle,transparent 0px,transparent 3px,rgba(255,255,255,.03) 3px,rgba(255,255,255,.03) 4px);pointer-events:none}
+.bgm-player .vinyl-label{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:16px;height:16px;border-radius:50%;background:linear-gradient(135deg,#ff6b6b,#ee5a24);box-shadow:0 2px 6px rgba(0,0,0,.3)}
+.bgm-player .bgm-btn{width:38px;height:38px;border-radius:50%;border:none;background:rgba(255,255,255,.25);color:#fff;cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.15);flex-shrink:0}
 .bgm-player .bgm-btn:hover{background:rgba(255,255,255,.4);transform:scale(1.05)}
 .bgm-player .bgm-btn:active{transform:scale(.95)}
-.bgm-player .bgm-info{font-size:.85rem;color:rgba(255,255,255,.9);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;letter-spacing:.3px}
+.bgm-player .bgm-controls{display:flex;flex-direction:column;gap:6px}
+.bgm-player .bgm-info{font-size:.82rem;color:rgba(255,255,255,.9);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;letter-spacing:.3px}
 .bgm-player .bgm-vol{width:70px;accent-color:#fff;height:4px;border-radius:2px;cursor:pointer}
 .bgm-player .bgm-vol::-webkit-slider-thumb{width:14px;height:14px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2)}
 .login-prompt{text-align:center;padding:40px 20px;color:#888}
@@ -196,6 +207,7 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 </head>
 <body>
 <div class="header">
+<div class="header-particles" id="headerParticles"></div>
 <h1>英语期末考试复习</h1>
 <p>交互式模拟练习 ・ 基于教材内容</p>
 <div class="user-bar" id="userBar">
@@ -1258,6 +1270,8 @@ function startBgm(){
   bgmPlaying=true;
   playBgmTrack(bgmCurrentTrack);
   updateBgmUI();
+  var p=document.getElementById('bgmPlayer');
+  if(p)p.classList.add('playing');
   var prefs=getUserPrefs()||{};
   prefs.bgmOn=true;
   saveUserPrefs(prefs);
@@ -1269,6 +1283,8 @@ function stopBgm(){
   bgmOscillators=[];
   bgmPlaying=false;
   updateBgmUI();
+  var p=document.getElementById('bgmPlayer');
+  if(p)p.classList.remove('playing');
   var prefs=getUserPrefs()||{};
   prefs.bgmOn=false;
   saveUserPrefs(prefs);
@@ -1443,6 +1459,24 @@ document.addEventListener('DOMContentLoaded',function(){
 });
 
 // ===== INIT =====
+// Header particles
+(function(){
+  var container=document.getElementById('headerParticles');
+  if(!container)return;
+  var count=window.innerWidth<640?15:25;
+  for(var i=0;i<count;i++){
+    var span=document.createElement('span');
+    var size=Math.random()*6+3;
+    span.style.width=size+'px';
+    span.style.height=size+'px';
+    span.style.left=Math.random()*100+'%';
+    span.style.animationDuration=(Math.random()*8+6)+'s';
+    span.style.animationDelay=(Math.random()*5)+'s';
+    span.style.opacity=Math.random()*.4+.1;
+    container.appendChild(span);
+  }
+})();
+
 // Ensure first reading set is rendered
 if(RD_DATA.length>0){
   document.getElementById('rd-container').innerHTML=renderRd(RD_DATA[0]);
@@ -1560,8 +1594,12 @@ updateUserBar();
 
 <!-- BGM播放器 -->
 <div class="bgm-player" id="bgmPlayer">
+  <div class="vinyl-disc" id="vinylDisc">
+    <div class="vinyl-grooves"></div>
+    <div class="vinyl-label"></div>
+  </div>
   <button class="bgm-btn" id="bgmPlayBtn" onclick="toggleBgmPlay()">▶</button>
-  <div style="display:flex;flex-direction:column;gap:4px">
+  <div class="bgm-controls">
     <span class="bgm-info" id="bgmInfo">🎵 点击播放</span>
     <input type="range" class="bgm-vol" id="bgmVolPlayer" min="0" max="100" value="30" oninput="setBgmVolume(this.value)">
   </div>
