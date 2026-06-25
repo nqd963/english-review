@@ -85,8 +85,8 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .tc{cursor:pointer;transition:all .2s;position:relative;overflow:hidden}
 .tc:hover{border-color:var(--accent);box-shadow:0 4px 16px rgba(67,97,238,.12)}
 .tc.opened{border-color:var(--accent);background:linear-gradient(135deg,#fff 0%,rgba(67,97,238,.03) 100%)}
-.t-en{font-size:.95rem;line-height:1.85;color:#333}
-.t-zh{font-size:.95rem;color:#555;line-height:1.85;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
+.t-en{font-size:1.05rem;line-height:1.85;color:#333}
+.t-zh{font-size:1.05rem;color:#555;line-height:1.85;margin-top:10px;padding-top:10px;border-top:1px dashed var(--border)}
 .t-zh.show{animation:fadeIn .3s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 .thint{font-size:.8rem;color:var(--text-light);margin-top:4px}
@@ -110,9 +110,12 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .rd-analysis .a-ans{color:#1a7a6e;font-weight:600}
 .rd-analysis .a-expl{color:#555;margin-top:4px;font-size:.9rem;line-height:1.8}
 .cl-mean-hl{display:inline-block;background:#fff3cd;padding:0 4px;border-radius:3px;font-weight:700;color:#856404;border-bottom:2px solid #ffc107}
-.cn-analysis{margin-top:12px;padding:14px 16px;background:linear-gradient(135deg,#fff8f0 0%,#fff0e0 100%);border-radius:10px;border:1px solid #f0d8b0;font-size:.92rem;line-height:1.9;color:#5a4a20;display:none}
+.cn-analysis{margin-top:12px;padding:14px 16px;background:linear-gradient(135deg,#fff8f0 0%,#fff0e0 100%);border-radius:10px;border:1px solid #f0d8b0;font-size:.88rem;line-height:1.9;color:#5a4a20;display:none}
 .cn-analysis.show{display:block;animation:fadeIn .3s ease}
-.cn-analysis .a-title{font-weight:600;color:#b8860b;margin-bottom:8px;font-size:.92rem}
+.cn-analysis .a-title{font-weight:600;color:#b8860b;margin-bottom:8px;font-size:.9rem}
+.en-analysis{margin-top:12px;padding:14px 16px;background:linear-gradient(135deg,#f0f8ff 0%,#e8f4fd 100%);border-radius:10px;border:1px solid #b8d8f0;font-size:.88rem;line-height:1.9;color:#2a4a7a;display:none}
+.en-analysis.show{display:block;animation:fadeIn .3s ease}
+.en-analysis .a-title{font-weight:600;color:#1a5276;margin-bottom:8px;font-size:.9rem}
 .analysis-btn{display:inline-block;margin-top:10px;padding:6px 14px;background:var(--accent-light);color:var(--accent);border:1px solid var(--accent);border-radius:8px;font-size:.88rem;font-weight:500;cursor:pointer;transition:all .15s;user-select:none}
 .analysis-btn:hover{background:var(--accent);color:#fff}
 .analysis-btn.show{background:var(--accent);color:#fff}
@@ -169,12 +172,14 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .settings-section .toggle-switch input:checked+.toggle-slider{background:var(--accent)}
 .settings-section .toggle-switch input:checked+.toggle-slider::after{transform:translateX(20px)}
 .settings-section .toggle-label{font-size:.9rem;color:#444}
-.bgm-player{position:fixed;bottom:20px;right:20px;background:#fff;border-radius:12px;box-shadow:0 4px 20px rgba(0,0,0,.15);padding:12px 16px;display:none;align-items:center;gap:12px;z-index:999;animation:slideUp .3s ease}
+.bgm-player{position:fixed;bottom:20px;right:20px;background:linear-gradient(135deg,#667eea 0%,#764ba2 100%);border-radius:16px;box-shadow:0 8px 32px rgba(102,126,234,.35),0 2px 8px rgba(0,0,0,.1);padding:14px 18px;display:none;align-items:center;gap:14px;z-index:999;animation:slideUp .3s ease;backdrop-filter:blur(10px)}
 .bgm-player.show{display:flex}
-.bgm-player .bgm-btn{width:36px;height:36px;border-radius:50%;border:none;background:var(--accent);color:#fff;cursor:pointer;font-size:1.1rem;display:flex;align-items:center;justify-content:center;transition:all .15s}
-.bgm-player .bgm-btn:hover{opacity:.85}
-.bgm-player .bgm-info{font-size:.82rem;color:#555;max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.bgm-player .bgm-vol{width:60px;accent-color:var(--accent)}
+.bgm-player .bgm-btn{width:42px;height:42px;border-radius:50%;border:none;background:rgba(255,255,255,.25);color:#fff;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 2px 8px rgba(0,0,0,.15)}
+.bgm-player .bgm-btn:hover{background:rgba(255,255,255,.4);transform:scale(1.05)}
+.bgm-player .bgm-btn:active{transform:scale(.95)}
+.bgm-player .bgm-info{font-size:.85rem;color:rgba(255,255,255,.9);max-width:140px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;letter-spacing:.3px}
+.bgm-player .bgm-vol{width:70px;accent-color:#fff;height:4px;border-radius:2px;cursor:pointer}
+.bgm-player .bgm-vol::-webkit-slider-thumb{width:14px;height:14px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2)}
 .login-prompt{text-align:center;padding:40px 20px;color:#888}
 .login-prompt .login-prompt-icon{font-size:3rem;margin-bottom:12px}
 .login-prompt p{font-size:1rem;margin-bottom:16px}
@@ -1556,8 +1561,10 @@ updateUserBar();
 <!-- BGM播放器 -->
 <div class="bgm-player" id="bgmPlayer">
   <button class="bgm-btn" id="bgmPlayBtn" onclick="toggleBgmPlay()">▶</button>
-  <span class="bgm-info" id="bgmInfo">点击播放</span>
-  <input type="range" class="bgm-vol" id="bgmVolPlayer" min="0" max="100" value="30" oninput="setBgmVolume(this.value)">
+  <div style="display:flex;flex-direction:column;gap:4px">
+    <span class="bgm-info" id="bgmInfo">🎵 点击播放</span>
+    <input type="range" class="bgm-vol" id="bgmVolPlayer" min="0" max="100" value="30" oninput="setBgmVolume(this.value)">
+  </div>
 </div>
 
 </body>
