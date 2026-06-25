@@ -164,7 +164,7 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:640px){body{font-size:15px}.header h1{font-size:1.7rem}.header-badge{font-size:.7rem;padding:4px 10px}.q-card{padding:12px 14px}.tab-btn{padding:10px 12px;font-size:.82rem}.rd-nav{flex-direction:column;align-items:flex-start}.rd-nav .rd-nav-btns{width:100%;justify-content:space-between}}
+@media(max-width:640px){body{font-size:15px}.header h1{font-size:1.7rem}.header-badge{font-size:.7rem;padding:4px 10px}.q-card{padding:12px 14px}.tab-btn{padding:10px 12px;font-size:.82rem}.rd-nav{flex-direction:column;align-items:flex-start}.rd-nav .rd-nav-btns{width:100%;justify-content:space-between}.announcement-wrapper{top:8px;right:8px}.ann-btn{padding:6px 12px;font-size:.82rem}.announcement-dropdown{width:300px;max-height:360px}}
 /* ===== USER SETTINGS ===== */
 .settings-btn{padding:6px 16px;border:1px solid rgba(255,255,255,.4);border-radius:8px;background:transparent;color:#fff;cursor:pointer;font-size:.85rem;font-weight:500;transition:all .15s}
 .settings-btn:hover{background:rgba(255,255,255,.2)}
@@ -211,8 +211,9 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .bgm-player .bgm-info{font-size:.82rem;color:rgba(255,255,255,.9);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;letter-spacing:.3px}
 .bgm-player .bgm-vol{width:70px;accent-color:#fff;height:4px;border-radius:2px;cursor:pointer}
 .bgm-player .bgm-vol::-webkit-slider-thumb{width:14px;height:14px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2)}
-.ann-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.3);color:#fff;cursor:pointer;font-size:.9rem;font-weight:500;transition:all .2s;backdrop-filter:blur(10px)}
-.ann-btn:hover{background:rgba(255,255,255,.25);transform:translateY(-1px)}
+.announcement-wrapper{position:fixed;top:12px;right:16px;z-index:99999}
+.ann-btn{display:flex;align-items:center;gap:6px;padding:8px 16px;border-radius:10px;background:rgba(30,30,60,.75);border:1px solid rgba(255,255,255,.3);color:#fff;cursor:pointer;font-size:.9rem;font-weight:500;transition:all .2s;backdrop-filter:blur(10px)}
+.ann-btn:hover{background:rgba(60,60,100,.85);transform:translateY(-1px)}
 .ann-btn-text{font-size:.85rem}
 .announcement-badge{position:absolute;top:-6px;right:-6px;background:#ff4757;color:#fff;font-size:.65rem;font-weight:700;padding:2px 6px;border-radius:10px;min-width:18px;text-align:center;animation:badgePulse 2s infinite}
 @keyframes badgePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
@@ -288,7 +289,8 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
   <button class="user-btn" onclick="showLoginModal()">登录</button>
   <button class="user-btn primary" onclick="showRegisterModal()">注册</button>
 </div>
-<div class="announcement-wrapper" id="annWrapper" style="position:relative;z-index:9999">
+</div>
+<div class="announcement-wrapper" id="annWrapper">
   <button class="ann-btn" onclick="toggleAnnouncement()" id="annBtn">🔔<span class="ann-btn-text">公告</span></button>
   <span class="announcement-badge" id="annBadge" style="display:none">0</span>
   <div class="announcement-dropdown" id="annDropdown">
@@ -298,7 +300,6 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
     </div>
     <div class="announcement-list" id="annList"></div>
   </div>
-</div>
 </div>
 <div class="tab-bar">
 <button class="tab-btn active" onclick="showTab('tab-v1')">词汇（一）</button>
