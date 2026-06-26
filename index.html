@@ -1363,11 +1363,21 @@ function showSettings(){
     showLoginModal();
     return;
   }
+  // Close announcement dropdown if open
+  var dd=document.getElementById('annDropdown');
+  if(dd&&dd.classList.contains('show')){
+    dd.classList.remove('show');
+    document.removeEventListener('click',closeAnnouncementOnOutside);
+  }
   document.getElementById('settingsPanel').classList.add('show');
+  var ann=document.getElementById('annWrapper');
+  if(ann)ann.style.display='none';
   applyPrefs();
 }
 function closeSettings(){
   document.getElementById('settingsPanel').classList.remove('show');
+  var ann=document.getElementById('annWrapper');
+  if(ann)ann.style.display='';
 }
 document.addEventListener('click',function(e){
   if(e.target.classList.contains('color-preset')){
