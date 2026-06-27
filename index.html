@@ -24,7 +24,6 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .header-particles span:nth-child(4n){width:4px;height:4px}
 .header-particles span:nth-child(5n){width:8px;height:8px;box-shadow:0 0 6px rgba(255,255,255,.3)}
 @keyframes floatUp{0%{transform:translateY(100%) rotate(0deg);opacity:0}10%{opacity:1}90%{opacity:1}100%{transform:translateY(-100vh) rotate(720deg);opacity:0}}
-.header-badge{display:inline-block;margin-top:12px;padding:5px 16px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);border-radius:20px;font-size:.78rem;letter-spacing:1px;backdrop-filter:blur(8px);position:relative;z-index:1;animation:fadeInUp .8s ease-out .5s both}
 .tab-bar{display:flex;background:rgba(255,255,255,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:100;overflow-x:auto;padding:0 12px;flex-wrap:nowrap;box-shadow:0 2px 8px rgba(0,0,0,.04)}
 .tab-btn{padding:14px 20px;border:none;background:none;font-size:.88rem;font-weight:500;color:#888;cursor:pointer;white-space:nowrap;border-bottom:3px solid transparent;transition:all .15s;flex-shrink:0}
 .tab-btn:hover{color:var(--accent);background:var(--accent-light)}
@@ -164,7 +163,7 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 @keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@media(max-width:640px){body{font-size:15px}.header h1{font-size:1.7rem}.header-badge{font-size:.7rem;padding:4px 10px}.q-card{padding:12px 14px}.tab-btn{padding:10px 12px;font-size:.82rem}.rd-nav{flex-direction:column;align-items:flex-start}.rd-nav .rd-nav-btns{width:100%;justify-content:space-between}.announcement-wrapper{top:8px;right:8px}.ann-btn{padding:6px 12px;font-size:.82rem}.announcement-dropdown{width:300px;max-height:360px}}
+@media(max-width:640px){body{font-size:15px}.header h1{font-size:1.7rem}.q-card{padding:12px 14px}.tab-btn{padding:10px 12px;font-size:.82rem}.rd-nav{flex-direction:column;align-items:flex-start}.rd-nav .rd-nav-btns{width:100%;justify-content:space-between}.announcement-wrapper{top:8px;right:8px}.ann-btn{padding:6px 12px;font-size:.82rem}.announcement-dropdown{width:300px;max-height:360px}}
 /* ===== USER SETTINGS ===== */
 .settings-btn{padding:6px 16px;border:1px solid rgba(255,255,255,.4);border-radius:8px;background:transparent;color:#fff;cursor:pointer;font-size:.85rem;font-weight:500;transition:all .15s}
 .settings-btn:hover{background:rgba(255,255,255,.2)}
@@ -285,7 +284,6 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 <div class="header-particles" id="headerParticles"></div>
 <h1>英语期末考试复习</h1>
 <p>交互式模拟练习 ・ 基于教材内容</p>
-<div class="header-badge">✨ 全新升级 · 10篇阅读理解 · 真实音乐BGM</div>
 <div class="user-bar" id="userBar">
   <span id="userStatus">未登录</span>
   <button class="user-btn" onclick="showLoginModal()">登录</button>
