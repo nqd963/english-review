@@ -208,7 +208,9 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .bgm-player .bgm-btn:hover{background:rgba(255,255,255,.4);transform:scale(1.05)}
 .bgm-player .bgm-btn:active{transform:scale(.95)}
 .bgm-player .bgm-controls{display:flex;flex-direction:column;gap:6px}
-.bgm-player .bgm-info{font-size:.82rem;color:rgba(255,255,255,.9);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;letter-spacing:.3px}
+.bgm-player .bgm-info{font-size:.82rem;color:rgba(255,255,255,.9);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;letter-spacing:.3px;display:flex;align-items:center;gap:4px}
+.bgm-player .bgm-info .now-playing{display:inline-block;width:8px;height:8px;border-radius:50%;background:#4ade80;animation:pulseDot 1.5s ease-in-out infinite}
+@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.7)}}
 .bgm-player .bgm-vol{width:70px;accent-color:#fff;height:4px;border-radius:2px;cursor:pointer}
 .bgm-player .bgm-vol::-webkit-slider-thumb{width:14px;height:14px;border-radius:50%;background:#fff;cursor:pointer;box-shadow:0 2px 6px rgba(0,0,0,.2)}
 .announcement-wrapper{position:fixed;top:12px;right:16px;z-index:99999}
@@ -1502,21 +1504,21 @@ function updateBgmUI(){
   var btn=document.getElementById('bgmPlayBtn');
   var player=document.getElementById('bgmPlayer');
   var info=document.getElementById('bgmInfo');
-  var trackNames={calm:'🌿 宁静森林',piano:'🎹 钢琴小品',ocean:'🌊 海浪声',cafe:'☕ 咖啡馆',jazz:'🎷 爵士夜晚',nature:'🍃 自然白噪音'};
+  var trackNames={calm:'🌿 晨曦钢琴',piano:'🎹 舒缓钢琴',ocean:'🌊 夏日海浪',cafe:'☕ 爵士咖啡馆',jazz:'🎷 温馨爵士',nature:'🍃 宁静自然'};
   if(!getCurrentUser()){if(player)player.classList.remove('show');return}
   if(player)player.classList.add('show');
   if(!btn)return;
-  if(bgmPlaying){btn.textContent='⏸';info.textContent=trackNames[bgmCurrentTrack]||'🎵 BGM'}
-  else{btn.textContent='▶';info.textContent='点击播放'}
+  if(bgmPlaying){btn.textContent='⏸';var tn=trackNames[bgmCurrentTrack]||'🎵 BGM';info.innerHTML='<span class="now-playing"></span>'+tn}
+  else{btn.textContent='▶';info.innerHTML='点击播放'}
 }
 var bgmAudio=null;
 var bgmUrls={
-  calm:'https://cdn.pixabay.com/audio/2022/05/27/audio_1808fbf07a.mp3',
-  piano:'https://cdn.pixabay.com/audio/2022/10/25/audio_33f0e1a862.mp3',
-  ocean:'https://cdn.pixabay.com/audio/2022/06/07/audio_b9bd4170e4.mp3',
-  cafe:'https://cdn.pixabay.com/audio/2022/03/10/audio_270f49b83a.mp3',
-  jazz:'https://cdn.pixabay.com/audio/2022/03/10/audio_4c6e4b08e2.mp3',
-  nature:'https://cdn.pixabay.com/audio/2022/02/23/audio_bc6c89ee59.mp3'
+  calm:'https://cdn.pixabay.com/download/audio/2025/05/28/audio_7bdd3eed86.mp3?filename=clavier-music-awakening-calm-piano-music-350549.mp3',
+  piano:'https://cdn.pixabay.com/download/audio/2025/11/05/audio_8eea27848e.mp3?filename=viacheslavstarostin-relaxing-soft-piano-music-431679.mp3',
+  ocean:'https://cdn.pixabay.com/download/audio/2025/04/29/audio_8f6b02adcd.mp3?filename=music_for_creators-background-royalty-free-music-summer-ocean-waves-334012.mp3',
+  cafe:'https://cdn.pixabay.com/download/audio/2025/06/13/audio_febe755adc.mp3?filename=tunetank-jazz-cafe-background-348913.mp3',
+  jazz:'https://cdn.pixabay.com/download/audio/2026/03/06/audio_980adf2214.mp3?filename=denis-pavlov-music-jazz-acoustic-gentle-calm-cozy-ambience-496002.mp3',
+  nature:'https://cdn.pixabay.com/download/audio/2026/03/28/audio_d9c302b745.mp3?filename=atlasaudio-calm-nature-510279.mp3'
 };
 function playBgmTrack(track){
   if(!bgmPlaying)return;
@@ -1527,6 +1529,19 @@ function playBgmTrack(track){
     bgmAudio.loop=true;
     bgmAudio.volume=bgmVolume;
     bgmAudio.play().catch(function(){});
+  }catch(e){}
+}
+var previewAudio=null;
+function previewBgmTrack(){
+  var track=document.getElementById('bgmTrack').value;
+  if(previewAudio){previewAudio.pause();previewAudio=null}
+  var url=bgmUrls[track]||bgmUrls.calm;
+  try{
+    previewAudio=new Audio(url);
+    previewAudio.volume=bgmVolume;
+    previewAudio.play().catch(function(){});
+    // Auto-stop after 15 seconds
+    setTimeout(function(){if(previewAudio){previewAudio.pause();previewAudio=null}},15000);
   }catch(e){}
 }
 
@@ -1631,7 +1646,7 @@ document.addEventListener('DOMContentLoaded',function(){
 // ===== ANNOUNCEMENTS =====
 var ANNOUNCEMENTS=[
   {id:'2026062506',date:'2026-06-25',title:'📖 新增5篇阅读理解文章',content:'新增10篇阅读理解，涵盖《国家地理》《卫报》《科学美国人》等知名期刊，以及ACG文化和教育主题，答案ABCD合理分配！'},
-  {id:'2026062501',date:'2026-06-25',title:'🎵 新增BGM音乐播放器',content:'登录后即可使用背景音乐功能，支持4种曲目选择，还有旋转留声机动画效果！'},
+  {id:'2026062501',date:'2026-06-25',title:'🎵 全新真实乐器BGM音乐',content:'已替换为Pixabay无版权真实乐器演奏纯音乐：晨曦钢琴、舒缓钢琴、夏日海浪、爵士咖啡馆、温馨爵士、宁静自然。还有旋转留声机动画效果！'},
   {id:'2026062502',date:'2026-06-25',title:'🖼️ 自定义背景图功能',content:'现在可以使用瓶宝文件夹中的3张精美图片作为页面背景，在设置面板中切换。'},
   {id:'2026062503',date:'2026-06-25',title:'📐 全翻译题句子结构分析',content:'所有30道翻译题（英译汉+汉译英）都已添加详细的句子主干和成分分析。'},
   {id:'2026062504',date:'2026-06-25',title:'📝 翻译解析功能',content:'每道翻译题都新增了翻译解析，包含核心词汇、翻译技巧和常见错误。'},
@@ -1895,14 +1910,17 @@ updateUserBar();
     </div>
     <div class="settings-item">
       <label>曲目选择</label>
-      <select id="bgmTrack" onchange="changeBgmTrack(this.value)">
-        <option value="calm">🌿 宁静森林</option>
-        <option value="piano">🎹 钢琴小品</option>
-        <option value="ocean">🌊 海浪声</option>
-        <option value="cafe">☕ 咖啡馆</option>
-        <option value="jazz">🎷 爵士夜晚</option>
-        <option value="nature">🍃 自然白噪音</option>
-      </select>
+      <div style="display:flex;gap:8px;align-items:center">
+        <select id="bgmTrack" onchange="changeBgmTrack(this.value)">
+          <option value="calm">🌿 晨曦钢琴</option>
+          <option value="piano">🎹 舒缓钢琴</option>
+          <option value="ocean">🌊 夏日海浪</option>
+          <option value="cafe">☕ 爵士咖啡馆</option>
+          <option value="jazz">🎷 温馨爵士</option>
+          <option value="nature">🍃 宁静自然</option>
+        </select>
+        <button class="btn btn-out" onclick="previewBgmTrack()" style="padding:6px 12px;font-size:.8rem">🎧 试听</button>
+      </div>
     </div>
     <div class="settings-item">
       <label>音量: <span id="bgmVolLabel">30%</span></label>
