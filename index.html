@@ -1361,10 +1361,8 @@ function clBuild(ci){
     }
   }
   var totalCands=allCands.length;
-  // 2. Decide how many blanks (十五选十: 10 for units 0-4; unit 5 has more text, use 15)
-  var numBlanks=5;
-  if(ci<5){numBlanks=10;}else{numBlanks=Math.min(15,totalCands);}
-  if(numBlanks>totalCands)numBlanks=totalCands;
+  // 2. Decide how many blanks (十五选十: max 10 per unit)
+  var numBlanks=Math.min(10,totalCands);
   // 3. Randomly select which candidates become blanks
   var idxArr=[];
   for(var i=0;i<totalCands;i++)idxArr.push(i);
@@ -1397,8 +1395,7 @@ function clBuild(ci){
   }
   // 5. Build word bank: correct words + distractors from bank
   var bankAll=src.bank;
-  var targetBankSize=5;
-  if(ci<5){targetBankSize=15;}else{targetBankSize=Math.min(20,bankAll.length);}
+  var targetBankSize=15;
   var needDistractors=targetBankSize-numBlanks;
   // Collect distractors: words in bank NOT in correctWords, deduplicated
   var distractors=[];
