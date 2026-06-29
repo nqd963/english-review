@@ -1340,10 +1340,27 @@ function clShowAnswer(ci){
 }
 
 // ===== DYNAMIC CLOZE BUILD =====
+// Secure random using crypto API for true randomness
+var _clRandBuf,_clRandIdx,_clRefreshCount=0;
+function clRand(){
+  if(!_clRandBuf||_clRandIdx>=_clRandBuf.length){
+    _clRandBuf=new Uint32Array(256);
+    crypto.getRandomValues(_clRandBuf);
+    _clRandIdx=0;
+  }
+  return _clRandBuf[_clRandIdx++]/4294967296;
+}
+// Enhanced shuffle: crypto random + double-pass for maximum entropy
 function shuffleArray(arr){
   var a=arr.slice();
+  // First pass: standard Fisher-Yates with crypto random
   for(var i=a.length-1;i>0;i--){
-    var j=Math.floor(Math.random()*(i+1));
+    var j=Math.floor(clRand()*(i+1));
+    var t=a[i];a[i]=a[j];a[j]=t;
+  }
+  // Second pass: additional bias-breaking shuffle with different window
+  for(var i=0;i<a.length-1;i++){
+    var j=i+Math.floor(clRand()*(a.length-i));
     var t=a[i];a[i]=a[j];a[j]=t;
   }
   return a;
@@ -1432,7 +1449,7 @@ function clBuild(ci){
   // 7. Generate full HTML
   var h='';
   h+='<div class="txt-card cl-card" id="cl-'+ci+'">';
-  h+='<div class="lb">'+src.title+' <span style="font-size:.72rem;color:#888;font-weight:400">'+src.sub+'</span></div>';
+  h+='<div class="lb">'+src.title+' <span style="font-size:.72rem;color:#888;font-weight:400">'+src.sub+'</span><span style="font-size:.65rem;color:#aaa;margin-left:10px">#'+_clRefreshCount+'</span></div>';
   h+='<div class="cl-p">'+passageHTML+'</div>';
   h+='<div class="cl-bank" id="cbank-'+ci+'">';
   for(var w=0;w<finalBank.length;w++){
@@ -1446,6 +1463,7 @@ function clBuild(ci){
   return h;
 }
 function initCloze(){
+  _clRefreshCount=0;
   var container=document.getElementById('cl-container');
   if(!container)return;
   var html='';
@@ -1455,6 +1473,7 @@ function initCloze(){
   container.innerHTML=html;
 }
 function clRefresh(ci){
+  _clRefreshCount+=Math.floor(clRand()*100)+1;
   var newHTML=clBuild(ci);
   if(!newHTML)return;
   var oldCard=document.getElementById('cl-'+ci);
