@@ -73,6 +73,9 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .btn-rand:hover{background:#ff6b6b;color:#fff}
 .btn-exit{border-color:#f39c12;color:#f39c12}
 .btn-exit:hover{background:#f39c12;color:#fff}
+.btn-refresh{border-color:#2ec4b6;color:#2ec4b6}
+.btn-refresh:hover{background:#2ec4b6;color:#fff}
+.btn-refresh:active{transform:scale(.95)}
 .txt-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .25s}
 .txt-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
 .txt-card .lb{font-size:.85rem;font-weight:600;color:var(--accent);margin-bottom:8px}
@@ -1438,7 +1441,7 @@ function clBuild(ci){
     h+='<span class="cl-w" id="cw-'+ci+'-'+w+'" onclick="clPick('+ci+','+w+')">'+finalBank[w]+'</span>';
   }
   h+='</div>';
-  h+='<div class="cl-actions"><button class="btn btn-pri" onclick="clSubmit('+ci+')">提交</button><button class="btn btn-out" onclick="clReset('+ci+')">重置</button><button class="btn btn-out" onclick="clShowAnswer('+ci+')">显示答案</button></div>';
+  h+='<div class="cl-actions"><button class="btn btn-pri" onclick="clSubmit('+ci+')">提交</button><button class="btn btn-out" onclick="clReset('+ci+')">重置</button><button class="btn btn-out" onclick="clShowAnswer('+ci+')">显示答案</button><button class="btn btn-refresh" onclick="clRefresh('+ci+')">🔄 刷新</button></div>';
   h+='<div class="cl-zh" id="clzh-'+ci+'" style="display:none">'+src.zh+'</div>';
   h+='<div class="fb" id="cfb-'+ci+'"></div>';
   h+='</div>';
@@ -1452,6 +1455,24 @@ function initCloze(){
     html+=clBuild(ci);
   }
   container.innerHTML=html;
+}
+function clRefresh(ci){
+  var newHTML=clBuild(ci);
+  if(!newHTML)return;
+  var oldCard=document.getElementById('cl-'+ci);
+  if(!oldCard)return;
+  // Preserve scroll position of the cloze section
+  var scrollContainer=document.getElementById('tab-cl');
+  var scrollTop=scrollContainer?scrollContainer.scrollTop:0;
+  // Replace the card
+  var wrapper=document.createElement('div');
+  wrapper.innerHTML=newHTML;
+  var newCard=wrapper.firstChild;
+  oldCard.parentNode.replaceChild(newCard,oldCard);
+  // Restore scroll
+  if(scrollContainer)scrollContainer.scrollTop=scrollTop;
+  // Clear state for this unit
+  if(clSt[ci])clSt[ci]={active:null,map:{}};
 }
 
 // ===== TRANS =====
