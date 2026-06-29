@@ -69,6 +69,10 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 .btn-pri:hover{opacity:.85;transform:translateY(-1px)}
 .btn-out{background:transparent;border:2px solid var(--accent);color:var(--accent);padding:5px 12px}
 .btn-out:hover{background:var(--accent);color:#fff}
+.btn-rand{border-color:#ff6b6b;color:#ff6b6b}
+.btn-rand:hover{background:#ff6b6b;color:#fff}
+.btn-exit{border-color:#f39c12;color:#f39c12}
+.btn-exit:hover{background:#f39c12;color:#fff}
 .txt-card{background:var(--card);border-radius:var(--radius);border:1px solid var(--border);padding:16px 18px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,.04);transition:all .25s}
 .txt-card:hover{transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.1)}
 .txt-card .lb{font-size:.85rem;font-weight:600;color:var(--accent);margin-bottom:8px}
@@ -314,7 +318,9 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 <div class="section-title">Vocabulary and Structure <span class="badge">第一部分 31-60</span></div>
 <div class="act-bar"><div class="prog"><span class="sco" id="sv1-sco">0/30</span><span>正确</span><div class="prog-bar"><div class="prog-fill" id="sv1-bar"></div>
 </div></div>
-<button class="btn btn-out" onclick="resetV(1,30)">重置</button></div>
+<button class="btn btn-out" onclick="resetV(1,30)">重置</button>
+<button class="btn btn-out btn-rand" onclick="toggleRandomMode(1)" id="rand-btn-1">🎲 随机模式</button>
+<button class="btn btn-out btn-exit" onclick="exitRandomMode(1)" id="exit-rand-btn-1" style="display:none">✕ 退出随机</button></div>
 <div class="q-card" id="q-31"><div class="q-hdr"><span class="q-num">31</span><div class="q-txt">We shall be grateful if you will ______ space for any of the enclosed advertisements in your publications.</div>
 </div><div class="opts"><div class="opt" data-idx="0" onclick="pick(31,this,'donate')"><span class="dot"></span><span><strong>A</strong> donate</span></div><div class="opt" data-idx="1" onclick="pick(31,this,'forge')"><span class="dot"></span><span><strong>B</strong> forge</span></div><div class="opt" data-idx="2" onclick="pick(31,this,'impart')"><span class="dot"></span><span><strong>C</strong> impart</span></div><div class="opt" data-idx="3" onclick="pick(31,this,'specify')"><span class="dot"></span><span><strong>D</strong> specify</span></div>
 </div><div class="fb" id="fb-31"></div><div class="reveal" id="rev-31" style="display:none"><div class="rev-zh">如果你能在贵出版物中为所附的任何广告<span class="cl-mean-hl">免费提供</span>版面，我们将不胜感激。</div><div class="rev-opts"><span class="opt-mean" id="mean-31-0" style="display:none"><strong>A)</strong> donate：捐赠；免费提供</span><span class="opt-mean" id="mean-31-1" style="display:none"><strong>B)</strong> forge：伪造；锻造</span><span class="opt-mean" id="mean-31-2" style="display:none"><strong>C)</strong> impart：传授；给予</span><span class="opt-mean" id="mean-31-3" style="display:none"><strong>D)</strong> specify：明确说明；指定</span></div>
@@ -440,7 +446,9 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 <div class="section-title">Vocabulary and Structure <span class="badge">第二部分 31-60</span></div>
 <div class="act-bar"><div class="prog"><span class="sco" id="sv2-sco">0/30</span><span>正确</span><div class="prog-bar"><div class="prog-fill" id="sv2-bar"></div>
 </div></div>
-<button class="btn btn-out" onclick="resetV(2,30)">重置</button></div>
+<button class="btn btn-out" onclick="resetV(2,30)">重置</button>
+<button class="btn btn-out btn-rand" onclick="toggleRandomMode(2)" id="rand-btn-2">🎲 随机模式</button>
+<button class="btn btn-out btn-exit" onclick="exitRandomMode(2)" id="exit-rand-btn-2" style="display:none">✕ 退出随机</button></div>
 <div class="q-card" id="q-101"><div class="q-hdr"><span class="q-num">101</span><div class="q-txt">Following his advice, the company then made a disastrous decision to ______ the investment opportunity.</div>
 </div><div class="opts"><div class="opt" data-idx="0" onclick="pick(101,this,'lessen')"><span class="dot"></span><span><strong>A</strong> lessen</span></div><div class="opt" data-idx="1" onclick="pick(101,this,'wreck')"><span class="dot"></span><span><strong>B</strong> wreck</span></div><div class="opt" data-idx="2" onclick="pick(101,this,'decline')"><span class="dot"></span><span><strong>C</strong> decline</span></div><div class="opt" data-idx="3" onclick="pick(101,this,'digest')"><span class="dot"></span><span><strong>D</strong> digest</span></div>
 </div><div class="fb" id="fb-101"></div><div class="reveal" id="rev-101" style="display:none"><div class="rev-zh">听从他的建议后，公司随后做出了一个灾难性的决定，<span class="cl-mean-hl">拒绝</span>了这次投资机会。</div><div class="rev-opts"><span class="opt-mean" id="mean-101-0" style="display:none"><strong>A)</strong> lessen：减少，减轻</span><span class="opt-mean" id="mean-101-1" style="display:none"><strong>B)</strong> wreck：毁坏，破坏</span><span class="opt-mean" id="mean-101-2" style="display:none"><strong>C)</strong> decline：拒绝，谢绝</span><span class="opt-mean" id="mean-101-3" style="display:none"><strong>D)</strong> digest：消化；领会</span></div>
@@ -1029,7 +1037,117 @@ function pick(n,el,word){
   updateV(n<=60?1:2);
 }
 function updateV(p){var s='sv'+p+'-sco';var b='sv'+p+'-bar';var cards=document.querySelectorAll('#tab-v'+p+' .q-card');var ok=0;cards.forEach(function(c){if(c.classList.contains('ok'))ok++;});var t=cards.length;document.getElementById(s).textContent=ok+'/'+t;document.getElementById(b).style.width=(t?(ok/t*100):0)+'%';}
-function resetV(p,t){document.querySelectorAll('#tab-v'+p+' .q-card').forEach(function(c){c.className='q-card';c.querySelectorAll('.opt').forEach(function(o){o.className='opt';o.style.pointerEvents='';});c.querySelector('.fb').className='fb';c.querySelector('.fb').textContent='';c.querySelector('.reveal').style.display='none';c.querySelectorAll('.opt-mean').forEach(function(m){m.style.display='none';});});Object.keys(doneV).forEach(function(k){var n=parseInt(k);if((p==1&&n<=60)||(p==2&&n>=100))delete doneV[k];});document.getElementById('sv'+p+'-sco').textContent='0/'+t;document.getElementById('sv'+p+'-bar').style.width='0%';}
+function resetV(p,t){
+  var isRand=randMode.active&&randMode.tab===p;
+  var visibleIds=[];
+  document.querySelectorAll('#tab-v'+p+' .q-card').forEach(function(c){
+    if(isRand&&c.style.display==='none')return;
+    visibleIds.push(c.id.replace('q-',''));
+    c.className='q-card';
+    c.querySelectorAll('.opt').forEach(function(o){o.className='opt';o.style.pointerEvents='';});
+    c.querySelector('.fb').className='fb';
+    c.querySelector('.fb').textContent='';
+    c.querySelector('.reveal').style.display='none';
+    c.querySelectorAll('.opt-mean').forEach(function(m){m.style.display='none';});
+  });
+  // Clear doneV for visible questions
+  if(isRand){
+    visibleIds.forEach(function(k){delete doneV[k];});
+    document.getElementById('sv'+p+'-sco').textContent='0/'+visibleIds.length;
+  }else{
+    Object.keys(doneV).forEach(function(k){var n=parseInt(k);if((p==1&&n<=60)||(p==2&&n>=100))delete doneV[k];});
+    document.getElementById('sv'+p+'-sco').textContent='0/'+t;
+  }
+  document.getElementById('sv'+p+'-bar').style.width='0%';
+}
+
+// ===== RANDOM MODE =====
+var randMode={active:false,tab:null,origHtml:'',ids:[]};
+function shuffleArr(arr){for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}
+function toggleRandomMode(p){
+  if(randMode.active)return;
+  var tab=document.getElementById('tab-v'+p);
+  if(!tab)return;
+  // Store original HTML
+  randMode.origHtml=tab.innerHTML;
+  randMode.tab=p;
+  randMode.active=true;
+  // Collect all question IDs from both tabs
+  var allIds=[];
+  var otherTab=document.getElementById('tab-v'+(p===1?2:1));
+  [tab,otherTab].forEach(function(t){
+    if(!t)return;
+    t.querySelectorAll('.q-card').forEach(function(c){
+      var id=c.id.replace('q-','');
+      allIds.push(id);
+    });
+  });
+  // Shuffle and pick 10
+  shuffleArr(allIds);
+  var selected=allIds.slice(0,10);
+  randMode.ids=selected;
+  // Hide all questions, show only selected
+  tab.querySelectorAll('.q-card').forEach(function(c){
+    var id=c.id.replace('q-','');
+    if(selected.indexOf(id)===-1){c.style.display='none';}
+    else{c.style.display='';}
+  });
+  // Update UI
+  document.getElementById('rand-btn-'+p).style.display='none';
+  document.getElementById('exit-rand-btn-'+p).style.display='';
+  document.getElementById('sv'+p+'-sco').textContent='0/10';
+  document.getElementById('sv'+p+'-bar').style.width='0%';
+  // Clear doneV for random mode questions
+  Object.keys(doneV).forEach(function(k){
+    if(selected.indexOf(k)===-1)delete doneV[k];
+  });
+  // Scroll to top
+  window.scrollTo(0,0);
+}
+function exitRandomMode(p){
+  if(!randMode.active||randMode.tab!==p)return;
+  var tab=document.getElementById('tab-v'+p);
+  if(!tab)return;
+  // Restore original HTML
+  tab.innerHTML=randMode.origHtml;
+  randMode.active=false;
+  randMode.origHtml='';
+  randMode.ids=[];
+  randMode.tab=null;
+  // Update UI
+  document.getElementById('rand-btn-'+p).style.display='';
+  document.getElementById('exit-rand-btn-'+p).style.display='none';
+  // Reset score display
+  document.getElementById('sv'+p+'-sco').textContent='0/30';
+  document.getElementById('sv'+p+'-bar').style.width='0%';
+  // Clear doneV for this tab's questions
+  Object.keys(doneV).forEach(function(k){var n=parseInt(k);if((p==1&&n<=60)||(p==2&&n>=100))delete doneV[k];});
+}
+// Wrap updateV to handle random mode
+var origUpdateV=updateV;
+updateV=function(p){
+  if(randMode.active&&randMode.tab===p){
+    var s='sv'+p+'-sco';var b='sv'+p+'-bar';
+    var cards=document.querySelectorAll('#tab-v'+p+' .q-card');
+    var visibleCards=[];
+    cards.forEach(function(c){if(c.style.display!=='none')visibleCards.push(c);});
+    var ok=0;
+    visibleCards.forEach(function(c){if(c.classList.contains('ok'))ok++;});
+    var t=visibleCards.length;
+    document.getElementById(s).textContent=ok+'/'+t;
+    document.getElementById(b).style.width=(t?(ok/t*100):0)+'%';
+  }else{
+    origUpdateV(p);
+  }
+};
+// Wrap pick to prevent answering hidden questions
+var origPick=pick;
+pick=function(n,el,word){
+  // Check if this question is visible
+  var card=el.closest('.q-card');
+  if(card&&card.style.display==='none')return;
+  origPick(n,el,word);
+};
 
 // ===== READING =====
 function renderRd(rd){
