@@ -1038,66 +1038,84 @@ function pick(n,el,word){
 }
 function updateV(p){var s='sv'+p+'-sco';var b='sv'+p+'-bar';var cards=document.querySelectorAll('#tab-v'+p+' .q-card');var ok=0;cards.forEach(function(c){if(c.classList.contains('ok'))ok++;});var t=cards.length;document.getElementById(s).textContent=ok+'/'+t;document.getElementById(b).style.width=(t?(ok/t*100):0)+'%';}
 function resetV(p,t){
-  var isRand=randMode.active&&randMode.tab===p;
+  var isRand=randMode.active;
   var visibleIds=[];
-  document.querySelectorAll('#tab-v'+p+' .q-card').forEach(function(c){
-    if(isRand&&c.style.display==='none')return;
-    visibleIds.push(c.id.replace('q-',''));
-    c.className='q-card';
-    c.querySelectorAll('.opt').forEach(function(o){o.className='opt';o.style.pointerEvents='';});
-    c.querySelector('.fb').className='fb';
-    c.querySelector('.fb').textContent='';
-    c.querySelector('.reveal').style.display='none';
-    c.querySelectorAll('.opt-mean').forEach(function(m){m.style.display='none';});
+  // In random mode, reset visible questions across BOTH tabs
+  var tabs=isRand?[1,2]:[p];
+  tabs.forEach(function(pp){
+    document.querySelectorAll('#tab-v'+pp+' .q-card').forEach(function(c){
+      if(isRand&&c.style.display==='none')return;
+      visibleIds.push(c.id.replace('q-',''));
+      c.className='q-card';
+      c.querySelectorAll('.opt').forEach(function(o){o.className='opt';o.style.pointerEvents='';});
+      c.querySelector('.fb').className='fb';
+      c.querySelector('.fb').textContent='';
+      c.querySelector('.reveal').style.display='none';
+      c.querySelectorAll('.opt-mean').forEach(function(m){m.style.display='none';});
+    });
   });
   // Clear doneV for visible questions
   if(isRand){
     visibleIds.forEach(function(k){delete doneV[k];});
+    // Update score for current tab
     document.getElementById('sv'+p+'-sco').textContent='0/'+visibleIds.length;
+    document.getElementById('sv'+p+'-bar').style.width='0%';
+    // Also update the other tab
+    var otherP=p===1?2:1;
+    document.getElementById('sv'+otherP+'-sco').textContent='0/'+visibleIds.length;
+    document.getElementById('sv'+otherP+'-bar').style.width='0%';
   }else{
     Object.keys(doneV).forEach(function(k){var n=parseInt(k);if((p==1&&n<=60)||(p==2&&n>=100))delete doneV[k];});
     document.getElementById('sv'+p+'-sco').textContent='0/'+t;
+    document.getElementById('sv'+p+'-bar').style.width='0%';
   }
-  document.getElementById('sv'+p+'-bar').style.width='0%';
 }
 
 // ===== RANDOM MODE =====
-var randMode={active:false,tab:null,origHtml:'',ids:[]};
+var randMode={active:false,tab:null,origHtml1:'',origHtml2:'',ids:[]};
 function shuffleArr(arr){for(var i=arr.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=arr[i];arr[i]=arr[j];arr[j]=t;}return arr;}
 function toggleRandomMode(p){
   if(randMode.active)return;
-  var tab=document.getElementById('tab-v'+p);
-  if(!tab)return;
-  // Store original HTML
-  randMode.origHtml=tab.innerHTML;
+  var tab1=document.getElementById('tab-v1');
+  var tab2=document.getElementById('tab-v2');
+  if(!tab1||!tab2)return;
+  // Store original HTML for both tabs
+  randMode.origHtml1=tab1.innerHTML;
+  randMode.origHtml2=tab2.innerHTML;
   randMode.tab=p;
   randMode.active=true;
-  // Collect all question IDs from both tabs
+  // Collect all question IDs from BOTH tabs (60 total)
   var allIds=[];
-  var otherTab=document.getElementById('tab-v'+(p===1?2:1));
-  [tab,otherTab].forEach(function(t){
-    if(!t)return;
+  [tab1,tab2].forEach(function(t){
     t.querySelectorAll('.q-card').forEach(function(c){
       var id=c.id.replace('q-','');
       allIds.push(id);
     });
   });
-  // Shuffle and pick 10
+  // Shuffle and pick 10 from the combined 60
   shuffleArr(allIds);
   var selected=allIds.slice(0,10);
   randMode.ids=selected;
-  // Hide all questions, show only selected
-  tab.querySelectorAll('.q-card').forEach(function(c){
-    var id=c.id.replace('q-','');
-    if(selected.indexOf(id)===-1){c.style.display='none';}
-    else{c.style.display='';}
+  // Hide all questions in BOTH tabs, show only selected
+  [tab1,tab2].forEach(function(t){
+    t.querySelectorAll('.q-card').forEach(function(c){
+      var id=c.id.replace('q-','');
+      if(selected.indexOf(id)===-1){c.style.display='none';}
+      else{c.style.display='';}
+    });
   });
-  // Update UI
+  // Update UI for current tab
   document.getElementById('rand-btn-'+p).style.display='none';
   document.getElementById('exit-rand-btn-'+p).style.display='';
   document.getElementById('sv'+p+'-sco').textContent='0/10';
   document.getElementById('sv'+p+'-bar').style.width='0%';
-  // Clear doneV for random mode questions
+  // Also update the other tab's buttons
+  var otherP=p===1?2:1;
+  document.getElementById('rand-btn-'+otherP).style.display='none';
+  document.getElementById('exit-rand-btn-'+otherP).style.display='';
+  document.getElementById('sv'+otherP+'-sco').textContent='0/10';
+  document.getElementById('sv'+otherP+'-bar').style.width='0%';
+  // Clear doneV for non-selected questions
   Object.keys(doneV).forEach(function(k){
     if(selected.indexOf(k)===-1)delete doneV[k];
   });
@@ -1105,37 +1123,50 @@ function toggleRandomMode(p){
   window.scrollTo(0,0);
 }
 function exitRandomMode(p){
-  if(!randMode.active||randMode.tab!==p)return;
-  var tab=document.getElementById('tab-v'+p);
-  if(!tab)return;
-  // Restore original HTML
-  tab.innerHTML=randMode.origHtml;
+  if(!randMode.active)return;
+  var tab1=document.getElementById('tab-v1');
+  var tab2=document.getElementById('tab-v2');
+  if(!tab1||!tab2)return;
+  // Restore original HTML for both tabs
+  tab1.innerHTML=randMode.origHtml1;
+  tab2.innerHTML=randMode.origHtml2;
   randMode.active=false;
-  randMode.origHtml='';
+  randMode.origHtml1='';
+  randMode.origHtml2='';
   randMode.ids=[];
   randMode.tab=null;
-  // Update UI
-  document.getElementById('rand-btn-'+p).style.display='';
-  document.getElementById('exit-rand-btn-'+p).style.display='none';
-  // Reset score display
-  document.getElementById('sv'+p+'-sco').textContent='0/30';
-  document.getElementById('sv'+p+'-bar').style.width='0%';
-  // Clear doneV for this tab's questions
-  Object.keys(doneV).forEach(function(k){var n=parseInt(k);if((p==1&&n<=60)||(p==2&&n>=100))delete doneV[k];});
+  // Update UI for both tabs
+  [1,2].forEach(function(pp){
+    document.getElementById('rand-btn-'+pp).style.display='';
+    document.getElementById('exit-rand-btn-'+pp).style.display='none';
+    document.getElementById('sv'+pp+'-sco').textContent='0/30';
+    document.getElementById('sv'+pp+'-bar').style.width='0%';
+  });
+  // Clear doneV for all questions
+  Object.keys(doneV).forEach(function(k){var n=parseInt(k);if((n>=31&&n<=60)||(n>=101&&n<=130))delete doneV[k];});
 }
 // Wrap updateV to handle random mode
 var origUpdateV=updateV;
 updateV=function(p){
-  if(randMode.active&&randMode.tab===p){
-    var s='sv'+p+'-sco';var b='sv'+p+'-bar';
-    var cards=document.querySelectorAll('#tab-v'+p+' .q-card');
+  if(randMode.active){
+    // In random mode, count visible questions across BOTH tabs
     var visibleCards=[];
-    cards.forEach(function(c){if(c.style.display!=='none')visibleCards.push(c);});
     var ok=0;
-    visibleCards.forEach(function(c){if(c.classList.contains('ok'))ok++;});
+    [1,2].forEach(function(pp){
+      document.querySelectorAll('#tab-v'+pp+' .q-card').forEach(function(c){
+        if(c.style.display!=='none'){
+          visibleCards.push(c);
+          if(c.classList.contains('ok'))ok++;
+        }
+      });
+    });
     var t=visibleCards.length;
-    document.getElementById(s).textContent=ok+'/'+t;
-    document.getElementById(b).style.width=(t?(ok/t*100):0)+'%';
+    // Update both tabs' score displays
+    document.getElementById('sv'+p+'-sco').textContent=ok+'/'+t;
+    document.getElementById('sv'+p+'-bar').style.width=(t?(ok/t*100):0)+'%';
+    var otherP=p===1?2:1;
+    document.getElementById('sv'+otherP+'-sco').textContent=ok+'/'+t;
+    document.getElementById('sv'+otherP+'-bar').style.width=(t?(ok/t*100):0)+'%';
   }else{
     origUpdateV(p);
   }
