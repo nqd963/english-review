@@ -1368,85 +1368,101 @@ function shuffleArray(arr){
 function clBuild(ci){
   var src=CL_SRC[String(ci)];
   if(!src)return'';
-  // 1. Collect all candidates from passage (in order)
+  // 高频虚词排除表（不作挖空候选）
+  var sw={a:1,an:1,the:1,and:1,or:1,but:1,nor:1,so:1,yet:1,
+    in:1,on:1,at:1,to:1,of:1,by:1,up:1,as:1,is:1,it:1,be:1,
+    do:1,no:1,if:1,go:1,he:1,we:1,me:1,us:1,am:1,an:1,my:1};
+  // 1. 收集段落中**所有单词**为候选（不再局限于<b>标签）
   var allCands=[];
   var para=src.para;
   for(var p=0;p<para.length;p++){
-    var html=para[p];
-    var re=/<b>([^<]+)<\/b>/g,m;
-    while((m=re.exec(html))!==null){
-      allCands.push({word:m[1],paraIdx:p,fullMatch:m[0]});
+    // 去掉<b>标签，让所有单词平等参与随机
+    var html=para[p].replace(/<\/?b>/g,'');
+    // 按HTML标签切分段落：只处理标签之间的纯文本
+    var segments=[];
+    var tagRe=/<[^>]+>/g,last=0,tm;
+    while((tm=tagRe.exec(html))!==null){
+      if(tm.index>last)segments.push({text:html.slice(last,tm.index),off:last});
+      last=tm.index+tm[0].length;
+    }
+    if(last<html.length)segments.push({text:html.slice(last),off:last});
+    for(var s=0;s<segments.length;s++){
+      var seg=segments[s];
+      var wr=/[a-zA-Z]{3,}/g,wm;
+      while((wm=wr.exec(seg.text))!==null){
+        var wd=wm[0],lo=wd.toLowerCase();
+        if(sw[lo])continue;
+        allCands.push({word:wd,lower:lo,paraIdx:p,
+          startPos:seg.off+wm.index,
+          endPos:seg.off+wm.index+wd.length});
+      }
     }
   }
   var totalCands=allCands.length;
-  // 2. Decide how many blanks (十五选十: max 10 per unit)
+  if(totalCands<5)return'';
+  // 2. 挖空数量：固定10
   var numBlanks=Math.min(10,totalCands);
-  // 3. Randomly select which candidates become blanks
+  // 3. 加密随机选取挖空
   var idxArr=[];
   for(var i=0;i<totalCands;i++)idxArr.push(i);
   idxArr=shuffleArray(idxArr);
-  var blankSet={};
-  for(var i=0;i<numBlanks;i++)blankSet[idxArr[i]]=true;
-  // 4. Build passage HTML with blanks
-  var passageHTML='';
-  var candIdx=0;
   var correctWords=[];
+  var blankByPara={};
+  for(var i=0;i<numBlanks;i++){
+    var cd=allCands[idxArr[i]];
+    correctWords.push(cd.word);
+    if(!blankByPara[cd.paraIdx])blankByPara[cd.paraIdx]=[];
+    blankByPara[cd.paraIdx].push({startPos:cd.startPos,endPos:cd.endPos,blankIdx:i});
+  }
+  for(var key in blankByPara)blankByPara[key].sort(function(a,b){return a.startPos-b.startPos;});
+  // 4. 生成带挖空的段落HTML
+  var passageHTML='';
   for(var p=0;p<para.length;p++){
-    var html=para[p];
-    var result='';
-    var lastIdx=0;
-    var re=/<b>([^<]+)<\/b>/g,m;
-    while((m=re.exec(html))!==null){
-      result+=html.substring(lastIdx,m.index);
-      if(blankSet[candIdx]){
-        var bi=correctWords.length;
-        result+='<span class="cl-blank" id="cb-'+ci+'-'+bi+'" onclick="clBlk('+ci+','+bi+')"></span>';
-        correctWords.push(m[1]);
-      }else{
-        result+=m[1];
-      }
-      candIdx++;
-      lastIdx=m.index+m[0].length;
+    var html=para[p].replace(/<\/?b>/g,'');
+    var blanks=blankByPara[p]||[];
+    var result='',last=0;
+    for(var b=0;b<blanks.length;b++){
+      var bl=blanks[b];
+      result+=html.slice(last,bl.startPos);
+      result+='<span class="cl-blank" id="cb-'+ci+'-'+bl.blankIdx+'" onclick="clBlk('+ci+','+bl.blankIdx+')"></span>';
+      last=bl.endPos;
     }
-    result+=html.substring(lastIdx);
+    result+=html.slice(last);
     passageHTML+=result;
   }
-  // 5. Build word bank: correct words + distractors from bank
-  var bankAll=src.bank;
-  var targetBankSize=15;
-  var needDistractors=targetBankSize-numBlanks;
-  // Collect distractors: words in bank NOT in correctWords, deduplicated
-  var distractors=[];
-  var seen={};
+  // 5. 构建词库：正确答案 + 干扰项（优先用bank，不足则从段落补）
+  var bankAll=src.bank||[];
+  var needDistractors=15-numBlanks;
+  var distractors=[],seen={};
+  for(var i=0;i<correctWords.length;i++)seen[correctWords[i].toLowerCase()]=true;
   for(var i=0;i<bankAll.length;i++){
-    var bw=bankAll[i];
-    if(correctWords.indexOf(bw)===-1&&!seen[bw]){
-      distractors.push(bw);
-      seen[bw]=true;
+    var bw=bankAll[i],bl=bw.toLowerCase();
+    if(!seen[bl]){distractors.push(bw);seen[bl]=true;}
+  }
+  // 干扰项不足则从段落剩余单词中补
+  if(distractors.length<needDistractors){
+    var extra=[];
+    for(var i=0;i<totalCands;i++){
+      var cd=allCands[i];
+      if(!seen[cd.lower]){extra.push(cd.word);seen[cd.lower]=true;}
     }
+    extra=shuffleArray(extra);
+    for(var i=0;i<extra.length&&distractors.length<needDistractors;i++)distractors.push(extra[i]);
   }
   distractors=shuffleArray(distractors);
   if(distractors.length>needDistractors)distractors=distractors.slice(0,needDistractors);
-  // Build final bank with known positions for correct words, then shuffle
-  var correctPos={};
+  // 6. 组装最终词库并打乱
   var bankItems=[];
-  for(var b=0;b<correctWords.length;b++){
-    correctPos[b]=bankItems.length;
-    bankItems.push({word:correctWords[b],isCorrect:true,correctIdx:b});
-  }
-  for(var d=0;d<distractors.length;d++){
-    bankItems.push({word:distractors[d],isCorrect:false});
-  }
+  for(var b=0;b<correctWords.length;b++)bankItems.push({word:correctWords[b],isCorrect:true,correctIdx:b});
+  for(var d=0;d<distractors.length;d++)bankItems.push({word:distractors[d],isCorrect:false});
   bankItems=shuffleArray(bankItems);
   var finalBank=[];
   CL_ANS[ci]={};
   for(var i=0;i<bankItems.length;i++){
     finalBank.push(bankItems[i].word);
-    if(bankItems[i].isCorrect){
-      CL_ANS[ci][bankItems[i].correctIdx]=i;
-    }
+    if(bankItems[i].isCorrect)CL_ANS[ci][bankItems[i].correctIdx]=i;
   }
-  // 7. Generate full HTML
+  // 7. 生成完整HTML
   var h='';
   h+='<div class="txt-card cl-card" id="cl-'+ci+'">';
   h+='<div class="lb">'+src.title+' <span style="font-size:.72rem;color:#888;font-weight:400">'+src.sub+'</span><span style="font-size:.65rem;color:#aaa;margin-left:10px">#'+_clRefreshCount+'</span></div>';
@@ -1976,7 +1992,7 @@ document.addEventListener('DOMContentLoaded',function(){
 
 // ===== ANNOUNCEMENTS =====
 var ANNOUNCEMENTS=[
-  {id:'2026063001',date:'2026-06-30',title:'🎲 选词填空随机性大幅增强',content:'升级为加密级随机数（crypto.getRandomValues）+ 双轮洗牌算法，每次刷新都产生截然不同的挖空组合与词序。每个卡片标题显示当前种子编号 #N，刷新时随机递增，随机性拉满！'},
+  {id:'2026063001',date:'2026-06-30',title:'🔥 选词填空随机性史诗级增强',content:'候选词从仅<b>标签标记词扩展为段落所有实词（每单元60~150个），挖空组合数从几千暴增到万亿级别（C(62,10)=1070亿种起）。搭配加密级随机数+双轮洗牌+刷新计数种子，每次刷新都是全新题目！卡片标题显示#N种子编号。'},
   {id:'2026062506',date:'2026-06-25',title:'📖 新增5篇阅读理解文章',content:'新增10篇阅读理解，涵盖《国家地理》《卫报》《科学美国人》等知名期刊，以及ACG文化和教育主题，答案ABCD合理分配！'},
   {id:'2026062501',date:'2026-06-25',title:'🎵 全新真实乐器BGM音乐',content:'已替换为Pixabay无版权真实乐器演奏纯音乐：晨曦钢琴、舒缓钢琴、夏日海浪、爵士咖啡馆、温馨爵士、宁静自然。还有旋转留声机动画效果！'},
   {id:'2026062502',date:'2026-06-25',title:'🖼️ 自定义背景图功能',content:'现在可以使用瓶宝文件夹中的3张精美图片作为页面背景，在设置面板中切换。'},
