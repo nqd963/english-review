@@ -173,7 +173,7 @@ body{font-size:17px;scroll-behavior:smooth;font-family:'Inter','Noto Sans SC',-a
 @keyframes slideIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:640px){body{font-size:15px}.header h1{font-size:1.7rem}.q-card{padding:12px 14px}.tab-btn{padding:10px 12px;font-size:.82rem}.rd-nav{flex-direction:column;align-items:flex-start}.rd-nav .rd-nav-btns{width:100%;justify-content:space-between}.announcement-wrapper{top:8px;right:8px}.ann-btn{padding:6px 12px;font-size:.82rem}.announcement-dropdown{width:300px;max-height:360px}}
 /* ===== USER SETTINGS ===== */
-.settings-btn{padding:6px 16px;border:1px solid rgba(255,255,255,.4);border-radius:8px;background:transparent;color:#fff;cursor:pointer;font-size:.85rem;font-weight:500;transition:all .15s}
+.settings-btn{padding:6px 10px;border:1px solid rgba(255,255,255,.4);border-radius:8px;background:transparent;color:#fff;cursor:pointer;font-size:.8rem;font-weight:500;transition:all .15s;min-width:34px;text-align:center}
 .settings-btn:hover{background:rgba(255,255,255,.2)}
 .settings-panel{position:fixed;top:0;right:-320px;width:300px;height:100%;background:#fff;box-shadow:-4px 0 20px rgba(0,0,0,.15);z-index:1001;transition:right .3s ease;overflow-y:auto;padding:24px 20px}
 .settings-panel.show{right:0}
@@ -1580,10 +1580,10 @@ function updateUserBar(){
   var user=getCurrentUser();
   if(user){
     status.textContent='当前用户：'+user;
-    bar.innerHTML='<span class="user-name">当前用户：'+user+'</span><button class="settings-btn" onclick="showSettings()">⚙️ 设置</button><button class="user-btn" onclick="logout()">退出登录</button>';
+    bar.innerHTML='<span class="user-name">当前用户：'+user+'</span><span id="zoomDisplay" style="font-size:.75rem;opacity:.7;margin:0 4px">100%</span><button class="settings-btn" onclick="adjustZoom(-10)" title="缩小 (Ctrl+-)">➖</button><button class="settings-btn" onclick="adjustZoom(10)" title="放大 (Ctrl++)">➕</button><button class="settings-btn" onclick="setZoom(100)" title="重置 (Ctrl+0)">↺</button><button class="settings-btn" onclick="showSettings()">⚙️</button><button class="user-btn" onclick="logout()">退出登录</button>';
   }else{
     status.textContent='未登录';
-    bar.innerHTML='<span id="userStatus">未登录</span><button class="user-btn" onclick="showLoginModal()">登录</button><button class="user-btn primary" onclick="showRegisterModal()">注册</button>';
+    bar.innerHTML='<span id="userStatus">未登录</span><span id="zoomDisplay" style="font-size:.75rem;opacity:.7;margin:0 4px">100%</span><button class="settings-btn" onclick="adjustZoom(-10)" title="缩小">➖</button><button class="settings-btn" onclick="adjustZoom(10)" title="放大">➕</button><button class="settings-btn" onclick="setZoom(100)" title="重置">↺</button><button class="user-btn" onclick="showLoginModal()">登录</button><button class="user-btn primary" onclick="showRegisterModal()">注册</button>';
   }
 }
 function showRegisterModal(){
@@ -1776,6 +1776,32 @@ function setBgImage(url){
     p.classList.toggle('active',p.dataset.bg===url);
   });
   playSfx('click');
+}
+
+// ===== ZOOM =====
+function setZoom(pct){
+  pct=Math.max(50,Math.min(150,parseInt(pct)));
+  document.body.style.zoom=pct+'%';
+  var label=document.getElementById('zoomLabel');
+  if(label)label.textContent=pct+'%';
+  var slider=document.getElementById('zoomSlider');
+  if(slider)slider.value=pct;
+  var display=document.getElementById('zoomDisplay');
+  if(display)display.textContent=pct+'%';
+  var prefs=getUserPrefs()||{};
+  prefs.zoom=pct;
+  saveUserPrefs(prefs);
+  playSfx('click');
+}
+function initZoom(){
+  var prefs=getUserPrefs();
+  var z=prefs&&prefs.zoom?prefs.zoom:100;
+  setZoom(z);
+}
+function adjustZoom(delta){
+  var prefs=getUserPrefs();
+  var z=prefs&&prefs.zoom?prefs.zoom:100;
+  setZoom(z+delta);
 }
 
 // ===== BGM SYSTEM (Web Audio API) =====
@@ -1988,6 +2014,16 @@ document.addEventListener('DOMContentLoaded',function(){
   }
   // Build cloze units with randomized blanks
   if(typeof initCloze==='function')initCloze();
+  // Restore zoom level
+  if(typeof initZoom==='function')initZoom();
+});
+// Keyboard shortcuts: Ctrl +/- to zoom, Ctrl 0 to reset
+document.addEventListener('keydown',function(e){
+  if(e.ctrlKey||e.metaKey){
+    if(e.key==='+'||e.key==='='){e.preventDefault();adjustZoom(10);}
+    else if(e.key==='-'){e.preventDefault();adjustZoom(-10);}
+    else if(e.key==='0'){e.preventDefault();setZoom(100);}
+  }
 });
 
 // ===== ANNOUNCEMENTS =====
@@ -2244,6 +2280,19 @@ updateUserBar();
     <div class="settings-item">
       <label>或输入图片URL</label>
       <input type="text" id="bgImageUrl" placeholder="https://example.com/image.jpg">
+    </div>
+  </div>
+  <div class="settings-section">
+    <h4>🔍 屏幕缩放</h4>
+    <div class="settings-item">
+      <label>缩放比例: <span id="zoomLabel">100%</span></label>
+      <input type="range" id="zoomSlider" min="50" max="150" value="100" step="5" oninput="setZoom(this.value)">
+      <div style="display:flex;gap:6px;margin-top:8px">
+        <button class="btn btn-out" onclick="setZoom(80)" style="padding:4px 10px;font-size:.75rem">80%</button>
+        <button class="btn btn-out" onclick="setZoom(100)" style="padding:4px 10px;font-size:.75rem">100%</button>
+        <button class="btn btn-out" onclick="setZoom(120)" style="padding:4px 10px;font-size:.75rem">120%</button>
+        <button class="btn btn-out" onclick="setZoom(150)" style="padding:4px 10px;font-size:.75rem">150%</button>
+      </div>
     </div>
   </div>
   <div class="settings-section">
